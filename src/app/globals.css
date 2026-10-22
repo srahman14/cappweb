@@ -1,26 +1,74 @@
+/*
+ * Global styles + CAPP brand tokens (Tailwind v4: tokens live in CSS, not tailwind.config).
+ *
+ * RULE FOR CONTRIBUTORS: never write raw hex colours in components.
+ * Use these tokens (e.g. `bg-navy`, `text-muted`, `border-line`) so the whole
+ * site can be re-themed from this one file.
+ */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Colours (from the CAPP logo: white wordmark on deep navy, plus a gold accent) */
+  --color-navy: #0A0F45;        /* dark panels */
+  --color-navy-deep: #070A2E;   /* gradient end */
+  --color-navy-ink: #0B0F2A;    /* body text */
+  --color-indigo: #232C94;      /* accents, links */
+  --color-indigo-soft: #EEF0FB; /* soft tags */
+  --color-gold: #E3B04B;
+  --color-gold-light: #F7DC9B;
+  --color-gold-deep: #C98A22;
+  --color-surface: #FAFAFC;     /* page background */
+  --color-line: #E7E8F0;        /* hairline borders */
+  --color-muted: #5B6078;       /* secondary text */
+  --color-muted-soft: #8A8EA6;
+  --color-on-dark: #B9BDE4;     /* secondary text on navy */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Shapes and shadows */
+  --radius-card: 20px;
+  --radius-panel: 32px;
+  --shadow-card: 0 1px 2px rgb(11 15 42 / 0.04), 0 12px 30px -18px rgb(11 15 42 / 0.35);
+  
+  /* Marquee used by TrustedByMarquee */
+  --animate-marquee: marquee var(--marquee-duration, 20s) linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Full-screen mobile menu (used by MegaNavbar) */
+  --animate-menu-in: menu-in 200ms ease-out;
+  --animate-menu-out: menu-out 150ms ease-in;
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes menu-out {
+    from { opacity: 1; transform: none; }
+    to   { opacity: 0; transform: translateY(-8px); }
   }
 }
 
+/* `inline` because --font-jakarta is set at runtime by next/font (see lib/fonts.ts) */
+@theme inline {
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+}
+
+/* Brand gradients, used as classes: bg-gold-gradient, bg-panel-gradient, bg-glow-indigo, bg-glow-gold */
+@utility bg-gold-gradient {
+  background-image: linear-gradient(135deg, #F7DC9B, #E3B04B 55%, #C98A22);
+}
+@utility bg-panel-gradient {
+  background-image: linear-gradient(180deg, #0E1450, #070A2E);
+}
+@utility bg-glow-indigo {
+  background-image: radial-gradient(900px 420px at 50% -10%, rgb(86 96 220 / 0.55), rgb(86 96 220 / 0) 70%);
+}
+@utility bg-glow-gold {
+  background-image: radial-gradient(700px 320px at 50% 120%, rgb(227 176 75 / 0.35), rgb(227 176 75 / 0) 70%);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface);
+  color: var(--color-navy-ink);
+  font-family: var(--font-sans);
 }
