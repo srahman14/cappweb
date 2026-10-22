@@ -1,44 +1,72 @@
 /**
- * Top navigation: logo, links, and the WhatsApp join button.
- * On small screens the links collapse into a native <details> menu
- * (no JavaScript needed, so this stays a server component).
+ * CAPP's top navigation, built on <MegaNavbar>. This is the ONLY place the
+ * nav items are defined. Rendered once, in app/layout.tsx.
  *
- * Usage: <Navbar links={[{ label: "Events", href: "/events" }]} />
+ * To add or rename pages, edit the arrays below. Dropdown items need their
+ * links in BOTH places (`content` for desktop, `mobileLinks` for mobile),
+ * which is why both are generated from the same array.
  */
-import Link from "next/link";
-import { Logo } from "@/components/ui/Logo";
-import { Container } from "@/components/ui/Section";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
-import type { NavLink } from "@/types";
+import { Logo } from "@/components/ui/Logo";
+import {
+  MegaNavbar,
+  MegaNavbarLink,
+  MegaNavbarSection,
+  type MegaNavbarItem,
+} from "@/components/ui/MegaNavbar";
 
-export function Navbar({ links }: { links: NavLink[] }) {
-  return (
-    <header className="border-b border-line bg-surface/90 backdrop-blur">
-      <Container className="flex items-center justify-between py-5">
-        <Logo />
+const SUBJECT_LINKS = [
+  { title: "Tech", description: "LeetCode, NeetCode, AI courses and more", href: "/tech" },
+  { title: "Business & Finance", description: "Guides, events and opportunities", href: "/business-finance" },
+  { title: "Engineering", description: "Guides, events and opportunities", href: "/engineering" },
+  { title: "Law", description: "Guides, events and opportunities", href: "/law" },
+] as const;
 
-        {/* Desktop links */}
-        <nav aria-label="Main" className="hidden gap-9 text-[15px] font-medium text-muted md:flex">
-          {links.map((l) => (
-            <Link key={l.href} href={l.href} className="hover:text-navy-ink">{l.label}</Link>
+const ABOUT_LINKS = [
+  { title: "About CAPP", description: "Our mission and how CAPP works", href: "/about" },
+  { title: "Meet the team", description: "Ambassadors and who to contact", href: "/team" },
+  { title: "Get involved", description: "Volunteer, speak or become an ambassador", href: "/get-involved" },
+] as const;
+
+/** Turns a links array into the plain {label, href} list the mobile menu uses. */
+const toMobileLinks = (links: readonly { title: string; href: string }[]) =>
+  links.map(({ title, href }) => ({ label: title, href }));
+
+const items: MegaNavbarItem[] = [
+  {
+    label: "Subjects",
+    mobileLinks: toMobileLinks(SUBJECT_LINKS),
+    content: (
+      <MegaNavbarSection title="Pick your subject" className="w-[520px] p-3">
+        <div className="grid grid-cols-2 gap-1">
+          {SUBJECT_LINKS.map((l) => (
+            <MegaNavbarLink key={l.href} {...l} />
           ))}
-        </nav>
-
-        <div className="hidden md:block">
-          <WhatsAppButton label="Join on WhatsApp" size="sm" />
         </div>
+      </MegaNavbarSection>
+    ),
+  },
+  { label: "Events", href: "/events" },
+  { label: "Resources", href: "/resources" },
+  {
+    label: "About",
+    mobileLinks: toMobileLinks(ABOUT_LINKS),
+    content: (
+      <MegaNavbarSection className="w-[320px] p-3">
+        {ABOUT_LINKS.map((l) => (
+          <MegaNavbarLink key={l.href} {...l} />
+        ))}
+      </MegaNavbarSection>
+    ),
+  },
+];
 
-        {/* Mobile menu */}
-        <details className="relative md:hidden">
-          <summary className="cursor-pointer list-none rounded-full border border-line px-4 py-2 text-sm font-semibold">Menu</summary>
-          <div className="absolute right-0 z-10 mt-2 flex w-56 flex-col gap-3 rounded-card border border-line bg-white p-4 shadow-card">
-            {links.map((l) => (
-              <Link key={l.href} href={l.href} className="font-medium">{l.label}</Link>
-            ))}
-            <WhatsAppButton label="Join on WhatsApp" size="sm" />
-          </div>
-        </details>
-      </Container>
-    </header>
+export function Navbar() {
+  return (
+    <MegaNavbar
+      items={items}
+      logo={<Logo />}
+      actions={<WhatsAppButton label="Join on WhatsApp" size="sm" />}
+    />
   );
 }

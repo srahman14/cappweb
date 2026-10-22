@@ -59,4 +59,6 @@ export interface Speaker {
   name: string;
   /** Optional logo file in /public. Falls back to the name as text. */
   logoSrc?: string;
+  /** Optional visual scale for logos whose artwork has extra whitespace in its viewBox. */
+  logoScale?: number;
 }

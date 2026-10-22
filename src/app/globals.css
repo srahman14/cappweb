@@ -27,6 +27,25 @@
   --radius-card: 20px;
   --radius-panel: 32px;
   --shadow-card: 0 1px 2px rgb(11 15 42 / 0.04), 0 12px 30px -18px rgb(11 15 42 / 0.35);
+  
+  /* Marquee used by TrustedByMarquee */
+  --animate-marquee: marquee var(--marquee-duration, 20s) linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+  }
+
+  /* Full-screen mobile menu (used by MegaNavbar) */
+  --animate-menu-in: menu-in 200ms ease-out;
+  --animate-menu-out: menu-out 150ms ease-in;
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes menu-out {
+    from { opacity: 1; transform: none; }
+    to   { opacity: 0; transform: translateY(-8px); }
+  }
 }
 
 /* `inline` because --font-jakarta is set at runtime by next/font (see lib/fonts.ts) */

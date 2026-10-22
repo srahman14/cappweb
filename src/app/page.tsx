@@ -4,8 +4,6 @@
  * should move into data/*.ts files; delete this file once that's done.
  */
 import { EventList } from "@/components/events/EventList";
-import { Footer } from "@/components/layout/Footer";
-import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/Hero";
 import { LogoStrip } from "@/components/home/LogoStrip";
 import { StepJourney } from "@/components/home/StepJourney";
@@ -15,9 +13,21 @@ import { HandDrawnUnderline } from "@/components/ui/HandDrawnUnderline";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SITE } from "@/lib/site";
-import type { EventItem, NavLink, SocialLink, Speaker, Step, Subject } from "@/types";
+import type { EventItem, Speaker, Step, Subject } from "@/types";
 
-const speakers: Speaker[] = ["Morgan Stanley", "PwC", "J.P. Morgan", "Deloitte", "EY", "KPMG", "Goldman Sachs", "Barclays"].map((name) => ({ name }));
+const speakers: Speaker[] = [
+  { name: "Accenture", logoSrc: "/company_logos/Accenture_logo.svg", logoScale: 1},
+  { name: "BT", logoSrc: "/company_logos/BT.svg" },
+  { name: "Amazon", logoSrc: "/company_logos/Amazon_logo.svg", logoScale: 0.9},
+  { name: "NHS", logoSrc: "/company_logos/nhs.svg", logoScale: 2.4 },
+  { name: "Barclays", logoSrc: "/company_logos/Barclays-Logo.svg", logoScale: 2.3 },
+  { name: "EY", logoSrc: "/company_logos/ernst-young.svg", logoScale: 1.3 },
+  { name: "KPMG", logoSrc: "/company_logos/kpmg.svg" },
+  { name: "PwC", logoSrc: "/company_logos/PwC_2025_Logo.svg", logoScale: 2.4 },
+  { name: "JPMorgan", logoSrc: "/company_logos/JPMorgan.svg"  },
+
+];
+
 const events: EventItem[] = [1, 2, 3].map((n) => ({
   id: `e${n}`, title: "[EVENT NAME]", dateLabel: "[DATE]", weekday: "[WEEKDAY]", time: "[TIME]",
   location: "[LOCATION]", hostName: "[HOST NAME]", tags: ["Panel", "Tech"], href: "#",

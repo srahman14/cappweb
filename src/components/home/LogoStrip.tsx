@@ -1,31 +1,53 @@
 /**
- * Greyed-out row of companies whose people have spoken at CAPP panels.
- * Shows the logo image if `logoSrc` is given, otherwise the company name as text.
+ * Moving, greyed-out row of companies whose people have spoken at CAPP panels.
+ * Built on <TrustedByMarquee>, which loops the items forever, pauses on hover,
+ * fades the edges and respects "reduce motion".
  *
+ * Each speaker shows its logo image if `logoSrc` is given, otherwise its name as text.
  * ONLY list firms that have actually spoken at a CAPP panel.
  *
  * Usage: <LogoStrip speakers={[{ name: "PwC" }, { name: "EY", logoSrc: "/logos/ey.svg" }]} />
  */
 import Image from "next/image";
 import { Container } from "@/components/ui/Section";
+import { CompanyMarquee } from "@/components/home/CompanyMarquee";
 import type { Speaker } from "@/types";
 
 export interface LogoStripProps {
   heading?: string;
   speakers: Speaker[];
+  /** Seconds for one full loop (higher = slower). */
+  duration?: number;
 }
 
-export function LogoStrip({ heading = "Panel speakers have come from", speakers }: LogoStripProps) {
+export function LogoStrip({ heading = "panel speakers have come from", speakers, duration = 30 }: LogoStripProps) {
   return (
     <Container className="flex flex-col items-center gap-7 pt-14">
       <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted-soft">{heading}</p>
-      <ul className="flex w-full flex-wrap items-center justify-between gap-x-8 gap-y-5 border-y border-line py-7 text-muted-soft">
-        {speakers.map((s) => (
-          <li key={s.name} className="whitespace-nowrap text-xl font-bold opacity-80 grayscale">
-            {s.logoSrc ? <Image src={s.logoSrc} alt={s.name} width={110} height={32} className="h-7 w-auto" /> : s.name}
-          </li>
-        ))}
-      </ul>
+
+      {/* The hairlines above and below frame the moving strip */}
+      <div className="w-full border-y border-line py-7">
+        <CompanyMarquee
+          duration={duration}
+          items={speakers.map((s) =>
+            s.logoSrc ? (
+              <Image
+                key={s.name}
+                src={s.logoSrc}
+                alt={s.name}
+                width={176}
+                height={48}
+                className="h-12 w-44 object-contain"
+                style={{ transform: `scale(${s.logoScale ?? 1})` }}
+              />
+            ) : (
+              <span key={s.name} className="whitespace-nowrap text-xl font-bold text-muted">
+                {s.name}
+              </span>
+            ),
+          )}
+        />
+      </div>
     </Container>
   );
 }
