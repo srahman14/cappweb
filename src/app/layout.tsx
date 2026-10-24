@@ -32,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${jakarta.variable} h-full antialiased`}>
       {/* font-sans maps to --font-jakarta (see app/globals.css) */}
       <body className="flex max-w-7xl mx-auto min-h-full flex-col font-sans">
-        <Navbar links={navLinks}/>
+        <Navbar />
         {/* The layout owns the single <main>; pages return their sections only. */}
         <main className="flex-1">{children}</main>
         <Footer socials={socials}/>
