@@ -62,3 +62,43 @@ export interface Speaker {
   /** Optional visual scale for logos whose artwork has extra whitespace in its viewBox. */
   logoScale?: number;
 }
+
+/** A learning resource (LeetCode, a CV guide...). */
+export interface Resource {
+  id: string;
+  title: string;
+  description: string;
+  /** Pill label, e.g. "Practice", "Learn", "AI". */
+  category: string;
+  href: string;
+}
+
+/** An ambassador or team member. */
+export interface Person {
+  id: string;
+  name: string;
+  role: string;
+  /** Optional photo (path in /public). A gold gradient circle is shown if missing. */
+  photoSrc?: string;
+  linkedinUrl?: string;
+}
+
+/**
+ * Everything a subject page needs. Typed, so the build fails if a field is missing.
+ * Tech, Business & Finance, Engineering and Law each supply one of these in data/.
+ */
+export interface SubjectPageData {
+  /** e.g. "Tech" */
+  name: string;
+  description: string;
+  /** Label of the main button, e.g. "Join the Tech channel". */
+  channelLabel: string;
+  /** Subject-specific WhatsApp channel link. Falls back to the main community link. */
+  channelUrl?: string;
+  about: { eyebrow: string; title: string; body: string; bullets: string[] };
+  /** Shown in the header's right-hand card. Omit if nothing is scheduled. */
+  nextEvent?: EventItem;
+  resources: Resource[];
+  pastEvents: EventItem[];
+  ambassadors: Person[];
+}
