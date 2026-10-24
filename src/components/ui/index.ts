@@ -8,3 +8,5 @@ export * from "./Pill";
 export * from "./Section";
 export * from "./SectionHeader";
 export * from "./SocialIcons";
+export * from "./PageHeader";
+export * from "./TileCollage";
