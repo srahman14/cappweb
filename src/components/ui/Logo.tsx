@@ -14,7 +14,7 @@ export interface LogoProps {
 export function Logo({ size = 40 }: LogoProps) {
   return (
     <Link href="/" aria-label="CAPP home" className="inline-block shrink-0">
-      <Image src="/capp-logo.webp" alt="CAPP logo" width={size} height={size} className="rounded-[10px] object-cover" priority />
+      <Image src="/brand/capp-logo.webp" alt="CAPP logo" width={size} height={size} className="rounded-[10px] object-cover" priority />
     </Link>
   );
 }
