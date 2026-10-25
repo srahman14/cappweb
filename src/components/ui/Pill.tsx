@@ -25,5 +25,5 @@ export interface PillProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 export function Pill({ tone = "indigo", className, ...props }: PillProps) {
-  return <span className={cn("inline-block rounded-full px-3 py-1 text-[13px] font-semibold", TONES[tone], className)} {...props} />;
+  return <span className={cn("inline-block rounded-sm px-3 py-1 text-[13px] font-semibold", TONES[tone], className)} {...props} />;
 }

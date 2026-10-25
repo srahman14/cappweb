@@ -10,3 +10,5 @@ export * from "./SectionHeader";
 export * from "./SocialIcons";
 export * from "./PageHeader";
 export * from "./TileCollage";
+export * from "./Accordion";
+export * from "./Marquee";
