@@ -11,6 +11,13 @@ import type { SocialLink } from "@/types";
 /** Shared SVG attributes so every icon is sized the same. */
 const svgBase = { width: 18, height: 18, viewBox: "0 0 24 24", "aria-hidden": true } as const;
 
+/** Display names for each platform (also used by the footer's "Connect" column). */
+export const SOCIAL_LABELS: Record<SocialLink["platform"], string> = {
+  tiktok: "TikTok",
+  instagram: "Instagram",
+  linkedin: "LinkedIn",
+};
+
 const ICONS: Record<SocialLink["platform"], { label: string; icon: ReactNode }> = {
   tiktok: {
     label: "TikTok",
@@ -39,7 +46,11 @@ const ICONS: Record<SocialLink["platform"], { label: string; icon: ReactNode }> 
   },
 };
 
-export function SocialIcons({ links }: { links: SocialLink[] }) {
+/**
+ * variant="outline" (default): round bordered buttons, for light backgrounds.
+ * variant="plain": bare icons, for use on a coloured bar.
+ */
+export function SocialIcons({ links, variant = "outline" }: { links: SocialLink[]; variant?: "outline" | "plain" }) {
   return (
     <ul className="flex gap-3">
       {links.map(({ platform, href }) => (
@@ -49,7 +60,11 @@ export function SocialIcons({ links }: { links: SocialLink[] }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={ICONS[platform].label}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white text-muted transition hover:text-navy-ink"
+            className={
+              variant === "plain"
+                ? "flex h-10 w-10 items-center justify-center text-navy-ink transition hover:opacity-70"
+                : "flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white text-muted transition hover:text-navy-ink"
+            }
           >
             {ICONS[platform].icon}
           </a>

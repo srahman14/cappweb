@@ -9,9 +9,13 @@ import { LogoStrip } from "@/components/home/LogoStrip";
 import { StepJourney } from "@/components/home/StepJourney";
 import { SubjectAccordion } from "@/components/home/SubjectAccordion";
 import { CTABand } from "@/components/shared/CTABand";
+import { TestimonialMarquee } from "@/components/shared/TestimonialMarquee";
+import { Accordion } from "@/components/ui";
 import { HandDrawnUnderline } from "@/components/ui/HandDrawnUnderline";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { faq } from "@/data/faq";
+import { testimonials } from "@/data/testimonial";
 import { SITE } from "@/lib/site";
 import type { EventItem, Speaker, Step, Subject } from "@/types";
 
@@ -70,6 +74,15 @@ export default function HomePage() {
         <SectionHeader eyebrow="New here?" title="Get started in four steps" />
         <StepJourney steps={steps} />
       </Section>
+      <Section>
+        <TestimonialMarquee testimonials={testimonials} />
+      </Section>
+
+      <Section>
+        <SectionHeader eyebrow="FAQ" title="Frequently asked questions" />
+        <Accordion items={faq} />
+      </Section>
+      
       <CTABand title={<>Ready to join <HandDrawnUnderline rotate={1}>CAPP?</HandDrawnUnderline></>} />
     </main>
   );

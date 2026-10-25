@@ -3,6 +3,8 @@
  * (events, subjects, steps...) can live in plain data files.
  */
 
+import { ReactNode } from "react";
+
 /** A link in the navbar. */
 export interface NavLink {
   label: string;
@@ -101,4 +103,35 @@ export interface SubjectPageData {
   resources: Resource[];
   pastEvents: EventItem[];
   ambassadors: Person[];
+}
+
+/** A member quote shown in the testimonials marquee. Get the person's permission first. */
+export interface Testimonial {
+  id: string;
+  quote: string;
+  name: string;
+  /** e.g. "Computer Science, Year 2". */
+  role: string;
+  photoSrc?: string;
+}
+
+/** One accordion row. `content` can be plain text or JSX. */
+export interface AccordionItem {
+  id: string;
+  title: string;
+  content: ReactNode;
+}
+
+/** A link in a footer column or the legal row. */
+export interface FooterLink {
+  label: string;
+  href: string;
+  /** Optional small gold tag, e.g. "New". */
+  badge?: string;
+}
+
+/** A titled group of footer links. */
+export interface FooterColumn {
+  title: string;
+  links: FooterLink[];
 }
