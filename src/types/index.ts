@@ -75,6 +75,37 @@ export interface Resource {
   href: string;
 }
 
+/** Which sidebar section a resource belongs to. */
+export type ResourceGroup = "capp" | "subjects" | "events";
+
+/** Icon keys understood by <ResourceIcon />. Add a key there before adding it here. */
+export type ResourceIconName =
+  | "document"
+  | "chat"
+  | "network"
+  | "code"
+  | "chart"
+  | "cog"
+  | "scale"
+  | "calendar";
+
+export interface Resource {
+  id: string;
+  title: string;
+  description: string;
+  /** Sidebar option inside the group, e.g. "CV and ATS", "Tech", "Panel recaps". */
+  category: string;
+  href: string;
+  /** Optional card icon. Defaults to "document". */
+  icon?: ResourceIconName;
+  featured?: boolean; // no longer used by this page; safe to remove
+}
+
+/** A resource as listed on /resources: a Resource plus the group it sits under. */
+export interface LibraryResource extends Resource {
+  group: ResourceGroup;
+}
+
 /** An ambassador or team member. */
 export interface Person {
   id: string;
