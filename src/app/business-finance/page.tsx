@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { EventList } from "@/components/events/EventList";
 import { NextEventCard } from "@/components/events/NextEventCard";
 import { PersonGrid } from "@/components/people/PersonGrid";
@@ -28,7 +29,20 @@ export default function BusinessFinancePage() {
       />
 
       <Section>
-        <FeatureSplit {...businessFinance.about} />
+        <FeatureSplit
+          {...businessFinance.about}
+          media={
+            <div className="relative aspect-4/3 overflow-hidden rounded-panel">
+              <Image
+                src="/media/IMG_0053.JPEG"
+                alt="Attendees at a CAPP career event"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          }
+        />
       </Section>
 
       <Section id="resources" className="scroll-mt-8">
