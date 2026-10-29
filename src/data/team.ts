@@ -13,13 +13,9 @@ export interface Director {
 export interface TeamMember {
   id: string;
   name: string;
-  /** e.g. "Tech ambassador" */
   role: string;
-  /** Which tab they appear under. */
   subject: TeamSubjectId;
-  /** One line: why they joined CAPP, or what they love about it. */
   oneLiner?: string;
-  /** Full LinkedIn profile URL. Leave out to hide the icon. */
   linkedin?: string;
 }
 export interface TeamGroup {
