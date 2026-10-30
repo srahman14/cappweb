@@ -7,8 +7,6 @@ import {
   SectionHeader,
 } from "@/components/ui";
 
-import { ApplyBand } from "@/components/team/ApplyBand";
-import { DirectorsFeature } from "@/components/team/DirectorsFeature";
 import { TeamBrowser } from "@/components/team/TeamBrowser";
 import {
   application,
