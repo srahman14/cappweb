@@ -11,11 +11,10 @@
  *     stat={SITE.memberStat}
  *   />
  */
-import type { ReactNode } from "react";
+import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { Button } from "@/components/ui/Button";
 import { GradientPanel } from "@/components/ui/GradientPanel";
-import { Pill } from "@/components/ui/Pill";
-import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
+import type { ReactNode } from "react";
 
 export interface HeroProps {
   eyebrow: string;
