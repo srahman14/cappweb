@@ -1,25 +1,17 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { EventList } from "@/components/events/EventList";
+  import { EventList } from "@/components/events/EventList";
 import { NextEventCard } from "@/components/events/NextEventCard";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
-import { FeatureSplit } from "@/components/shared/FeatureSplit";
+import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import { Button, HandDrawnUnderline, PageHeader, Section, SectionHeader } from "@/components/ui";
 import { businessFinance } from "@/data/business-finance";
 import { SITE } from "@/lib/site";
-import { getMediaBySlots } from "@/lib/services/media.service";
 
 export const metadata: Metadata = { title: businessFinance.name, description: businessFinance.description };
 
-export default async function BusinessFinancePage() {
-  const mediaSlots = await getMediaBySlots(["subject_business_finance_feature"])
-
-  const businessFinanceImage = mediaSlots.find(
-    (slot) => slot.slot_key === "subject_business_finance_feature"
-  )?.blob_url;
-
+export default function BusinessFinancePage() {
   return (
     <>
       <PageHeader
@@ -35,29 +27,11 @@ export default async function BusinessFinancePage() {
         aside={businessFinance.nextEvent && <NextEventCard event={businessFinance.nextEvent} label="Next Business & Finance event" />}
       />
 
-      <Section>
-        <FeatureSplit
+      <MediaFeatureSplit
+          slotKey="subject_business_finance_feature"
+          alt="A speaker presenting at a CAPP career event"
           {...businessFinance.about}
-          media={
-            <div className="relative aspect-4/3 overflow-hidden rounded-panel">
-              {businessFinanceImage ? (
-              <Image
-                src={businessFinanceImage}
-                alt="A speaker presenting at a CAPP career event"
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-              ) : (
-                <div 
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-navy-deep" 
-                />  
-              )}
-            </div>
-          }
         />
-      </Section>
 
       <Section id="resources" className="scroll-mt-8">
         <SectionHeader eyebrow="Resources" title="Tools to level up" linkLabel="All resources →" linkHref="/resources" />
