@@ -29,43 +29,57 @@ const pastEvents = [
   {
     id: 4,
     title: "CAPP Socials",
-    date: "TBC",
+    date: "19/20 Sep, 2026",
     category: "Wellbeing",
   },
   {
     id: 5,
     title: "Summer Series",
-    date: "TBC",
+    date: "July, 2026",
     category: "Networking",
   },
   {
     id: 6,
-    title: "Winter Series",
-    date: "TBC",
+    title: "FCA Firm Visit",
+    date: "23 April, 2026",
     category: "Education",
   },
+
   {
     id: 7,
     title: "Women in Tech Panel",
-    date: "TBC",
+    date: "10 Feb, 2026",
     category: "Education",
   },
+  
   {
     id: 8,
-    title: "FCA Firm Visit",
-    date: "TBC",
+    title: "Alumni Panel",
+    date: "5 Feb, 2026",
     category: "Education",
   },
   {
     id: 9,
     title: "AC Simulation",
-    date: "TBC",
+    date: "22 Jan, 2026",
     category: "Education",
   },
   {
     id: 10,
-    title: "Alumni Panel",
-    date: "TBC",
+    title: "Winter Series",
+    date: "19 Dec 2025 - 9 Jan 2026",
+    category: "Education",
+  },
+  {
+    id: 11,
+    title: "Business and Finance Meet and Greet",
+    date: "29 Jan, 2025",
+    category: "Education",
+  },
+  {
+    id: 12,
+    title: "Tech Meet and Greet",
+    date: "27 Jan, 2025",
     category: "Education",
   },
 ];
