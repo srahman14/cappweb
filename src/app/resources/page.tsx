@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { CTABand } from "@/components/shared/CTABand";
-import { SuggestResourceBand } from "@/components/shared/SuggestedResourceBand";
-import { Section } from "@/components/ui/Section";
 import { ResourceBrowser } from "@/components/resources/ResourceBrowser";
+import { SuggestResourceBand } from "@/components/shared/SuggestedResourceBand";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { Section } from "@/components/ui/Section";
 import { libraryResources } from "@/data/resources";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -32,8 +31,6 @@ export default function ResourcesPage() {
       <Section>
         <SuggestResourceBand />
       </Section>
-
-      {/* <CTABand /> */}
     </>
   );
 }

@@ -9,10 +9,17 @@ import { FeatureSplit } from "@/components/shared/FeatureSplit";
 import { Button, HandDrawnUnderline, PageHeader, Section, SectionHeader } from "@/components/ui";
 import { engineering } from "@/data/engineering";
 import { SITE } from "@/lib/site";
+import { getMediaBySlots } from "@/lib/services/media.service";
 
 export const metadata: Metadata = { title: engineering.name, description: engineering.description };
 
-export default function EngineeringPage() {
+export default async function EngineeringPage() {
+  const mediaSlots = await getMediaBySlots(["subject_engineering_feature"])
+
+  const engineeringImage = mediaSlots.find(
+    (slot) => slot.slot_key === "subject_engineering_feature"
+  )?.blob_url;
+  
   return (
     <>
       <PageHeader
@@ -33,13 +40,20 @@ export default function EngineeringPage() {
           {...engineering.about}
           media={
             <div className="relative aspect-4/3 overflow-hidden rounded-panel">
+              {engineeringImage ? (
               <Image
-                src="/media/IMG_0053.JPEG"
-                alt="Attendees at a CAPP career event"
+                src={engineeringImage}
+                alt="A speaker presenting at a CAPP career event"
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
+              ) : (
+                <div 
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-navy-deep" 
+                />  
+              )}
             </div>
           }
         />

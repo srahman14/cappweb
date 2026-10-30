@@ -27,3 +27,19 @@ export async function getMediaSlots() {
 
   return data ?? [];
 }
+
+export async function getMediaBySlots(slotKeys: string[]) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("media_assets")
+    .select("slot_key, blob_url, alt_text")
+    .in("slot_key", slotKeys);
+
+  if (error) {
+    console.error("Failed to load media assets:", error.message);
+    throw new Error("Unable to load media assets.");
+  }
+
+  return data ?? [];
+}

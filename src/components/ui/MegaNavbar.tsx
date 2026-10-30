@@ -65,13 +65,18 @@ function Chevron({ open }: { open: boolean }) {
 /* ---------------------------- mobile (full screen) ---------------------------- */
 
 function MobileMenu({ items, logo, actions }: Pick<MegaNavbarProps, "items" | "logo" | "actions">) {
-  const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
 
-  // close after navigating (also covers back/forward)
-  React.useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  return <MobileMenuContent key={pathname} items={items} logo={logo} actions={actions} pathname={pathname} />;
+}
+
+function MobileMenuContent({
+  items,
+  logo,
+  actions,
+  pathname,
+}: Pick<MegaNavbarProps, "items" | "logo" | "actions"> & { pathname: string }) {
+  const [open, setOpen] = React.useState(false);
 
   // close if the window grows past the mobile breakpoint
   React.useEffect(() => {

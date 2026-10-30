@@ -9,10 +9,17 @@ import { FeatureSplit } from "@/components/shared/FeatureSplit";
 import { Button, HandDrawnUnderline, PageHeader, Section, SectionHeader } from "@/components/ui";
 import { businessFinance } from "@/data/business-finance";
 import { SITE } from "@/lib/site";
+import { getMediaBySlots } from "@/lib/services/media.service";
 
 export const metadata: Metadata = { title: businessFinance.name, description: businessFinance.description };
 
-export default function BusinessFinancePage() {
+export default async function BusinessFinancePage() {
+  const mediaSlots = await getMediaBySlots(["subject_business_finance_feature"])
+
+  const businessFinanceImage = mediaSlots.find(
+    (slot) => slot.slot_key === "subject_business_finance_feature"
+  )?.blob_url;
+
   return (
     <>
       <PageHeader
@@ -33,13 +40,20 @@ export default function BusinessFinancePage() {
           {...businessFinance.about}
           media={
             <div className="relative aspect-4/3 overflow-hidden rounded-panel">
+              {businessFinanceImage ? (
               <Image
-                src="/media/IMG_0053.JPEG"
-                alt="Attendees at a CAPP career event"
+                src={businessFinanceImage}
+                alt="A speaker presenting at a CAPP career event"
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
+              ) : (
+                <div 
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-navy-deep" 
+                />  
+              )}
             </div>
           }
         />

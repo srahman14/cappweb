@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { Director } from "@/data/team";
+import Image from "next/image";
 
 interface DirectorsFeatureProps {
   directors: Director[];

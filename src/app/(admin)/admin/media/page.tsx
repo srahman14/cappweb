@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { getCappAdminStatus } from "@/lib/auth/admin";
 import { getMediaSlots } from "@/lib/services/media.service";
 import LogoutButton from "@/components/admin/logout-button";
+import MediaUploadButton from "@/components/media/media-upload-button";
 
 
 export default function AdminMediaPage() {
@@ -53,10 +54,13 @@ async function AdminMediaContent() {
         <p className="text-sm text-gray-500">
           CAPP / Administration
         </p>
-
-        <h1 className="mt-2 text-3xl font-semibold">
-          Media management
-        </h1>
+        
+        <div className="flex items-center justify-between">
+          <h1 className="mt-2 text-3xl font-semibold">
+            Media management
+          </h1>
+          <LogoutButton />
+        </div>
 
         <p className="mt-2 text-gray-600">
           Manage the images used across the CAPP website.
@@ -71,8 +75,7 @@ async function AdminMediaContent() {
         <p className="mt-1 text-sm text-gray-500">
           {mediaSlots.length} media slots configured
         </p>
-
-        <LogoutButton />
+        
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -113,6 +116,11 @@ async function AdminMediaContent() {
               <p className="text-xs text-gray-400">
                 {slot.blob_url ? "Image configured" : "Awaiting image"}
               </p>
+
+              <MediaUploadButton
+                  slotKey={slot.slot_key}
+                  hasImage={Boolean(slot.blob_url)}
+                />
             </div>
           </article>
         ))}

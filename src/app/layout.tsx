@@ -1,16 +1,9 @@
+import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { jakarta } from "@/lib/fonts";
+import { SocialLink } from "@/types";
 import type { Metadata } from "next";
 import "./globals.css";
-import { jakarta } from "@/lib/fonts"; 
-import { Navbar } from "@/components/layout/Navbar"; 
-import { Footer } from "@/components/layout/Footer"; 
-import { NavLink, SocialLink } from "@/types";
-
-const navLinks: NavLink[] = [
-  { label: "Events", href: "/events" },
-  { label: "Resources", href: "/resources" },
-  { label: "Team", href: "/team" },
-  { label: "Get involved", href: "/get-involved" },
-];
 
 const socials: SocialLink[] = [
   { platform: "tiktok", href: "#" },

@@ -1,7 +1,4 @@
-import type { Metadata } from "next";
-import Image from "next/image";
 import { EventList } from "@/components/events/EventList";
-import { NextEventCard } from "@/components/events/NextEventCard";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
@@ -15,13 +12,22 @@ import {
 } from "@/components/ui";
 import { tech } from "@/data/tech";
 import { SITE } from "@/lib/site";
+import type { Metadata } from "next";
+import Image from "next/image";
+import { getMediaBySlots } from "@/lib/services/media.service";
 
 export const metadata: Metadata = {
   title: tech.name,
   description: tech.description,
 };
 
-export default function TechPage() {
+export default async function TechPage() {
+  const mediaSlots = await getMediaBySlots(["subject_tech_feature"])
+
+  const techImage = mediaSlots.find(
+    (slot) => slot.slot_key === "subject_tech_feature"
+  )?.blob_url;
+  
   return (
     <>
       <PageHeader
@@ -51,13 +57,20 @@ export default function TechPage() {
           {...tech.about}
           media={
             <div className="relative aspect-4/3 overflow-hidden rounded-panel">
+              {techImage ? (
               <Image
-                src="/media/IMG_0070.JPG"
+                src={techImage}
                 alt="A speaker presenting at a CAPP career event"
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
+              ) : (
+                <div 
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-navy-deep" 
+                />  
+              )}
             </div>
           }
         />
