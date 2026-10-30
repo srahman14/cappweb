@@ -55,18 +55,9 @@ export function DirectorsFeature({
             </>
           )}
         </div>
-
-        {/* <ul className="flex flex-wrap gap-x-8 gap-y-3">
-          {directors.map((d) => (
-            <li key={d.id}>
-              <p className="font-bold text-navy-ink">{d.name}</p>
-              <p className="text-sm text-muted-soft">{d.role}</p>
-            </li>
-          ))}
-        </ul> */}
       </div>
 
-      <div className="order-2 flex flex-col justify-start border-none bg-color-surface p-8 shadow-none lg:order-1 md:p-10">
+      <div className="order-2 flex flex-col justify-start border-none bg-color-surface p-8 shadow-none lg:order-1 md:p-0">
         <h3 className="text-2xl font-extrabold tracking-[-0.03em] text-navy-ink md:text-3xl">
           {message.title}
         </h3>
