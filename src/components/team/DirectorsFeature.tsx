@@ -1,5 +1,5 @@
 import type { Director } from "@/data/team";
-import Image from "next/image";
+import { MediaImage } from "@/components/media/MediaImage";
 
 interface DirectorsFeatureProps {
   directors: Director[];
@@ -36,7 +36,7 @@ export function DirectorsFeature({
               className="absolute inset-0 h-full w-full object-cover"
             />
           ) : image.src ? (
-            <Image
+            <MediaImage
               src={image.src}
               alt={image.alt}
               fill
