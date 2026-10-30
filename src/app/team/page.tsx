@@ -7,12 +7,18 @@ import {
   SectionHeader,
 } from "@/components/ui";
 import { Suspense } from "react";
+
+import { TeamBrowser } from "@/components/team/TeamBrowser";
 import {
   application,
   directors,
-  directorsMessage
+  directorsImage,
+  directorsMessage,
+  teamMembers,
+  teamSubjects,
 } from "@/data/team";
 import type { Metadata } from "next";
+
 import { getMediaBySlots } from "@/lib/services/media.service";
 
 export const metadata: Metadata = {
@@ -27,7 +33,7 @@ export default function TeamPage() {
         breadcrumb={[{ label: "Home", href: "/" }, { label: "Team" }]}
         title={
           <>
-            Meet the <HandDrawnUnderline>team</HandDrawnUnderline>
+            Our <HandDrawnUnderline>team</HandDrawnUnderline>
           </>
         }
         description="The people who run CAPP, and the ambassadors who keep each subject going."
@@ -37,10 +43,14 @@ export default function TeamPage() {
         <TeamDirectors />
       </Suspense>
 
-      {/* <Section>
-        <SectionHeader eyebrow="THE TEAM" title="The rest of the team" />
-        <MemberGrid groups={teamGroups} />
-      </Section> */}
+      <Section>
+        <SectionHeader eyebrow="AMBASSADORS" title="Meet the team" />
+        <p className="-mt-2 mb-10 max-w-2xl text-lg leading-relaxed text-muted">
+          Our ambassadors share events, internships and resources in their
+          subject. Pick a subject to see who to talk to.
+        </p>
+        <TeamBrowser subjects={teamSubjects} members={teamMembers} />
+      </Section>
 
       {/* Closing band for this page: replaces CTABand because it already links to WhatsApp when closed. */}
       <ApplyBand info={application} />

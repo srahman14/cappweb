@@ -16,11 +16,9 @@ import { TestimonialCard } from "./TestimonialCard";
 
 export interface TestimonialMarqueeProps {
   testimonials: Testimonial[];
-  eyebrow?: string;
-  title?: string;
 }
 
-export function TestimonialMarquee({ testimonials, eyebrow = "Testimonials", title = "What members say" }: TestimonialMarqueeProps) {
+export function TestimonialMarquee({ testimonials }: TestimonialMarqueeProps) {
   const half = Math.ceil(testimonials.length / 2);
   const rows = [
     { items: testimonials.slice(0, half), direction: "left", duration: 50 },
@@ -28,15 +26,16 @@ export function TestimonialMarquee({ testimonials, eyebrow = "Testimonials", tit
   ] as const;
 
   return (
-    <section className="py-12 md:py-20">
-      <Container>
-        <SectionHeader eyebrow={eyebrow} title={title} />
-      </Container>
+    <section className="py-12 md:py-12">
       <div className="flex flex-col gap-5">
         {rows.map(
           (row) =>
             row.items.length > 0 && (
-              <Marquee key={row.direction} direction={row.direction} duration={row.duration}>
+              <Marquee
+                key={row.direction}
+                direction={row.direction}
+                duration={row.duration}
+              >
                 {row.items.map((t) => (
                   <TestimonialCard key={t.id} testimonial={t} />
                 ))}
