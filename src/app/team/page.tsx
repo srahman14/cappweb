@@ -6,10 +6,7 @@ import {
   Section,
   SectionHeader,
 } from "@/components/ui";
-import {
-  application,
-  directors,
-  directorsMessage
+
 import { ApplyBand } from "@/components/team/ApplyBand";
 import { DirectorsFeature } from "@/components/team/DirectorsFeature";
 import { TeamBrowser } from "@/components/team/TeamBrowser";
@@ -21,6 +18,7 @@ import {
   teamMembers,
   teamSubjects,
 } from "@/data/team";
+
 import { getMediaBySlots } from "@/lib/services/media.service";
 import type { Metadata } from "next";
 
