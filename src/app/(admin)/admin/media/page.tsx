@@ -5,6 +5,7 @@ import { getCappAdminStatus } from "@/lib/auth/admin";
 import { getMediaSlots } from "@/lib/services/media.service";
 import LogoutButton from "@/components/admin/logout-button";
 import MediaUploadButton from "@/components/media/media-upload-button";
+import { MediaImage } from "@/components/media/MediaImage";
 
 
 export default function AdminMediaPage() {
@@ -84,12 +85,14 @@ async function AdminMediaContent() {
             key={slot.id}
             className="overflow-hidden rounded-xl border border-gray-200 bg-white"
           >
-            <div className="flex aspect-video items-center justify-center bg-gray-100">
+            <div className="relative flex aspect-video items-center justify-center bg-gray-100">
               {slot.blob_url ? (
-                <img
+                <MediaImage
                   src={slot.blob_url}
                   alt={slot.alt_text ?? ""}
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover"
                 />
               ) : (
                 <span className="text-sm text-gray-500">

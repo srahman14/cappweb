@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Suspense } from "react";
 import { PullQuote } from "@/components/about/PullQuote";
 import { CTABand } from "@/components/shared/CTABand";
 import { FeatureSplit } from "@/components/shared/FeatureSplit";
+import { MediaImage } from "@/components/media/MediaImage";
 import {
   Card,
   HandDrawnUnderline,
@@ -120,7 +120,7 @@ function WhatWeDoSection({ slotImages }: { slotImages: Record<string, string> })
             <Card className="group h-full overflow-hidden transition-[transform,box-shadow] duration-300 hover:shadow-lg active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none">
               <div className="relative aspect-4/3 overflow-hidden">
                 {slotImages[slotByItemId[item.id]] ? (
-                  <Image
+                  <MediaImage
                     src={slotImages[slotByItemId[item.id]]}
                     alt=""
                     fill

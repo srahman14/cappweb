@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { Suspense } from "react";
 import { getMediaBySlots } from "@/lib/services/media.service";
 import { Section } from "@/components/ui";
+import { MediaImage } from "@/components/media/MediaImage";
 import { FeatureSplit, type FeatureSplitProps } from "./FeatureSplit";
 
 interface MediaFeatureSplitProps extends FeatureSplitProps {
@@ -42,7 +42,7 @@ async function MediaFeatureSplitContent({
         media={
           <div className="relative aspect-4/3 overflow-hidden rounded-panel">
             {image ? (
-              <Image
+              <MediaImage
                 src={image}
                 alt={alt}
                 fill
