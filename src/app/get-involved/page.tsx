@@ -42,10 +42,10 @@ export default function Page() {
               </h3>
               <p className="text-muted mb-4">{item.description}</p>
 
-              {/* Use shared Button component */}
+              
               <item.action.component
                 href={item.action.href}
-                variant={item.action.variant}
+                className={item.action.className}
                 size="md"
               >
                 {item.action.label}
