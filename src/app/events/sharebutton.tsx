@@ -22,7 +22,9 @@ export default function ShareButton() {
           await navigator.clipboard.writeText(shareData.url);
           alert("Event link copied to clipboard!");
         } catch {
-          alert("Unable to share the link. Please copy the page URL from your browser.");
+          alert(
+            "Unable to share the link. Please copy the page URL from your browser."
+          );
         }
       }
     }
@@ -31,8 +33,8 @@ export default function ShareButton() {
   return (
     <button
       type="button"
-      className="event-share-button"
       onClick={handleShare}
+      className="inline-flex cursor-pointer items-center gap-[6px] border-0 bg-transparent p-0 font-sans text-[13px] font-extrabold leading-normal text-indigo hover:underline"
     >
       <span aria-hidden="true">↗</span>
       Share event
