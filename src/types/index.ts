@@ -166,3 +166,23 @@ export interface FooterColumn {
   title: string;
   links: FooterLink[];
 }
+
+/** One block of text inside a legal section. */
+export type LegalBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "list"; items: string[] };
+
+/** A numbered section of a legal page. `id` becomes the anchor (#id). */
+export interface LegalSection {
+  id: string;
+  title: string;
+  blocks: LegalBlock[];
+}
+
+/** Everything a legal page (Privacy, Terms) needs. */
+export interface LegalPageData {
+  /** Shown as "Last updated: ...". Keep as a [PLACEHOLDER] until launch. */
+  lastUpdated: string;
+  intro?: string;
+  sections: LegalSection[];
+}

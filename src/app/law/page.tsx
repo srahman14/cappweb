@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { EventList } from "@/components/events/EventList";
-import { NextEventCard } from "@/components/events/NextEventCard";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
-import { FeatureSplit } from "@/components/shared/FeatureSplit";
+import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import {
   Button,
   HandDrawnUnderline,
@@ -46,22 +44,11 @@ export default function LawPage() {
         // aside={law.nextEvent && <NextEventCard event={law.nextEvent} label="Next Law event" />}
       />
 
-      <Section>
-        <FeatureSplit
-          {...law.about}
-          media={
-            <div className="relative aspect-4/3 overflow-hidden rounded-panel">
-              <Image
-                src="/media/IMG_0070.JPG"
-                alt="A speaker presenting at a CAPP career event"
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          }
-        />
-      </Section>
+      <MediaFeatureSplit
+        slotKey="subject_law_feature"
+        alt="A speaker presenting at a CAPP career event"
+        {...law.about}
+      />
 
       <Section id="resources" className="scroll-mt-8">
         <SectionHeader

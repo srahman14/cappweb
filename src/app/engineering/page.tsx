@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { EventList } from "@/components/events/EventList";
 import { NextEventCard } from "@/components/events/NextEventCard";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
-import { FeatureSplit } from "@/components/shared/FeatureSplit";
+import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import { Button, HandDrawnUnderline, PageHeader, Section, SectionHeader } from "@/components/ui";
 import { engineering } from "@/data/engineering";
 import { SITE } from "@/lib/site";
@@ -28,22 +27,11 @@ export default function EngineeringPage() {
         aside={engineering.nextEvent && <NextEventCard event={engineering.nextEvent} label="Next Engineering event" />}
       />
 
-      <Section>
-        <FeatureSplit
+      <MediaFeatureSplit
+          slotKey="subject_engineering_feature"
+          alt="A speaker presenting at a CAPP career event"
           {...engineering.about}
-          media={
-            <div className="relative aspect-4/3 overflow-hidden rounded-panel">
-              <Image
-                src="/media/IMG_0053.JPEG"
-                alt="Attendees at a CAPP career event"
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          }
         />
-      </Section>
 
       <Section id="resources" className="scroll-mt-8">
         <SectionHeader eyebrow="Resources" title="Tools to level up" linkLabel="All resources →" linkHref="/resources" />

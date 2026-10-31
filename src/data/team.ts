@@ -13,19 +13,26 @@ export interface Director {
 export interface TeamMember {
   id: string;
   name: string;
-  /** e.g. "Tech ambassador" */
   role: string;
-  /** Path in /public, e.g. "/team/jane.jpg". Leave out for an initials avatar. */
-  image?: string;
-  /** Optional short bio shown under the name. */
-  bio?: string;
+  subject: TeamSubjectId;
+  oneLiner?: string;
+  linkedin?: string;
 }
-
 export interface TeamGroup {
   id: string;
   title: string;
   members: TeamMember[];
 }
+
+export type TeamSubjectId = "tech" | "business-finance" | "law" | "engineering";
+
+/** Tabs on the team page, in display order. First one is selected by default. */
+export const teamSubjects: { id: TeamSubjectId; label: string }[] = [
+  { id: "tech", label: "Technology" },
+  { id: "business-finance", label: "Business & Finance" },
+  { id: "law", label: "Law" },
+  { id: "engineering", label: "Engineering" },
+];
 
 export interface ApplicationInfo {
   status: "open" | "closed";
@@ -66,30 +73,41 @@ export const directorsMessage = {
   signOff: "Aiman & Khadeja",
 };
 
-export const teamGroups: TeamGroup[] = [
+export const teamMembers: TeamMember[] = [
   {
-    id: "committee",
-    title: "Committee",
-    members: [
-      {
-        id: "committee-1",
-        name: "[NAME]",
-        role: "[ROLE]",
-        bio: "[OPTIONAL BIO: one or two sentences.]",
-      },
-      { id: "committee-2", name: "[NAME]", role: "[ROLE]" },
-      { id: "committee-3", name: "[NAME]", role: "[ROLE]" },
-    ],
+    id: "tech-1",
+    name: "[NAME]",
+    role: "Tech ambassador",
+    subject: "tech",
+    oneLiner: "[ONE LINER: why they joined CAPP or what they love about it.]",
+    linkedin: "https://www.linkedin.com/", // replace with the real profile URL
+  },
+  { id: "tech-2", name: "[NAME]", role: "Tech ambassador", subject: "tech" },
+  {
+    id: "bf-1",
+    name: "[NAME]",
+    role: "Business & Finance ambassador",
+    subject: "business-finance",
   },
   {
-    id: "ambassadors",
-    title: "Ambassadors",
-    members: [
-      { id: "amb-tech", name: "[NAME]", role: "Tech ambassador" },
-      { id: "amb-bf", name: "[NAME]", role: "Business & Finance ambassador" },
-      { id: "amb-eng", name: "[NAME]", role: "Engineering ambassador" },
-      { id: "amb-law", name: "[NAME]", role: "Law ambassador" },
-    ],
+    id: "bf-2",
+    name: "[NAME]",
+    role: "Business & Finance ambassador",
+    subject: "business-finance",
+  },
+  { id: "law-1", name: "[NAME]", role: "Law ambassador", subject: "law" },
+  { id: "law-2", name: "[NAME]", role: "Law ambassador", subject: "law" },
+  {
+    id: "eng-1",
+    name: "[NAME]",
+    role: "Engineering ambassador",
+    subject: "engineering",
+  },
+  {
+    id: "eng-2",
+    name: "[NAME]",
+    role: "Engineering ambassador",
+    subject: "engineering",
   },
 ];
 
