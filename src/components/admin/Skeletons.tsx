@@ -26,7 +26,7 @@ export function OverviewSkeleton() {
   return (
     <div>
       <div aria-hidden="true">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {[0, 1, 2].map((i) => (
             <div key={i} className="h-[84px] rounded-xl border border-line bg-white p-4">
               <div className={`h-3 w-20 rounded bg-line ${pulse}`} />

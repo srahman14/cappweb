@@ -35,20 +35,24 @@ async function OverviewContent() {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <StatTile label="Media slots" value={total} />
         <StatTile label="Filled" value={filled} />
         {empty > 0 ? (
-          <StatTile label="Need an image" value={empty} tone="attention" href="/admin/media" />
+          <StatTile label="Needs an image" value={empty} tone="attention" href="/admin/media" />
         ) : (
           <StatTile
-            label="Need an image"
+            label="Needs an image"
             value={0}
             caption={
-              <span className="flex items-center gap-1 text-success">
-                <CheckCircle2 aria-hidden="true" className="size-3.5" />
-                All filled
-              </span>
+              total === 0 ? (
+                <span className="text-muted">No media slots configured</span>
+              ) : (
+                <span className="flex items-center gap-1 text-success">
+                  <CheckCircle2 aria-hidden="true" className="size-3.5" />
+                  All filled
+                </span>
+              )
             }
           />
         )}
@@ -82,6 +86,8 @@ async function OverviewContent() {
               </li>
             ))}
           </ul>
+        ) : total === 0 ? (
+          <p className="p-4 text-sm text-muted">No media slots configured.</p>
         ) : (
           <p className="flex items-center gap-2 p-4 text-sm text-navy-ink">
             <CheckCircle2 aria-hidden="true" className="size-4 text-success" />
