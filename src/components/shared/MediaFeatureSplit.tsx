@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { getMediaBySlots } from "@/lib/services/media.service";
 import { Section } from "@/components/ui";
 import { MediaImage } from "@/components/media/MediaImage";
@@ -32,6 +33,8 @@ async function MediaFeatureSplitContent({
   alt: string;
   feature: FeatureSplitProps;
 }) {
+  await connection();
+
   const mediaSlots = await getMediaBySlots([slotKey]);
   const image = mediaSlots.find((slot) => slot.slot_key === slotKey)?.blob_url;
 

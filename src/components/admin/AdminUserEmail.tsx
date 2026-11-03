@@ -1,7 +1,10 @@
 import { getCappAdminStatus } from "@/lib/auth/admin";
+import { connection } from "next/server";
 
 /** Signed-in email for the sidebar. Display only — not an access check. */
 export async function AdminUserEmail() {
+  await connection();
+
   let email: string | undefined;
   try {
     const { user } = await getCappAdminStatus();

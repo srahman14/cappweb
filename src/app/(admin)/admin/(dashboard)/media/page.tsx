@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { ExternalLink, ImageOff } from "lucide-react";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
@@ -44,6 +45,7 @@ export default function AdminMediaPage() {
 }
 
 async function AdminMediaContent() {
+  await connection();
   await requireAdmin();
 
   const mediaSlots = await getMediaSlots();
