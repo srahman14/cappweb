@@ -52,7 +52,7 @@ export function AdminNav({ orientation = "vertical" }: AdminNavProps) {
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   base,
-                  "focus-ring focus-visible:outline-gold-light hover:bg-white/5 hover:text-white",
+                  "focus-ring-on-dark hover:bg-white/5 hover:text-white",
                   "aria-[current=page]:bg-white/10 aria-[current=page]:text-white",
                   vertical
                     ? "aria-[current=page]:before:absolute aria-[current=page]:before:inset-y-2 aria-[current=page]:before:left-0 aria-[current=page]:before:w-0.5 aria-[current=page]:before:rounded-full aria-[current=page]:before:bg-gold"

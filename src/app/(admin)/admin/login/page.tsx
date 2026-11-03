@@ -27,7 +27,7 @@ export default function AdminLoginPage({ searchParams }: PageProps<"/admin/login
 
         <Link
           href="/"
-          className="focus-ring mt-6 rounded text-sm text-on-dark hover:text-white focus-visible:outline-gold-light"
+          className="focus-ring-on-dark mt-6 rounded text-sm text-on-dark hover:text-white"
         >
           ← Back to CAPP website
         </Link>

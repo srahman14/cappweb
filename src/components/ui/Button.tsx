@@ -23,8 +23,8 @@ type Size = "sm" | "md";
 const VARIANTS: Record<Variant, string> = {
   primary: "bg-navy-ink text-white hover:bg-navy",
   secondary: "border border-line bg-white text-navy-ink hover:border-muted-soft",
-  onDark: "bg-white text-navy-ink hover:bg-white/90",
-  outlineOnDark: "border border-white/30 text-white hover:bg-white/10",
+  onDark: "bg-white text-navy-ink hover:bg-white/90 focus-visible:outline-gold-light",
+  outlineOnDark: "border border-white/30 text-white hover:bg-white/10 focus-visible:outline-gold-light",
   gold: "bg-gold-gradient text-navy-ink hover:brightness-105",
 };
 const SIZES: Record<Size, string> = {
@@ -45,6 +45,8 @@ export type ButtonProps = LinkProps | NativeProps;
 export function Button({ variant = "primary", size = "md", className, children, ...rest }: ButtonProps) {
   const classes = cn(
     "inline-flex items-center justify-center rounded-full font-semibold transition",
+    // Additive only: visible keyboard focus + disabled state (no default-state change).
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo disabled:pointer-events-none disabled:opacity-60",
     VARIANTS[variant],
     SIZES[size],
     className,

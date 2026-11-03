@@ -46,7 +46,7 @@ export default function LogoutButton({
       size="sm"
       onClick={handleLogout}
       disabled={loading}
-      className={cn("gap-2", variant === "outlineOnDark" && "focus-visible:outline-gold-light", className)}
+      className={cn("gap-2", className)}
     >
       <LogOut aria-hidden="true" className="size-4" />
       {loading ? "Signing out…" : label}
