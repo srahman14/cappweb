@@ -5,6 +5,7 @@
  * Usage: <PersonCard person={person} />
  */
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import type { Person } from "@/types";
 
@@ -17,8 +18,8 @@ export function PersonCard({ person }: { person: Person }) {
       <h3 className="text-lg font-bold">{person.name}</h3>
       <p className="text-[15px] text-muted">{person.role}</p>
       {person.linkedinUrl && (
-        <a href={person.linkedinUrl} target="_blank" rel="noopener noreferrer" className="mt-1 text-[15px] font-semibold text-indigo hover:underline">
-          LinkedIn →
+        <a href={person.linkedinUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 text-[15px] font-semibold text-indigo hover:underline">
+          LinkedIn <ArrowUpRight size={16} aria-hidden="true" />
         </a>
       )}
     </Card>

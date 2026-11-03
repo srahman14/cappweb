@@ -54,7 +54,7 @@ export default function TechPage() {
         <SectionHeader
           eyebrow="Resources"
           title="Tools to level up"
-          linkLabel="All resources →"
+          linkLabel="All resources"
           linkHref="/resources"
         />
         <ResourceGrid resources={tech.resources} />
@@ -64,18 +64,10 @@ export default function TechPage() {
         <SectionHeader
           eyebrow="Events"
           title="What we've done"
-          linkLabel="All events →"
+          linkLabel="All events"
           linkHref="/events"
         />
         <EventList events={tech.pastEvents} variant="past" />
-      </Section>
-
-      <Section>
-        <SectionHeader
-          eyebrow="Ambassadors"
-          title="Meet the Tech ambassadors"
-        />
-        <PersonGrid people={tech.ambassadors} />
       </Section>
 
       <CTABand title="Join the Tech community" />

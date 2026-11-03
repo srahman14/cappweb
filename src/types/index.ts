@@ -136,14 +136,11 @@ export interface SubjectPageData {
   ambassadors: Person[];
 }
 
-/** A member quote shown in the testimonials marquee. Get the person's permission first. */
+/** A quote shown in the testimonials marquee, attributed to its program. */
 export interface Testimonial {
   id: string;
-  quote: string;
-  name: string;
-  /** e.g. "Computer Science, Year 2". */
-  role: string;
-  photoSrc?: string;
+  quote: ReactNode;
+  program: string;
 }
 
 /** One accordion row. `content` can be plain text or JSX. */

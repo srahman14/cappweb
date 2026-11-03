@@ -5,6 +5,7 @@
  * Usage: <ResourceCard resource={resource} />
  */
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Pill } from "@/components/ui/Pill";
 import type { Resource } from "@/types";
@@ -23,7 +24,9 @@ export function ResourceCard({ resource }: { resource: Resource }) {
         </Link>
       </h3>
       <p className="text-base leading-normal text-muted">{resource.description}</p>
-      <span className="mt-auto pt-2 text-[15px] font-semibold text-indigo">Open →</span>
+      <span className="mt-auto inline-flex items-center gap-1 pt-2 text-[15px] font-semibold text-indigo">
+        Open <ArrowUpRight size={16} aria-hidden="true" />
+      </span>
     </Card>
   );
 }

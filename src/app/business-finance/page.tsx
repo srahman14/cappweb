@@ -34,12 +34,12 @@ export default function BusinessFinancePage() {
         />
 
       <Section id="resources" className="scroll-mt-8">
-        <SectionHeader eyebrow="Resources" title="Tools to level up" linkLabel="All resources →" linkHref="/resources" />
+        <SectionHeader eyebrow="Resources" title="Tools to level up" linkLabel="All resources" linkHref="/resources" />
         <ResourceGrid resources={businessFinance.resources} />
       </Section>
 
       <Section>
-        <SectionHeader eyebrow="Events" title="What we've done" linkLabel="All events →" linkHref="/events" />
+        <SectionHeader eyebrow="Events" title="What we've done" linkLabel="All events" linkHref="/events" />
         <EventList events={businessFinance.pastEvents} variant="past" />
       </Section>
 

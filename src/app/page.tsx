@@ -39,17 +39,44 @@ const speakers: Speaker[] = [
   { name: "JPMorgan", logoSrc: "/company_logos/JPMorgan.svg" },
 ];
 
-const events: EventItem[] = [1, 2, 3].map((n) => ({
-  id: `e${n}`,
-  title: "[EVENT NAME]",
-  dateLabel: "[DATE]",
-  weekday: "[WEEKDAY]",
-  time: "[TIME]",
-  location: "[LOCATION]",
-  hostName: "[HOST NAME]",
-  tags: ["Panel", "Tech"],
-  href: "#",
-}));
+const events: EventItem[] = [
+  {
+    id: "consulting-panel",
+    title: "Consulting Panel",
+    dateLabel: "12 Nov",
+    weekday: "Thursday",
+    time: "To be announced",
+    location: "To be announced",
+    hostName: "CAPP Team",
+    tags: ["Panel", "Consulting"],
+    coverSrc: "/brand/capp-repeated.webp",
+    href: "/events",
+  },
+  {
+    id: "tech-panel",
+    title: "Tech Panel",
+    dateLabel: "26 Nov",
+    weekday: "Thursday",
+    time: "To be announced",
+    location: "To be announced",
+    hostName: "CAPP Team",
+    tags: ["Panel", "Tech"],
+    coverSrc: "/brand/capp-repeated.webp",
+    href: "/events",
+  },
+  {
+    id: "business-finance-panel",
+    title: "Business & Finance Panel",
+    dateLabel: "10 Dec",
+    weekday: "Thursday",
+    time: "To be announced",
+    location: "To be announced",
+    hostName: "CAPP Team",
+    tags: ["Panel", "Business & Finance"],
+    coverSrc: "/brand/capp-repeated.webp",
+    href: "/events",
+  },
+];
 // Gradient classes are written out in full so Tailwind can detect them.
 const subjects: Subject[] = [
   {
@@ -112,7 +139,6 @@ export default function HomePage() {
   return (
     <main>
       <Hero
-        // commented out eyebrow for now (in hero)
         eyebrow="Careers and People's Progression"
         title={
           <>
@@ -129,7 +155,7 @@ export default function HomePage() {
         <SectionHeader
           eyebrow="Events"
           title="Upcoming"
-          linkLabel="Past events and recaps →"
+          linkLabel="Past events and recaps"
           linkHref="/events"
         />
         <EventList events={events} />

@@ -54,7 +54,7 @@ export default function LawPage() {
         <SectionHeader
           eyebrow="Resources"
           title="Tools to level up"
-          linkLabel="All resources →"
+          linkLabel="All resources"
           linkHref="/resources"
         />
         <ResourceGrid resources={law.resources} />
@@ -64,7 +64,7 @@ export default function LawPage() {
         <SectionHeader
           eyebrow="Events"
           title="What we've done"
-          linkLabel="All events →"
+          linkLabel="All events"
           linkHref="/events"
         />
         <EventList events={law.pastEvents} variant="past" />

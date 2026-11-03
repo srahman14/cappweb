@@ -1,5 +1,6 @@
 
 import type { Metadata } from "next";
+import { ArrowUpRight } from "lucide-react";
 import ShareButton from "./sharebutton";
 
 export const metadata: Metadata = {
@@ -173,14 +174,14 @@ export default function EventsPage() {
               className="inline-flex items-center gap-[18px] rounded-[7px] bg-indigo px-[19px] py-[13px] text-[13px] font-bold text-white no-underline transition-colors hover:bg-navy"
               href="#past-events"
             >
-              Explore events <span aria-hidden="true">→</span>
+              Explore events <ArrowUpRight size={16} aria-hidden="true" />
             </a>
 
             <a
               className="text-[13px] font-extrabold text-indigo no-underline hover:underline"
               href="#past-events"
             >
-              Learn more <span aria-hidden="true">→</span>
+              Learn more <ArrowUpRight size={16} aria-hidden="true" />
             </a>
 
             <ShareButton />
@@ -295,7 +296,7 @@ export default function EventsPage() {
                     className="text-[13px] font-extrabold text-indigo no-underline hover:underline"
                     href="#past-events"
                   >
-                    Event details <span aria-hidden="true">→</span>
+                    Event details <ArrowUpRight size={16} aria-hidden="true" />
                   </a>
                 </div>
               </div>

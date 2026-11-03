@@ -4,9 +4,10 @@
  *
  * Usage:
  *   <SectionHeader eyebrow="EVENTS" title="Upcoming"
- *                  linkLabel="Past events and recaps →" linkHref="/events" />
+ *                  linkLabel="Past events and recaps" linkHref="/events" />
  */
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
 export interface SectionHeaderProps {
   eyebrow?: string;
@@ -36,9 +37,10 @@ export function SectionHeader({
       {linkLabel && linkHref && (
         <Link
           href={linkHref}
-          className="shrink-0 text-base font-semibold text-indigo hover:underline"
+          className="inline-flex shrink-0 items-center gap-1 text-base font-semibold text-indigo hover:underline"
         >
           {linkLabel}
+          <ArrowUpRight size={18} aria-hidden="true" />
         </Link>
       )}
     </div>
