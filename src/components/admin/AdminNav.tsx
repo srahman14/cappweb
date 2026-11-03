@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Pill } from "@/components/ui/Pill";
 import { cn } from "@/lib/cn";
 import { ADMIN_NAV, isNavItemActive } from "./navItems";
 
@@ -33,12 +32,13 @@ export function AdminNav({ orientation = "vertical" }: AdminNavProps) {
           if (item.status === "soon") {
             return (
               <li key={item.href} className={cn(!vertical && "shrink-0")}>
-                <span aria-disabled="true" className={cn(base, "cursor-default")}>
+                <span className={cn(base, "cursor-default")}>
                   <Icon aria-hidden="true" className="size-4 shrink-0" />
                   {item.label}
-                  <Pill tone="glass" className="ml-auto px-1.5 py-0 text-[11px]">
+                  {/* Pill's own padding/size can't be overridden via cn(), so a compact glass badge here. */}
+                  <span className="ml-auto rounded-sm border border-white/20 bg-white/10 px-1.5 text-[11px] font-semibold text-gold-light">
                     Soon
-                  </Pill>
+                  </span>
                 </span>
               </li>
             );

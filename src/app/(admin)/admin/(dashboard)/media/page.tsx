@@ -22,9 +22,17 @@ export default function AdminMediaPage() {
         title="Media"
         description="Images used across the CAPP website. Uploads go live on the next page refresh."
         actions={
-          <Button variant="secondary" size="sm" href="/" className="gap-2">
+          <Button
+            variant="secondary"
+            size="sm"
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gap-2"
+          >
             View live site
             <ExternalLink aria-hidden="true" className="size-4" />
+            <span className="sr-only">(opens in a new tab)</span>
           </Button>
         }
       />
