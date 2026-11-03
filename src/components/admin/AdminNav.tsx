@@ -56,7 +56,9 @@ export function AdminNav({ orientation = "vertical" }: AdminNavProps) {
                   "aria-[current=page]:bg-white/10 aria-[current=page]:text-white",
                   vertical
                     ? "aria-[current=page]:before:absolute aria-[current=page]:before:inset-y-2 aria-[current=page]:before:left-0 aria-[current=page]:before:w-0.5 aria-[current=page]:before:rounded-full aria-[current=page]:before:bg-gold"
-                    : "aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-gold)]",
+                    : // Inset the ring: the overflow-x-auto <ul> clips anything drawn outside the link.
+                      // (Wins over focus-ring-on-dark's offset by :focus-visible specificity, not CSS order.)
+                      "focus-visible:-outline-offset-2 aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-gold)]",
                 )}
               >
                 <Icon aria-hidden="true" className="size-4 shrink-0" />

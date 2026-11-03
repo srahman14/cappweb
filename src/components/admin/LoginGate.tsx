@@ -27,7 +27,7 @@ export async function LoginGate({ searchParams }: { searchParams: Promise<LoginS
     }
 
     if (status?.user) {
-      return <ForbiddenNotice email={status.user.email ?? "this account"} />;
+      return <ForbiddenNotice email={status.user.email} />;
     }
     // Not signed in: the param alone never shows the message.
   }
