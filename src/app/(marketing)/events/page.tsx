@@ -100,7 +100,7 @@ function PlaceholderImage({ large = false }: { large?: boolean }) {
 
 export default function EventsPage() {
   return (
-    <main className="mx-auto max-w-[1440px] px-[18px] pb-[56px] pt-[28px] text-navy-ink sm:px-[4%] sm:pb-[80px] sm:pt-[38px]">
+    <div className="mx-auto max-w-[1440px] px-[18px] pb-[56px] pt-[28px] text-navy-ink sm:px-[4%] sm:pb-[80px] sm:pt-[38px]">
       {/* Page heading */}
       <header className="mb-[26px] max-w-[650px]">
         <p className="mb-[8px] text-[13px] font-extrabold tracking-[1.5px] text-navy">
@@ -304,6 +304,6 @@ export default function EventsPage() {
           ))}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

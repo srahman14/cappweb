@@ -137,7 +137,7 @@ const steps: Step[] = [
 
 export default function HomePage() {
   return (
-    <main>
+    <div>
       <Hero
         eyebrow="Careers and People's Progression"
         title={
@@ -186,6 +186,6 @@ export default function HomePage() {
           </>
         }
       />
-    </main>
+    </div>
   );
 }
