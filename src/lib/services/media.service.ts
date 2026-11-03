@@ -3,7 +3,18 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { summariseMedia } from "@/lib/media/summarise";
 
-export async function getMediaSlots() {
+export type MediaSlot = {
+  id: string;
+  slot_key: string;
+  label: string | null;
+  description: string | null;
+  alt_text: string | null;
+  blob_url: string | null;
+  sort_order: number;
+  updated_at: string;
+};
+
+export async function getMediaSlots(): Promise<MediaSlot[]> {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -26,7 +37,7 @@ export async function getMediaSlots() {
     throw new Error("Unable to load media slots.");
   }
 
-  return data ?? [];
+  return (data ?? []) as MediaSlot[];
 }
 
 /** Overview numbers, derived from getMediaSlots() (no second query). */

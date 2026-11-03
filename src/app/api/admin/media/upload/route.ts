@@ -5,16 +5,11 @@ import sharp from "sharp";
 
 import { createClient } from "@/lib/supabase/server";
 import { getCappAdminStatus } from "@/lib/auth/admin";
+import { ACCEPTED_TYPES, MAX_UPLOAD_BYTES } from "@/lib/media/constants";
 
-const MAX_FILE_SIZE = 4 * 1024 * 1024;
 const MAX_IMAGE_PIXELS = 40_000_000;
 
-const ALLOWED_TYPES = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-]);
+const ALLOWED_TYPES = new Set<string>(ACCEPTED_TYPES);
 
 const EXTENSION_BY_TYPE: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -71,7 +66,7 @@ export async function POST(request: Request) {
   }
 
   // validate file size.
-  if (file.size === 0 || file.size > MAX_FILE_SIZE) {
+  if (file.size === 0 || file.size > MAX_UPLOAD_BYTES) {
     return NextResponse.json(
       { error: "Images must be between 1 byte and 4 MB." },
       { status: 400 }

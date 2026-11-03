@@ -46,3 +46,29 @@ export function OverviewSkeleton() {
     </div>
   );
 }
+
+export function MediaSkeleton() {
+  return (
+    <div>
+      <div aria-hidden="true">
+        <div className={`mb-4 h-4 w-40 rounded bg-line ${pulse}`} />
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="overflow-hidden rounded-xl border border-line bg-white">
+              <div className={`aspect-video bg-line ${pulse}`} />
+              <div className="space-y-2 p-4">
+                <div className={`h-3 w-32 rounded bg-line ${pulse}`} />
+                <div className={`h-3 w-24 rounded bg-line ${pulse}`} />
+                <div className={`h-3 w-40 rounded bg-line ${pulse}`} />
+                <div className={`mt-3 h-9 rounded-full bg-line ${pulse}`} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <span role="status" className="sr-only">
+        Loading…
+      </span>
+    </div>
+  );
+}
