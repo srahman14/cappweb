@@ -2,9 +2,23 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/cn";
 import { createClient } from "@/lib/supabase/client";
 
-export default function LogoutButton() {
+type LogoutButtonProps = {
+  /** "outlineOnDark" for the navy shell, "primary" on light cards. */
+  variant?: "outlineOnDark" | "primary";
+  label?: string;
+  className?: string;
+};
+
+export default function LogoutButton({
+  variant = "outlineOnDark",
+  label = "Sign out",
+  className,
+}: LogoutButtonProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -20,18 +34,22 @@ export default function LogoutButton() {
       return;
     }
 
+    // Plain /admin/login also drops any ?error=forbidden.
     router.replace("/admin/login");
     router.refresh();
   }
 
   return (
-    <button
+    <Button
       type="button"
+      variant={variant}
+      size="sm"
       onClick={handleLogout}
       disabled={loading}
-      className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 disabled:opacity-60"
+      className={cn("gap-2", className)}
     >
-      {loading ? "Signing out..." : "Sign out"}
-    </button>
+      <LogOut aria-hidden="true" className="size-4" />
+      {loading ? "Signing out…" : label}
+    </Button>
   );
 }

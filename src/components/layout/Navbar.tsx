@@ -1,6 +1,7 @@
 /**
  * CAPP's top navigation, built on <MegaNavbar>. This is the ONLY place the
- * nav items are defined. Rendered once, in app/layout.tsx.
+ * nav items are defined. Rendered once per page via <SiteChrome>
+ * (app/(marketing)/layout.tsx and app/not-found.tsx).
  *
  * To add or rename pages, edit the arrays below. Dropdown items need their
  * links in BOTH places (`content` for desktop, `mobileLinks` for mobile),

@@ -100,7 +100,7 @@ function PlaceholderImage({ large = false }: { large?: boolean }) {
 
 export default function EventsPage() {
   return (
-    <main className="mx-auto max-w-[1440px] px-[18px] pb-[56px] pt-[28px] text-navy-ink sm:px-[4%] sm:pb-[80px] sm:pt-[38px]">
+    <div className="mx-auto max-w-[1440px] px-[18px] pb-[56px] pt-[28px] text-navy-ink sm:px-[4%] sm:pb-[80px] sm:pt-[38px]">
       {/* Page heading */}
       <header className="mb-[26px] max-w-[650px]">
         <p className="mb-[8px] text-[13px] font-extrabold tracking-[1.5px] text-navy">
@@ -204,7 +204,7 @@ export default function EventsPage() {
           </h2>
 
           <p className="mb-0 mt-3 max-w-[500px] text-[16px] leading-[1.65] text-muted">
-            Take a look at some of the events we've hosted in the
+            Take a look at some of the events we&apos;ve hosted in the
             past. Select an event to see more details.
           </p>
         </div>
@@ -304,6 +304,6 @@ export default function EventsPage() {
           ))}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -21,11 +21,12 @@ type Variant = "primary" | "secondary" | "onDark" | "outlineOnDark" | "gold";
 type Size = "sm" | "md";
 
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-navy-ink text-white hover:bg-navy",
-  secondary: "border border-line bg-white text-navy-ink hover:border-muted-soft",
-  onDark: "bg-white text-navy-ink hover:bg-white/90",
-  outlineOnDark: "border border-white/30 text-white hover:bg-white/10",
-  gold: "bg-gold-gradient text-navy-ink hover:brightness-105",
+  // Each variant sets exactly one focus outline colour (cn() doesn't dedupe classes).
+  primary: "bg-navy-ink text-white hover:bg-navy focus-visible:outline-indigo",
+  secondary: "border border-line bg-white text-navy-ink hover:border-muted-soft focus-visible:outline-indigo",
+  onDark: "bg-white text-navy-ink hover:bg-white/90 focus-visible:outline-gold-light",
+  outlineOnDark: "border border-white/30 text-white hover:bg-white/10 focus-visible:outline-gold-light",
+  gold: "bg-gold-gradient text-navy-ink hover:brightness-105 focus-visible:outline-indigo",
 };
 const SIZES: Record<Size, string> = {
   sm: "px-5 py-2.5 text-sm",
@@ -45,6 +46,8 @@ export type ButtonProps = LinkProps | NativeProps;
 export function Button({ variant = "primary", size = "md", className, children, ...rest }: ButtonProps) {
   const classes = cn(
     "inline-flex items-center justify-center rounded-full font-semibold transition",
+    // Additive only: visible keyboard focus + disabled state (no default-state change).
+    "focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-60",
     VARIANTS[variant],
     SIZES[size],
     className,

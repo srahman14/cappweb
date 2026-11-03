@@ -7,6 +7,8 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    // Skip static assets. Extensions are listed in both cases so uploads
+    // like IMG_0070.JPG are skipped too; the matcher has no case-insensitive flag.
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|SVG|PNG|JPG|JPEG|GIF|WEBP)$).*)',
   ],
 }

@@ -39,7 +39,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "winter-cv-workshop-4",
-    quote: <>An <strong>absolutely brilliant session</strong>. I highly recommend it to anyone who couldn't attend.</>,
+    quote: <>An <strong>absolutely brilliant session</strong>. I highly recommend it to anyone who couldn&apos;t attend.</>,
     program: "Winter CV Workshop",
   },
 ];

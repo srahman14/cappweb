@@ -1,109 +1,36 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Suspense } from "react";
+import { Card } from "@/components/ui/Card";
+import { Logo } from "@/components/ui/Logo";
+import { LoginGate } from "@/components/admin/LoginGate";
+import { LoginCardSkeleton } from "@/components/admin/Skeletons";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+export const metadata: Metadata = {
+  title: "Sign in",
+};
 
-export default function AdminLoginPage() {
-  const router = useRouter();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    setError("");
-    setLoading(true);
-
-    try {
-      const supabase = createClient();
-
-      const { error: loginError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (loginError) {
-        setError("Invalid email or password.");
-        return;
-      }
-
-      router.replace("/admin/media");
-      router.refresh();
-    } catch {
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
+export default function AdminLoginPage({ searchParams }: PageProps<"/admin/login">) {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
-        <h1 className="text-2xl font-semibold text-gray-900">
-          CAPP Admin
-        </h1>
+    <main className="relative grid min-h-dvh flex-1 place-items-center bg-panel-gradient px-4 py-12">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-glow-indigo" />
 
-        <p className="mt-2 text-sm text-gray-600">
-          Sign in to manage website media.
-        </p>
-
-        <form onSubmit={handleLogin} className="mt-8 space-y-5">
-          <div>
-            <label
-              htmlFor="email"
-              className="mb-2 block text-sm font-medium text-gray-700"
-            >
-              Email address
-            </label>
-
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              required
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            />
+      <div className="relative flex w-full max-w-sm flex-col items-center">
+        <Card className="w-full p-8">
+          <div className="mb-6">
+            <Logo size={40} />
           </div>
+          <Suspense fallback={<LoginCardSkeleton />}>
+            <LoginGate searchParams={searchParams} />
+          </Suspense>
+        </Card>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="mb-2 block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            />
-          </div>
-
-          {error && (
-            <p role="alert" className="text-sm text-red-600">
-              {error}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-gray-900 px-4 py-2.5 font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loading ? "Signing in..." : "Sign in"}
-          </button>
-        </form>
+        <Link
+          href="/"
+          className="focus-ring-on-dark mt-6 rounded text-sm text-on-dark hover:text-white"
+        >
+          ← Back to CAPP website
+        </Link>
       </div>
     </main>
   );
