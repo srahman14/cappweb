@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
+import { summariseMedia } from "@/lib/media/summarise";
 
 export async function getMediaSlots() {
   const supabase = await createClient();
@@ -26,6 +27,11 @@ export async function getMediaSlots() {
   }
 
   return data ?? [];
+}
+
+/** Overview numbers, derived from getMediaSlots() (no second query). */
+export async function getMediaOverview() {
+  return summariseMedia(await getMediaSlots());
 }
 
 export async function getMediaBySlots(slotKeys: string[]) {
