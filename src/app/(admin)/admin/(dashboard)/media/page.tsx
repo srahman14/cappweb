@@ -1,133 +1,83 @@
-import { connection } from "next/server";
+import type { Metadata } from "next";
 import { Suspense } from "react";
-import { redirect } from "next/navigation";
-import { getCappAdminStatus } from "@/lib/auth/admin";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import { requireAdmin } from "@/lib/auth/admin";
 import { getMediaSlots } from "@/lib/services/media.service";
-import LogoutButton from "@/components/admin/logout-button";
 import MediaUploadButton from "@/components/media/media-upload-button";
 import { MediaImage } from "@/components/media/MediaImage";
 
+export const metadata: Metadata = {
+  title: "Media",
+};
 
 export default function AdminMediaPage() {
   return (
-    <Suspense
-      fallback={
-        <main className="p-8">
-          <p>Loading media management...</p>
-        </main>
-      }
-    >
-      <AdminMediaContent />
-    </Suspense>
+    <>
+      <AdminPageHeader
+        title="Media"
+        description="Images used across the CAPP website. Uploads go live on the next page refresh."
+      />
+      <Suspense fallback={<p className="text-sm text-muted">Loading media…</p>}>
+        <AdminMediaContent />
+      </Suspense>
+    </>
   );
 }
 
 async function AdminMediaContent() {
-  await connection();
-
-  const { user, isAdmin } = await getCappAdminStatus();
-
-  // Unauthenticated visitors must sign in.
-  if (!user) {
-    redirect("/admin/login");
-  }
-
-  // A signed-in user is not necessarily an administrator.
-  if (!isAdmin) {
-    return (
-      <main className="mx-auto max-w-3xl p-8">
-        <h1 className="text-2xl font-semibold">
-          Access denied
-        </h1>
-
-        <p className="mt-2 text-gray-600">
-          Your account does not have permission to manage CAPP media.
-        </p>
-      </main>
-    );
-  }
+  await requireAdmin();
 
   const mediaSlots = await getMediaSlots();
 
   return (
-    <main className="mx-auto max-w-6xl p-8">
-      <header className="mb-8">
-        <p className="text-sm text-gray-500">
-          CAPP / Administration
-        </p>
-        
-        <div className="flex items-center justify-between">
-          <h1 className="mt-2 text-3xl font-semibold">
-            Media management
-          </h1>
-          <LogoutButton />
-        </div>
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {mediaSlots.map((slot) => (
+        <article
+          key={slot.id}
+          className="overflow-hidden rounded-xl border border-gray-200 bg-white"
+        >
+          <div className="relative flex aspect-video items-center justify-center bg-gray-100">
+            {slot.blob_url ? (
+              <MediaImage
+                src={slot.blob_url}
+                alt={slot.alt_text ?? ""}
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                className="object-cover"
+              />
+            ) : (
+              <span className="text-sm text-gray-500">
+                No image uploaded
+              </span>
+            )}
+          </div>
 
-        <p className="mt-2 text-gray-600">
-          Manage the images used across the CAPP website.
-        </p>
-      </header>
+          <div className="space-y-2 p-4">
+            <h2 className="font-semibold">
+              {slot.label || slot.slot_key}
+            </h2>
 
-      <div className="mb-6">
-        <p className="text-sm text-gray-500">
-          Signed in as {user.email}
-        </p>
+            <p className="text-sm text-gray-500">
+              {slot.slot_key}
+            </p>
 
-        <p className="mt-1 text-sm text-gray-500">
-          {mediaSlots.length} media slots configured
-        </p>
-        
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {mediaSlots.map((slot) => (
-          <article
-            key={slot.id}
-            className="overflow-hidden rounded-xl border border-gray-200 bg-white"
-          >
-            <div className="relative flex aspect-video items-center justify-center bg-gray-100">
-              {slot.blob_url ? (
-                <MediaImage
-                  src={slot.blob_url}
-                  alt={slot.alt_text ?? ""}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover"
-                />
-              ) : (
-                <span className="text-sm text-gray-500">
-                  No image uploaded
-                </span>
-              )}
-            </div>
-
-            <div className="space-y-2 p-4">
-              <h2 className="font-semibold">
-                {slot.label || slot.slot_key}
-              </h2>
-
-              <p className="text-sm text-gray-500">
-                {slot.slot_key}
+            {slot.description && (
+              <p className="text-sm text-gray-600">
+                {slot.description}
               </p>
+            )}
 
-              {slot.description && (
-                <p className="text-sm text-gray-600">
-                  {slot.description}
-                </p>
-              )}
+            <p className="text-xs text-gray-400">
+              {slot.blob_url ? "Image configured" : "Awaiting image"}
+            </p>
 
-              <p className="text-xs text-gray-400">
-                {slot.blob_url ? "Image configured" : "Awaiting image"}
-              </p>
-
-              <MediaUploadButton
-                  slotKey={slot.slot_key}
-                  hasImage={Boolean(slot.blob_url)}
-                />
-            </div>
-          </article>
-        ))}
-      </div>
-    </main>
+            <MediaUploadButton
+                slotKey={slot.slot_key}
+                hasImage={Boolean(slot.blob_url)}
+              />
+          </div>
+        </article>
+      ))}
+    </div>
   );
 }
