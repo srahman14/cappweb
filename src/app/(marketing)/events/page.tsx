@@ -204,7 +204,7 @@ export default function EventsPage() {
           </h2>
 
           <p className="mb-0 mt-3 max-w-[500px] text-[16px] leading-[1.65] text-muted">
-            Take a look at some of the events we've hosted in the
+            Take a look at some of the events we&apos;ve hosted in the
             past. Select an event to see more details.
           </p>
         </div>
