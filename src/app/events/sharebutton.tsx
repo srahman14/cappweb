@@ -1,6 +1,8 @@
 
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
+
 export default function ShareButton() {
   async function handleShare() {
     const shareData = {
@@ -36,7 +38,7 @@ export default function ShareButton() {
       onClick={handleShare}
       className="inline-flex cursor-pointer items-center gap-[6px] border-0 bg-transparent p-0 font-sans text-[13px] font-extrabold leading-normal text-indigo hover:underline"
     >
-      <span aria-hidden="true">↗</span>
+      <ArrowUpRight size={16} aria-hidden="true" />
       Share event
     </button>
   );

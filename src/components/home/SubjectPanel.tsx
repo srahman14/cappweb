@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import type { Subject } from "@/types";
+import { ArrowUpRight } from "lucide-react";
 
 /** Decorative tilted tiles layered on the gradient (placeholder for a real photo collage). */
 const COLLAGE_TILES = [
@@ -53,7 +54,7 @@ export function SubjectPanel({ subject, index, active, onActivate }: SubjectPane
         <h3
           className={cn(
             "text-3xl font-extrabold leading-[1.05] tracking-[-0.03em] transition-[font-size] duration-500",
-            active ? "md:text-[52px]" : "md:text-3xl",
+            active ? "md:text-[52px]" : "md:text-2xl",
           )}
         >
           {subject.title}
@@ -61,7 +62,12 @@ export function SubjectPanel({ subject, index, active, onActivate }: SubjectPane
         {/* Description + button: always visible on mobile, revealed only when active on desktop */}
         <div className={cn("overflow-hidden transition-all duration-500 md:max-h-0 md:opacity-0", active && "md:max-h-52 md:opacity-100")}>
           <p className="mb-4 max-w-sm text-[17px] leading-relaxed text-on-dark">{subject.description}</p>
-          <Button href={subject.href} variant="onDark" size="sm">{subject.ctaLabel} →</Button>
+          <Button href={subject.href} variant="onDark" size="sm">
+            <span className="flex items-center justify-center gap-1 ">
+              {subject.ctaLabel}
+              <ArrowUpRight size={18} />
+            </span>
+          </Button>
         </div>
       </div>
     </article>
