@@ -2,7 +2,7 @@ import { ResourceBrowser } from "@/components/resources/ResourceBrowser";
 import { SuggestResourceBand } from "@/components/shared/SuggestedResourceBand";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
-import { libraryResources } from "@/data/resources";
+import { getPublishedResources } from "@/lib/services/resource.service";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
  * Sections: PageHeader, library (sidebar + cards), suggest-a-resource band, closing CTA.
  * Content lives in data/resources.ts.
  */
-export default function ResourcesPage() {
+export default async function ResourcesPage() {
+  const libraryResources = await getPublishedResources(); 
+
   return (
     <>
       <PageHeader
