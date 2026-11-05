@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { EventList } from "@/components/events/EventList";
-import { NextEventCard } from "@/components/events/NextEventCard";
+import { SubjectEvents } from "@/components/events/SubjectEvents";
+import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
-import { Button, HandDrawnUnderline, PageHeader, Section, SectionHeader } from "@/components/ui";
+import { Button, HandDrawnUnderline, Section, SectionHeader } from "@/components/ui";
 import { engineering } from "@/data/engineering";
 import { SITE } from "@/lib/site";
 
@@ -14,7 +14,8 @@ export const metadata: Metadata = { title: engineering.name, description: engine
 export default function EngineeringPage() {
   return (
     <>
-      <PageHeader
+      <SubjectPageHeader
+        subject="engineering"
         breadcrumb={[{ label: "Subjects", href: "/" }, { label: engineering.name }]}
         title={<><HandDrawnUnderline rotate={-1.5}>{engineering.name}</HandDrawnUnderline> at CAPP</>}
         description={engineering.description}
@@ -24,7 +25,6 @@ export default function EngineeringPage() {
             <Button href="#resources" variant="outlineOnDark">Jump to resources</Button>
           </>
         }
-        aside={engineering.nextEvent && <NextEventCard event={engineering.nextEvent} label="Next Engineering event" />}
       />
 
       <MediaFeatureSplit
@@ -38,10 +38,7 @@ export default function EngineeringPage() {
         <ResourceGrid resources={engineering.resources} />
       </Section>
 
-      <Section>
-        <SectionHeader eyebrow="Events" title="What we've done" linkLabel="All events" linkHref="/events" />
-        <EventList events={engineering.pastEvents} variant="past" />
-      </Section>
+      <SubjectEvents subject="engineering" />
 
       <Section>
         <SectionHeader eyebrow="Ambassadors" title="Meet the Engineering ambassadors" />

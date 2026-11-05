@@ -1,16 +1,4 @@
-import type { EventItem, SubjectPageData } from "@/types";
-
-const placeholderEvent = (n: number): EventItem => ({
-  id: `engineering-past-${n}`,
-  title: "[PAST EVENT NAME]",
-  dateLabel: "[DATE]",
-  weekday: "[WEEKDAY]",
-  time: "[TIME]",
-  location: "[LOCATION]",
-  hostName: "[HOST NAME]",
-  tags: ["Engineering"],
-  href: "#",
-});
+import type { SubjectPageData } from "@/types";
 
 export const engineering: SubjectPageData = {
   name: "Engineering",
@@ -29,12 +17,6 @@ export const engineering: SubjectPageData = {
     ],
   },
   resources: [],
-  nextEvent: {
-    ...placeholderEvent(0),
-    id: "engineering-next",
-    title: "[EVENT NAME]",
-  },
-  pastEvents: [1, 2, 3].map(placeholderEvent),
   ambassadors: [1, 2, 3, 4].map((n) => ({
     id: `engineering-amb-${n}`,
     name: "[NAME]",

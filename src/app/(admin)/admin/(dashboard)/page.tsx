@@ -9,6 +9,7 @@ import { StatTile } from "@/components/admin/StatTile";
 import { resourceGroups } from "@/data/resources";
 import { requireAdmin } from "@/lib/auth/admin";
 import { getSlotGroupLabel } from "@/lib/media/slot-groups";
+import { getEventOverview } from "@/lib/services/event.service";
 import { getMediaOverview } from "@/lib/services/media.service";
 import { getResourceOverview } from "@/lib/services/resource.service";
 import type { ResourceGroup } from "@/types";
@@ -36,11 +37,16 @@ export default function AdminOverviewPage() {
 async function OverviewContent() {
   await requireAdmin();
 
-  const [media, resources] = await Promise.all([getMediaOverview(), getResourceOverview()]);
+  const [media, resources, events] = await Promise.all([
+    getMediaOverview(),
+    getResourceOverview(),
+    getEventOverview(),
+  ]);
 
   const { total, filled, empty, emptySlots } = media;
   const shown = emptySlots.slice(0, EMPTY_LIST_LIMIT);
   const shownDrafts = resources.draftResources.slice(0, DRAFT_LIST_LIMIT);
+  const shownEventDrafts = events.draftEvents.slice(0, DRAFT_LIST_LIMIT);
 
   return (
     <div className="space-y-6">
@@ -79,6 +85,29 @@ async function OverviewContent() {
             caption={
               resources.total === 0 ? (
                 <span className="text-muted">No resources yet</span>
+              ) : (
+                <span className="flex items-center gap-1 text-success">
+                  <CheckCircle2 aria-hidden="true" className="size-3.5" />
+                  All published
+                </span>
+              )
+            }
+          />
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <StatTile label="Events" value={events.total} />
+        <StatTile label="Upcoming" value={events.upcoming} href="/admin/events" />
+        {events.drafts > 0 ? (
+          <StatTile label="Event drafts" value={events.drafts} tone="attention" href="/admin/events" />
+        ) : (
+          <StatTile
+            label="Event drafts"
+            value={0}
+            caption={
+              events.total === 0 ? (
+                <span className="text-muted">No events yet</span>
               ) : (
                 <span className="flex items-center gap-1 text-success">
                   <CheckCircle2 aria-hidden="true" className="size-3.5" />
@@ -169,9 +198,44 @@ async function OverviewContent() {
             </p>
           )}
         </AdminPanel>
-      </div>
 
-      <p className="text-sm text-muted">Events management is coming soon.</p>
+        <AdminPanel
+          title="Event drafts"
+          footer={
+            events.drafts > DRAFT_LIST_LIMIT ? (
+              <Link href="/admin/events" className="focus-ring rounded text-sm font-medium text-indigo hover:underline">
+                View all events →
+              </Link>
+            ) : undefined
+          }
+        >
+          {shownEventDrafts.length > 0 ? (
+            <ul className="p-2">
+              {shownEventDrafts.map((event) => (
+                <li key={event.id}>
+                  <Link
+                    href={`/admin/events#event-${event.id}`}
+                    className="focus-ring flex items-center justify-between gap-3 rounded-lg px-2 py-2.5 hover:bg-surface"
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-medium text-navy-ink">{event.title}</span>
+                      <span className="block text-xs text-muted">{event.whenLabel}</span>
+                    </span>
+                    <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-muted" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : events.total === 0 ? (
+            <p className="p-4 text-sm text-muted">No events yet.</p>
+          ) : (
+            <p className="flex items-center gap-2 p-4 text-sm text-navy-ink">
+              <CheckCircle2 aria-hidden="true" className="size-4 text-success" />
+              Every event is published.
+            </p>
+          )}
+        </AdminPanel>
+      </div>
     </div>
   );
 }

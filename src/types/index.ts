@@ -17,23 +17,32 @@ export interface SocialLink {
   href: string;
 }
 
-/** A CAPP event (upcoming or past). */
+/**
+ * A CAPP event (upcoming or past), as every event component renders it.
+ * Pages get these from event.service.ts, which maps the database row. Optional
+ * fields are left out when there is nothing to show, and components hide them.
+ */
 export interface EventItem {
   id: string;
   title: string;
-  /** Short date, e.g. "Oct 24". */
+  /** Short date, e.g. "24 Oct". "TBA" if there is no date. */
   dateLabel: string;
+  /** Date with the year, e.g. "24 Oct 2026", for lists that span years. */
+  fullDateLabel?: string;
   /** e.g. "Saturday". */
-  weekday: string;
-  time: string;
-  location: string;
+  weekday?: string;
+  time?: string;
+  location?: string;
   hostName: string;
-  /** Pill labels, e.g. ["Panel", "Tech"]. */
+  /** Pill labels, e.g. ["Panel", "Tech"]. The first acts as the category. */
   tags: string[];
-  /** Optional cover image (path in /public). A gradient placeholder is shown if missing. */
+  description?: string;
+  /** Optional cover image. A gradient placeholder is shown if missing. */
   coverSrc?: string;
-  /** Sign-up link (upcoming) or recap page (past). */
-  href: string;
+  /** Describes the cover. Left empty when the cover is decorative. */
+  coverAlt?: string;
+  /** Sign-up link (upcoming) or recap page (past). No link is shown if missing. */
+  href?: string;
 }
 
 /** One subject card (Tech, Business & Finance, ...). */
@@ -129,10 +138,7 @@ export interface SubjectPageData {
   /** Subject-specific WhatsApp channel link. Falls back to the main community link. */
   channelUrl?: string;
   about: { eyebrow: string; title: string; body: string; bullets: string[] };
-  /** Shown in the header's right-hand card. Omit if nothing is scheduled. */
-  nextEvent?: EventItem;
   resources: Resource[];
-  pastEvents: EventItem[];
   ambassadors: Person[];
 }
 
