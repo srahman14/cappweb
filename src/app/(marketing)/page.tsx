@@ -16,7 +16,10 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { faq } from "@/data/faq";
 import { testimonials } from "@/data/testimonial";
+import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
+import { pageMetadata } from "@/lib/seo";
 import { SITE } from "@/lib/site";
+import type { Metadata } from "next";
 import type { EventItem, Speaker, Step, Subject } from "@/types";
 
 const speakers: Speaker[] = [
@@ -135,9 +138,12 @@ const steps: Step[] = [
   },
 ];
 
+export const metadata: Metadata = pageMetadata("/");
+
 export default function HomePage() {
   return (
     <div>
+      <OrganizationJsonLd />
       <Hero
         eyebrow="Careers and People's Progression"
         title={

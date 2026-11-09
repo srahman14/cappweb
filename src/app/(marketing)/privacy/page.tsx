@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { LegalLayout } from "@/components/legal/LegalLayout";
 import { CTABand } from "@/components/shared/CTABand";
 import { HandDrawnUnderline, PageHeader, Section } from "@/components/ui";
 import { privacyPolicy } from "@/data/legal";
 
-export const metadata: Metadata = {
-  title: "Privacy policy",
-  description:
-    "How CAPP uses the personal information of people who apply to be an ambassador or join the committee.",
-};
+export const metadata: Metadata = pageMetadata("/privacy", "Privacy policy");
 
 export default function PrivacyPage() {
   return (

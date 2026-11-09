@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { EventList } from "@/components/events/EventList";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
@@ -14,10 +15,7 @@ import {
 import { law } from "@/data/law";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: law.name,
-  description: law.description,
-};
+export const metadata: Metadata = pageMetadata("/law", law.name);
 
 export default function LawPage() {
   return (

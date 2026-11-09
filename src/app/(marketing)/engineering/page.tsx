@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { EventList } from "@/components/events/EventList";
 import { NextEventCard } from "@/components/events/NextEventCard";
 import { PersonGrid } from "@/components/people/PersonGrid";
@@ -9,7 +10,7 @@ import { Button, HandDrawnUnderline, PageHeader, Section, SectionHeader } from "
 import { engineering } from "@/data/engineering";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = { title: engineering.name, description: engineering.description };
+export const metadata: Metadata = pageMetadata("/engineering", engineering.name);
 
 export default function EngineeringPage() {
   return (

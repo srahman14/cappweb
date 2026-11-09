@@ -4,12 +4,9 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
 import { libraryResources } from "@/data/resources";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Resources",
-  description:
-    "The CAPP resource library: CV and interview guides, plus curated resources for Tech, Business & Finance, Engineering and Law.",
-};
+export const metadata: Metadata = pageMetadata("/resources", "Resources");
 
 /**
  * /resources: the permanent, searchable library of everything CAPP recommends.
