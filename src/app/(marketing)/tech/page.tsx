@@ -13,11 +13,9 @@ import {
 import { tech } from "@/data/tech";
 import { SITE } from "@/lib/site";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: tech.name,
-  description: tech.description,
-};
+export const metadata: Metadata = pageMetadata("/tech", tech.name);
 
 export default function TechPage() {
   return (

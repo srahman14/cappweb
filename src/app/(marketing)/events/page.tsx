@@ -1,12 +1,10 @@
 
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ArrowUpRight } from "lucide-react";
 import ShareButton from "./sharebutton";
 
-export const metadata: Metadata = {
-  title: "Events | CAPP",
-  description: "Discover upcoming CAPP events and explore events from the past.",
-};
+export const metadata: Metadata = pageMetadata("/events", "Events");
 
 const pastEvents = [
   {

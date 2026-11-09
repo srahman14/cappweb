@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { PullQuote } from "@/components/about/PullQuote";
 import { CTABand } from "@/components/shared/CTABand";
@@ -14,11 +15,7 @@ import {
 import { motto, whatCappIs, whatWeDo, whoItsFor } from "@/data/about";
 import { getMediaBySlots } from "@/lib/services/media.service";
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    "CAPP is a careers community that runs events and panels with industry professionals across Tech, Business & Finance, Engineering and Law.",
-};
+export const metadata: Metadata = pageMetadata("/about", "About");
 
 const slotByItemId: Record<string, string> = {
   events: "about_image_1",

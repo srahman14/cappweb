@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
   import { EventList } from "@/components/events/EventList";
 import { NextEventCard } from "@/components/events/NextEventCard";
 import { PersonGrid } from "@/components/people/PersonGrid";
@@ -9,7 +10,7 @@ import { Button, HandDrawnUnderline, PageHeader, Section, SectionHeader } from "
 import { businessFinance } from "@/data/business-finance";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = { title: businessFinance.name, description: businessFinance.description };
+export const metadata: Metadata = pageMetadata("/business-finance", businessFinance.name);
 
 export default function BusinessFinancePage() {
   return (
