@@ -21,25 +21,6 @@ export const businessFinance: SubjectPageData = {
 
   resources: [],
 
-  nextEvent: {
-    ...placeholderEvent(0),
-    id: "business-finance-next",
-    title: "[COMING SOON]",
-  },
-
-  resources: [],
-
-  pastEvents: [
-  {
-    ...placeholderEvent(1),
-    title: "FCA Visit",
-  },
-  {
-    ...placeholderEvent(2),
-    title: "B&F Meet and Greet",
-  },
-],
-
   ambassadors: [1, 2, 3, 4].map((n) => ({
     id: `business-finance-amb-${n}`,
     name: "[NAME]",

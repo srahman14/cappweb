@@ -3,8 +3,6 @@ import { Suspense } from "react";
 import { EventsPageContent } from "@/components/events/EventsPageContent";
 import { EventsPageSkeleton } from "@/components/events/EventSkeletons";
 import { pageMetadata } from "@/lib/seo";
-import { ArrowUpRight } from "lucide-react";
-import ShareButton from "./sharebutton";
 
 export const metadata: Metadata = pageMetadata("/events", "Events");
 
