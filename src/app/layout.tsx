@@ -14,6 +14,18 @@ export const metadata: Metadata = {
   },
   description:
     "Events, industry panels and resources for Tech, Business & Finance, Engineering and Law.",
+  appleWebApp: {
+    title: "CAPP | Careers and People's Progression",
+  },
+  openGraph: {
+    title: "CAPP | Careers and People's Progression",
+    description:
+      "Events, industry panels and resources for Tech, Business & Finance, Engineering and Law.",
+    url: "https://www.cappmain.com",
+    siteName: "CAPP",
+    locale: "en_GB",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
