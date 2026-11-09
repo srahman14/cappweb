@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { SubjectEvents } from "@/components/events/SubjectEvents";
 import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
+import { pageMetadata } from "@/lib/seo";
+import { EventList } from "@/components/events/EventList";
+import { NextEventCard } from "@/components/events/NextEventCard";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
@@ -9,7 +12,7 @@ import { Button, HandDrawnUnderline, Section, SectionHeader } from "@/components
 import { businessFinance } from "@/data/business-finance";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = { title: businessFinance.name, description: businessFinance.description };
+export const metadata: Metadata = pageMetadata("/business-finance", businessFinance.name);
 
 export default function BusinessFinancePage() {
   return (

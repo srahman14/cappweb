@@ -6,12 +6,9 @@ import { getPublishedResources } from "@/lib/services/resource.service";
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { Suspense } from "react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Resources",
-  description:
-    "The CAPP resource library: CV and interview guides, plus curated resources for Tech, Business & Finance, Engineering and Law.",
-};
+export const metadata: Metadata = pageMetadata("/resources", "Resources");
 
 /**
  * /resources: the permanent, searchable library of everything CAPP recommends.

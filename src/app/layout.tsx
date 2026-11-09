@@ -4,16 +4,30 @@
  * <SiteChrome>; the admin area has its own layouts under app/(admin).
  */
 import { jakarta } from "@/lib/fonts";
+import { SITE } from "@/lib/site";
 import type { Metadata } from "next";
 import "./globals.css";
 
+const DEFAULT_TITLE = `${SITE.name} | ${SITE.fullName}`;
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
   title: {
-    default: "CAPP | Careers and People's Progression",
-    template: "%s | CAPP",
+    default: DEFAULT_TITLE,
+    template: `%s | ${SITE.name}`,
   },
-  description:
-    "Events, industry panels and resources for Tech, Business & Finance, Engineering and Law.",
+  description: SITE.description,
+  alternates: { canonical: "/" },
+  appleWebApp: { title: DEFAULT_TITLE },
+  openGraph: {
+    title: DEFAULT_TITLE,
+    description: SITE.description,
+    url: "/",
+    siteName: SITE.name,
+    locale: "en_GB",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

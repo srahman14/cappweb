@@ -19,13 +19,11 @@ import {
   teamSubjects,
 } from "@/data/team";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
 import { getMediaBySlots } from "@/lib/services/media.service";
 
-export const metadata: Metadata = {
-  title: "Meet the team",
-  description: "The directors, committee and ambassadors who run CAPP.",
-};
+export const metadata: Metadata = pageMetadata("/team", "Meet the team");
 
 export default function TeamPage() {
   return (

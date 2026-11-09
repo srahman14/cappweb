@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { SubjectEvents } from "@/components/events/SubjectEvents";
 import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
+import { pageMetadata } from "@/lib/seo";
+import { EventList } from "@/components/events/EventList";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
@@ -14,10 +16,7 @@ import {
 import { law } from "@/data/law";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: law.name,
-  description: law.description,
-};
+export const metadata: Metadata = pageMetadata("/law", law.name);
 
 export default function LawPage() {
   return (

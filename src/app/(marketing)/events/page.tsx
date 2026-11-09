@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { EventsPageContent } from "@/components/events/EventsPageContent";
 import { EventsPageSkeleton } from "@/components/events/EventSkeletons";
+import { pageMetadata } from "@/lib/seo";
+import { ArrowUpRight } from "lucide-react";
+import ShareButton from "./sharebutton";
 
-export const metadata: Metadata = {
-  title: "Events | CAPP",
-  description: "Discover upcoming CAPP events and explore events from the past.",
-};
+export const metadata: Metadata = pageMetadata("/events", "Events");
 
 export default function EventsPage() {
   return (

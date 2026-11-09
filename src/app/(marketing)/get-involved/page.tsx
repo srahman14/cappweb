@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { CTABand } from "@/components/shared/CTABand";
 import { PageHeader, Section, SectionHeader, HandDrawnUnderline } from "@/components/ui";
 import { content } from "@/data/get-involved";
 
-export const metadata: Metadata = {
-  title: "Get involved",
-  description: "Ways to support and contribute to the CAPP community.",
-};
+export const metadata: Metadata = pageMetadata("/get-involved", "Get involved");
 
 export default function Page() {
   return (
