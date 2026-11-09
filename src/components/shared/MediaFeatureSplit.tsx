@@ -1,16 +1,18 @@
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { getMediaBySlots } from "@/lib/services/media.service";
-import { Section } from "@/components/ui";
+import { ImageCaption, Section } from "@/components/ui";
 import { MediaImage } from "@/components/media/MediaImage";
 import { FeatureSplit, type FeatureSplitProps } from "./FeatureSplit";
 
 interface MediaFeatureSplitProps extends FeatureSplitProps {
   slotKey: string;
   alt: string;
+  /** Handwritten caption + squiggly arrow under the image, e.g. "From our Tech panel". */
+  caption?: string;
 }
 
-export function MediaFeatureSplit({ slotKey, alt, ...feature }: MediaFeatureSplitProps) {
+export function MediaFeatureSplit({ slotKey, alt, caption, ...feature }: MediaFeatureSplitProps) {
   return (
     <Suspense
       fallback={
@@ -19,7 +21,7 @@ export function MediaFeatureSplit({ slotKey, alt, ...feature }: MediaFeatureSpli
         </Section>
       }
     >
-      <MediaFeatureSplitContent slotKey={slotKey} alt={alt} feature={feature} />
+      <MediaFeatureSplitContent slotKey={slotKey} alt={alt} caption={caption} feature={feature} />
     </Suspense>
   );
 }
@@ -27,10 +29,12 @@ export function MediaFeatureSplit({ slotKey, alt, ...feature }: MediaFeatureSpli
 async function MediaFeatureSplitContent({
   slotKey,
   alt,
+  caption,
   feature,
 }: {
   slotKey: string;
   alt: string;
+  caption?: string;
   feature: FeatureSplitProps;
 }) {
   await connection();
@@ -43,18 +47,21 @@ async function MediaFeatureSplitContent({
       <FeatureSplit
         {...feature}
         media={
-          <div className="relative aspect-4/3 overflow-hidden rounded-panel">
-            {image ? (
-              <MediaImage
-                src={image}
-                alt={alt}
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-            ) : (
-              <MediaPlaceholder />
-            )}
+          <div>
+            <div className="relative aspect-4/3 overflow-hidden rounded-panel">
+              {image ? (
+                <MediaImage
+                  src={image}
+                  alt={alt}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                <MediaPlaceholder />
+              )}
+            </div>
+            {caption && <ImageCaption>{caption}</ImageCaption>}
           </div>
         }
       />

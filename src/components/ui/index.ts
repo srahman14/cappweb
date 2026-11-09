@@ -3,6 +3,7 @@ export * from "./Button";
 export * from "./Card";
 export * from "./GradientPanel";
 export * from "./HandDrawnUnderline";
+export * from "./ImageCaption";
 export * from "./Logo";
 export * from "./Pill";
 export * from "./Section";

@@ -15,18 +15,18 @@ const placeholderEvent = (n: number): EventItem => ({
 
 export const law: SubjectPageData = {
   name: "Law",
-  description: "Legal systems, rights and justice. Case studies, workshops and panels with legal professionals, all curated by your Law ambassadors.",
+  description: "Solicitor or barrister? Get clear on the routes into law with case studies, workshops and conversations with legal professionals.",
   channelLabel: "Join the Law channel",
   // channelUrl: "https://chat.whatsapp.com/...", // add once the Law channel link exists
   about: {
     eyebrow: "What Law is about at CAPP",
     title: "Where Law careers begin",
-    body: "[Two or three sentences on what the Law community does, who it is for and what members get out of it.]",
+    body: "Law has more than one way in, and it can be hard to know where to start. Here you can compare the solicitor and barrister routes, get to grips with vacation schemes and training contracts, and build your commercial awareness. Try your hand at mock trials and case studies alongside people on the same path.",
     bullets: [
-      "Insight into legal careers",
+      "Solicitor and barrister routes",
       "Case studies and mock trials",
-      "Panels with solicitors and barristers",
-      "Application and CV preparation",]
+      "Commercial awareness",
+      "Vacation scheme and training contract applications",]
     },
   nextEvent: { ...placeholderEvent(0), id: "law-next", title: "[EVENT NAME]" },
   resources: [
@@ -60,5 +60,10 @@ export const law: SubjectPageData = {
     },
   ],
   pastEvents: [1, 2, 3].map(placeholderEvent),
+  bentoCards: [
+    { id: "law-routes", title: "Solicitor or barrister?", body: "Compare the two routes, what each day looks like and how to decide which suits you." },
+    { id: "law-vac", title: "Vacation schemes", body: "Get to know how applications work and how to make yours stand out." },
+    { id: "law-practice", title: "Mock trials", body: "Practise arguing a case and thinking on your feet, working through scenarios with other students." },
+  ],
   ambassadors: [1, 2, 3, 4].map((n) => ({ id: `law-amb-${n}`, name: "[NAME]", role: "Law ambassador" })),
 };

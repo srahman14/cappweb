@@ -15,17 +15,17 @@ const placeholderEvent = (n: number): EventItem => ({
 export const engineering: SubjectPageData = {
   name: "Engineering",
   description:
-    "Explore engineering careers, discover industry opportunities and connect with people working across engineering disciplines.",
+    "From civil to electrical and everything between. Find your discipline, get graduate scheme guidance and hear from working engineers.",
   channelLabel: "Join the Engineering channel",
   about: {
     eyebrow: "What Engineering is about at CAPP",
     title: "Where engineering careers begin",
-    body: "[Add a short description of the Engineering community here.]",
+    body: "Engineering is a huge field, and this community helps you work out where you fit, from civil and mechanical to electrical and beyond. Get a head start on graduate schemes, understand what chartership involves and pick up insights from people who work on sites and in industry.",
     bullets: [
-      "Internships and graduate schemes",
-      "Engineering career pathways",
-      "Panels with industry professionals",
-      "CV and interview preparation",
+      "Placements and graduate schemes",
+      "Choosing your discipline",
+      "Site and industry insights",
+      "Routes to chartership",
     ],
   },
   resources: [],
@@ -35,6 +35,11 @@ export const engineering: SubjectPageData = {
     title: "[EVENT NAME]",
   },
   pastEvents: [1, 2, 3].map(placeholderEvent),
+  bentoCards: [
+    { id: "eng-disciplines", title: "Find your discipline", body: "Civil, mechanical, electrical and more. Learn what each involves so you can choose with confidence." },
+    { id: "eng-schemes", title: "Graduate schemes and chartership", body: "Understand how schemes work and what it takes to become a chartered engineer." },
+    { id: "eng-industry", title: "Site and industry insights", body: "Hear what the work really looks like day to day from people in industry." },
+  ],
   ambassadors: [1, 2, 3, 4].map((n) => ({
     id: `engineering-amb-${n}`,
     name: "[NAME]",

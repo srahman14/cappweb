@@ -1,6 +1,8 @@
 
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
+import { Button, HandDrawnUnderline, PageHeader } from "@/components/ui";
+import { SITE } from "@/lib/site";
 import ShareButton from "./sharebutton";
 
 export const metadata: Metadata = {
@@ -100,23 +102,27 @@ function PlaceholderImage({ large = false }: { large?: boolean }) {
 
 export default function EventsPage() {
   return (
+    <>
+      <PageHeader
+        breadcrumb={[{ label: "Home", href: "/" }, { label: "Events" }]}
+        title={
+          <>
+            <HandDrawnUnderline rotate={-1.5}>Events</HandDrawnUnderline> at CAPP
+          </>
+        }
+        description="Stay connected and get involved! Explore our upcoming events, workshops and community gatherings."
+        actions={
+          <>
+            <Button href={SITE.whatsappUrl} variant="onDark">
+              Join the community
+            </Button>
+            <Button href="#past-events" variant="outlineOnDark">
+              Explore past events
+            </Button>
+          </>
+        }
+      />
     <div className="mx-auto max-w-[1440px] px-[18px] pb-[56px] pt-[28px] text-navy-ink sm:px-[4%] sm:pb-[80px] sm:pt-[38px]">
-      {/* Page heading */}
-      <header className="mb-[26px] max-w-[650px]">
-        <p className="mb-[8px] text-[13px] font-extrabold tracking-[1.5px] text-navy">
-          CAPP EVENTS
-        </p>
-
-        <h1 className="text-[clamp(36px,5vw,54px)] font-extrabold leading-[1.1] tracking-[-1.8px]">
-          Upcoming <span className="text-indigo">Events</span>
-        </h1>
-
-        <p className="mt-3 max-w-[500px] text-[16px] leading-[1.65] text-muted">
-          Stay connected and get involved! Explore our upcoming
-          events, workshops, and community gatherings.
-        </p>
-      </header>
-
       {/* Featured event */}
       <section
         className="grid grid-cols-1 items-center gap-[18px] rounded-card border border-line bg-white p-4 sm:grid-cols-2 sm:gap-[30px]"
@@ -305,5 +311,6 @@ export default function EventsPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

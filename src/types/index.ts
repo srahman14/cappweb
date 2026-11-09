@@ -134,6 +134,17 @@ export interface SubjectPageData {
   resources: Resource[];
   pastEvents: EventItem[];
   ambassadors: Person[];
+  /** Subject-specific cards for the page's bento grid (2-3 recommended). */
+  bentoCards?: SubjectBentoCard[];
+}
+
+/** One subject-specific card in the bento grid. */
+export interface SubjectBentoCard {
+  id: string;
+  title: string;
+  body: string;
+  /** Optional picture, a path in /public or a remote URL. Fades out towards the top of the card. */
+  image?: { src: string; alt: string };
 }
 
 /** A quote shown in the testimonials marquee, attributed to its program. */

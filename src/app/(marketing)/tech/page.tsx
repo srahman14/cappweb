@@ -1,14 +1,10 @@
-import { EventList } from "@/components/events/EventList";
-import { PersonGrid } from "@/components/people/PersonGrid";
-import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
+import { SUBJECT_BENTO_ID, SubjectBento } from "@/components/subjects/SubjectBento";
 import {
   Button,
   HandDrawnUnderline,
   PageHeader,
-  Section,
-  SectionHeader,
 } from "@/components/ui";
 import { tech } from "@/data/tech";
 import { SITE } from "@/lib/site";
@@ -36,8 +32,8 @@ export default function TechPage() {
             <Button href={tech.channelUrl ?? SITE.whatsappUrl} variant="onDark">
               {tech.channelLabel}
             </Button>
-            <Button href="#resources" variant="outlineOnDark">
-              Jump to resources
+            <Button href={`#${SUBJECT_BENTO_ID}`} variant="outlineOnDark">
+              Explore the hub
             </Button>
           </>
         }
@@ -46,29 +42,12 @@ export default function TechPage() {
 
       <MediaFeatureSplit
           slotKey="subject_tech_feature"
+          caption={`From our ${tech.name} panel`}
           alt="A speaker presenting at a CAPP career event"
           {...tech.about}
         />
 
-      <Section id="resources" className="scroll-mt-8">
-        <SectionHeader
-          eyebrow="Resources"
-          title="Tools to level up"
-          linkLabel="All resources"
-          linkHref="/resources"
-        />
-        <ResourceGrid resources={tech.resources} />
-      </Section>
-
-      <Section>
-        <SectionHeader
-          eyebrow="Events"
-          title="What we've done"
-          linkLabel="All events"
-          linkHref="/events"
-        />
-        <EventList events={tech.pastEvents} variant="past" />
-      </Section>
+      <SubjectBento subject={tech.name} cards={tech.bentoCards} />
 
       <CTABand title="Join the Tech community" />
     </>

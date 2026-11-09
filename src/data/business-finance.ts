@@ -17,18 +17,18 @@ const placeholderEvent = (n: number): EventItem => ({
 export const businessFinance: SubjectPageData = {
   name: "Business & Finance",
   description:
-    "Explore careers across business and finance, discover industry opportunities and connect with professionals.",
+    "Banking, consulting, accounting and asset management. Prepare for spring weeks and assessment centres with help from people in the industry.",
   channelLabel: "Join the Business & Finance channel",
 
   about: {
     eyebrow: "What Business & Finance is about at CAPP",
     title: "Where business and finance careers begin",
-    body: "The Business & Finance community at CAPP is dedicated to helping students explore career opportunities, develop valuable skills and prepare for their future careers. We aim to bridge the gap between university and industry by providing access to opportunities, useful resources, assessment guidance and insights from professionals across the sector. Our community is built on collaboration and support, with active group chats where members can share opportunities, ask questions and learn from one another. Whether you're exploring your career options or preparing to take your next step, we're here to help you along the way.",
+    body: "Business and finance covers a lot of ground, from banking and consulting to accounting and asset management. We help you make sense of it, with spring week advice, assessment centre prep and chances to meet professionals, as at our FCA visit and B&F meet and greet. Our group chats are the place to share openings and swap what you have learned.",
     bullets: [
-      "Internships and graduate schemes",
-      "Careers in banking and finance",
-      "Panels with industry professionals",
-      "CV and interview preparation",
+      "Spring weeks and graduate schemes",
+      "Banking, consulting and accounting",
+      "Industry visits and meet and greets",
+      "Assessment centre preparation",
     ],
   },
 
@@ -51,6 +51,11 @@ export const businessFinance: SubjectPageData = {
   },
 ],
 
+  bentoCards: [
+    { id: "bf-spring", title: "Spring week prep", body: "Know what to expect from spring weeks and assessment centres, and how to prepare." },
+    { id: "bf-sectors", title: "Banking, consulting and accounting", body: "Compare the different areas of the industry, including asset management, and find your fit." },
+    { id: "bf-meet", title: "Meet professionals", body: "Visits and meet and greets that put you in the room with people working in the sector." },
+  ],
   ambassadors: [1, 2, 3, 4].map((n) => ({
     id: `business-finance-amb-${n}`,
     name: "[NAME]",
