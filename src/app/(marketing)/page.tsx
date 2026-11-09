@@ -19,9 +19,8 @@ import { testimonials } from "@/data/testimonial";
 import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
 import { pageMetadata } from "@/lib/seo";
 import { SITE } from "@/lib/site";
-import type { Speaker, Step, Subject } from "@/types";
 import type { Metadata } from "next";
-import type { EventItem, Speaker, Step, Subject } from "@/types";
+import type { Speaker, Step, Subject } from "@/types";
 
 const speakers: Speaker[] = [
   {
