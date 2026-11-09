@@ -66,7 +66,7 @@ function Slot({ image }: { image?: { src: string; alt: string } }) {
         data-slot="bento-image"
         className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 [mask-image:linear-gradient(to_bottom,transparent,black_75%)]"
       >
-        <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover object-top" />
+        <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover object-bottom" />
       </div>
     </>
   );

@@ -35,7 +35,7 @@ export const tech: SubjectPageData = {
   bentoCards: [
     { id: "tech-interviews", title: "Technical interviews", body: "Work through coding problems and system design questions with others, so the real thing feels familiar.",
       // TESTER image: replace with a real photo (path in /public). Add the same `image` field to any other card.
-      image: { src: "/team/hover-1.png", alt: "CAPP members at a technical interview workshop" } },
+      image: { src: "/team/logos-floating.webp", alt: "CAPP members at a technical interview workshop" } },
     { id: "tech-hackathons", title: "Hackathons and projects", body: "Team up, build something in a short space of time and add real work to your CV." },
     { id: "tech-paths", title: "Software, data and AI", body: "Not sure which direction suits you? Hear what each path involves day to day." },
   ],
