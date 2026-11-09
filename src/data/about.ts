@@ -22,22 +22,52 @@ export const whatCappIs = {
 export const whoItsFor = {
   eyebrow: "WHO IT’S FOR",
   title: "Anyone building a career in these fields",
+  // TODO(curator): confirm which year groups, universities or ages we welcome before stating them.
   intro:
-    "CAPP is for anyone who wants to explore, prepare for and grow a career in one of our four subjects. [CONFIRM: year groups, universities or ages we welcome.]",
+    "CAPP is for anyone who wants to explore, prepare for and grow a career in one of our four subjects.",
+  annotation: "Pick your path",
   // Draft one-liners: curator and ambassadors to confirm.
   subjects: [
-    { id: "tech", title: "Tech", text: "Software, data and AI careers." },
+    {
+      id: "tech",
+      title: "Tech",
+      text: "Software, data and AI careers.",
+      href: "/tech",
+      cta: "Explore Tech",
+    },
     {
       id: "business-finance",
       title: "Business & Finance",
       text: "Banking, consulting and corporate roles.",
+      href: "/business-finance",
+      cta: "Explore Business & Finance",
     },
     {
       id: "engineering",
       title: "Engineering",
       text: "Engineering disciplines and graduate schemes.",
+      href: "/engineering",
+      cta: "Explore Engineering",
     },
-    { id: "law", title: "Law", text: "Routes into legal careers." },
+    {
+      id: "law",
+      title: "Law",
+      text: "Routes into legal careers.",
+      href: "/law",
+      cta: "Explore Law",
+    },
+  ],
+  general: [
+    {
+      id: "exploring",
+      title: "Still exploring?",
+      text: "Not sure which field fits? Hear from people working in them and find out before you commit.",
+    },
+    {
+      id: "applying",
+      title: "Already applying?",
+      text: "Get practical help with applications, interviews and what employers look for.",
+    },
   ],
 };
 

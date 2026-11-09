@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PullQuote } from "@/components/about/PullQuote";
 import { CTABand } from "@/components/shared/CTABand";
-import { FeatureSplit } from "@/components/shared/FeatureSplit";
+import { WhoItsForBento } from "@/components/about/WhoItsForBento";
+import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import { MediaImage } from "@/components/media/MediaImage";
 import {
   Card,
@@ -11,7 +12,7 @@ import {
   Section,
   SectionHeader,
 } from "@/components/ui";
-import { motto, whatCappIs, whatWeDo, whoItsFor } from "@/data/about";
+import { motto, whatCappIs, whatWeDo } from "@/data/about";
 import { getMediaBySlots } from "@/lib/services/media.service";
 
 export const metadata: Metadata = {
@@ -42,35 +43,16 @@ export default function AboutPage() {
         description="A careers community that connects members with industry professionals."
       />
 
-      <Section>
-        <FeatureSplit
-          eyebrow={whatCappIs.eyebrow}
-          title={whatCappIs.title}
-          body={whatCappIs.paragraphs.join(" ")}
-        />
-      </Section>
+      <MediaFeatureSplit
+        slotKey="about_image_2"
+        caption="From a CAPP event"
+        alt="A CAPP community event"
+        eyebrow={whatCappIs.eyebrow}
+        title={whatCappIs.title}
+        body={whatCappIs.paragraphs.join(" ")}
+      />
 
-      {/* Who it's for */}
-      <Section>
-        <SectionHeader eyebrow={whoItsFor.eyebrow} title={whoItsFor.title} />
-        <p className="mb-8 max-w-2xl text-lg leading-relaxed text-muted">
-          {whoItsFor.intro}
-        </p>
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {whoItsFor.subjects.map((s) => (
-            <li key={s.id}>
-              <Card className="h-full p-6">
-                <h3 className="text-lg font-extrabold tracking-[-0.02em] text-navy-ink">
-                  {s.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {s.text}
-                </p>
-              </Card>
-            </li>
-          ))}
-        </ul>
-      </Section>
+      <WhoItsForBento />
 
       {/* Motto */}
       <Section>

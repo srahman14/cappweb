@@ -22,9 +22,9 @@ export function ImageCaption({ children, className }: { children: string; classN
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {/* tail at bottom-left (next to the text), head at top-right (at the image) */}
-        <path d="M3 52 C14 64 20 0 14 45 C8 32 22 60 28 34 C34 42 60 26 50 14 C52 10 55 7 58 4" />
-        <path d="M47 5 L58 4 L59 16" />
+        {/* tail at bottom-left (next to the text): one smooth wave, then up to the head at top-right (at the image) */}
+        <path d="M4 54 C12 54 16 40 26 40 C36 40 40 52 46 36 C52 20 54 18 60 8" />
+        <path d="M49.6 13.9 L60 8 L59.9 20" />
       </svg>
     </p>
   );
