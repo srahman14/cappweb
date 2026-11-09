@@ -15,8 +15,8 @@ export type AdminNavItem = {
 export const ADMIN_NAV: AdminNavItem[] = [
   { label: "Overview", href: "/admin", icon: LayoutDashboard, match: "exact", status: "live" },
   { label: "Media", href: "/admin/media", icon: Images, match: "prefix", status: "live" },
-  { label: "Resources", href: "/admin/resources", icon: FileText, match: "prefix", status: "soon" },
-  { label: "Events", href: "/admin/events", icon: CalendarDays, match: "prefix", status: "soon" },
+  { label: "Resources", href: "/admin/resources", icon: FileText, match: "prefix", status: "live" },
+  { label: "Events", href: "/admin/events", icon: CalendarDays, match: "prefix", status: "live" },
 ];
 
 export function isNavItemActive(item: AdminNavItem, pathname: string) {

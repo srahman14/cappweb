@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { SubjectEvents } from "@/components/events/SubjectEvents";
+import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
 import { pageMetadata } from "@/lib/seo";
-  import { EventList } from "@/components/events/EventList";
+import { EventList } from "@/components/events/EventList";
 import { NextEventCard } from "@/components/events/NextEventCard";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
-import { Button, HandDrawnUnderline, PageHeader, Section, SectionHeader } from "@/components/ui";
+import { Button, HandDrawnUnderline, Section, SectionHeader } from "@/components/ui";
 import { businessFinance } from "@/data/business-finance";
 import { SITE } from "@/lib/site";
 
@@ -15,7 +17,8 @@ export const metadata: Metadata = pageMetadata("/business-finance", businessFina
 export default function BusinessFinancePage() {
   return (
     <>
-      <PageHeader
+      <SubjectPageHeader
+        subject="business-finance"
         breadcrumb={[{ label: "Subjects", href: "/" }, { label: businessFinance.name }]}
         title={<><HandDrawnUnderline rotate={-1.5}>{businessFinance.name}</HandDrawnUnderline> at CAPP</>}
         description={businessFinance.description}
@@ -25,7 +28,6 @@ export default function BusinessFinancePage() {
             <Button href="#resources" variant="outlineOnDark">Jump to resources</Button>
           </>
         }
-        aside={businessFinance.nextEvent && <NextEventCard event={businessFinance.nextEvent} label="Next Business & Finance event" />}
       />
 
       <MediaFeatureSplit
@@ -39,10 +41,7 @@ export default function BusinessFinancePage() {
         <ResourceGrid resources={businessFinance.resources} />
       </Section>
 
-      <Section>
-        <SectionHeader eyebrow="Events" title="What we've done" linkLabel="All events" linkHref="/events" />
-        <EventList events={businessFinance.pastEvents} variant="past" />
-      </Section>
+      <SubjectEvents subject="business-finance" />
 
       <Section>
         <SectionHeader eyebrow="Ambassadors" title="Meet the Business & Finance ambassadors" />

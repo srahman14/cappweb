@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { SubjectEvents } from "@/components/events/SubjectEvents";
+import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
 import { pageMetadata } from "@/lib/seo";
 import { EventList } from "@/components/events/EventList";
 import { PersonGrid } from "@/components/people/PersonGrid";
@@ -8,7 +10,6 @@ import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import {
   Button,
   HandDrawnUnderline,
-  PageHeader,
   Section,
   SectionHeader,
 } from "@/components/ui";
@@ -20,7 +21,8 @@ export const metadata: Metadata = pageMetadata("/law", law.name);
 export default function LawPage() {
   return (
     <>
-      <PageHeader
+      <SubjectPageHeader
+        subject="law"
         breadcrumb={[{ label: "Subjects", href: "/" }, { label: law.name }]}
         title={
           <>
@@ -39,7 +41,6 @@ export default function LawPage() {
             </Button>
           </>
         }
-        // aside={law.nextEvent && <NextEventCard event={law.nextEvent} label="Next Law event" />}
       />
 
       <MediaFeatureSplit
@@ -58,15 +59,7 @@ export default function LawPage() {
         <ResourceGrid resources={law.resources} />
       </Section>
 
-      <Section>
-        <SectionHeader
-          eyebrow="Events"
-          title="What we've done"
-          linkLabel="All events"
-          linkHref="/events"
-        />
-        <EventList events={law.pastEvents} variant="past" />
-      </Section>
+      <SubjectEvents subject="law" />
 
       <Section>
         <SectionHeader

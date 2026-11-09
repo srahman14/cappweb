@@ -3,7 +3,7 @@
  * Copy into app/page.tsx. The sample content below is placeholder data and
  * should move into data/*.ts files; delete this file once that's done.
  */
-import { EventList } from "@/components/events/EventList";
+import { LandingEvents } from "@/components/events/LandingEvents";
 import { Hero } from "@/components/home/Hero";
 import { LogoStrip } from "@/components/home/LogoStrip";
 import { StepJourney } from "@/components/home/StepJourney";
@@ -19,6 +19,7 @@ import { testimonials } from "@/data/testimonial";
 import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
 import { pageMetadata } from "@/lib/seo";
 import { SITE } from "@/lib/site";
+import type { Speaker, Step, Subject } from "@/types";
 import type { Metadata } from "next";
 import type { EventItem, Speaker, Step, Subject } from "@/types";
 
@@ -42,44 +43,6 @@ const speakers: Speaker[] = [
   { name: "JPMorgan", logoSrc: "/company_logos/JPMorgan.svg" },
 ];
 
-const events: EventItem[] = [
-  {
-    id: "consulting-panel",
-    title: "Consulting Panel",
-    dateLabel: "12 Nov",
-    weekday: "Thursday",
-    time: "To be announced",
-    location: "To be announced",
-    hostName: "CAPP Team",
-    tags: ["Panel", "Consulting"],
-    coverSrc: "/brand/capp-repeated.webp",
-    href: "/events",
-  },
-  {
-    id: "tech-panel",
-    title: "Tech Panel",
-    dateLabel: "26 Nov",
-    weekday: "Thursday",
-    time: "To be announced",
-    location: "To be announced",
-    hostName: "CAPP Team",
-    tags: ["Panel", "Tech"],
-    coverSrc: "/brand/capp-repeated.webp",
-    href: "/events",
-  },
-  {
-    id: "business-finance-panel",
-    title: "Business & Finance Panel",
-    dateLabel: "10 Dec",
-    weekday: "Thursday",
-    time: "To be announced",
-    location: "To be announced",
-    hostName: "CAPP Team",
-    tags: ["Panel", "Business & Finance"],
-    coverSrc: "/brand/capp-repeated.webp",
-    href: "/events",
-  },
-];
 // Gradient classes are written out in full so Tailwind can detect them.
 const subjects: Subject[] = [
   {
@@ -164,7 +127,7 @@ export default function HomePage() {
           linkLabel="Past events and recaps"
           linkHref="/events"
         />
-        <EventList events={events} />
+        <LandingEvents />
       </Section>
       <Section>
         <SectionHeader eyebrow="Subjects" title="Find your field" />

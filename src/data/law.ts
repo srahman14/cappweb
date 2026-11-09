@@ -1,17 +1,4 @@
-import type { EventItem, SubjectPageData } from "@/types";
-
-/** Placeholder past event. Replace these with real events (and delete this helper). */
-const placeholderEvent = (n: number): EventItem => ({
-  id: `law-past-${n}`,
-  title: "[PAST EVENT NAME]",
-  dateLabel: "[DATE]",
-  weekday: "[WEEKDAY]",
-  time: "[TIME]",
-  location: "[LOCATION]",
-  hostName: "[HOST NAME]",
-  tags: ["Panel", "Law"],
-  href: "#",
-});
+import type { SubjectPageData } from "@/types";
 
 export const law: SubjectPageData = {
   name: "Law",
@@ -28,7 +15,6 @@ export const law: SubjectPageData = {
       "Panels with solicitors and barristers",
       "Application and CV preparation",]
     },
-  nextEvent: { ...placeholderEvent(0), id: "law-next", title: "[EVENT NAME]" },
   resources: [
     {
       id: "law-society",
@@ -59,6 +45,5 @@ export const law: SubjectPageData = {
       href: "#",
     },
   ],
-  pastEvents: [1, 2, 3].map(placeholderEvent),
   ambassadors: [1, 2, 3, 4].map((n) => ({ id: `law-amb-${n}`, name: "[NAME]", role: "Law ambassador" })),
 };

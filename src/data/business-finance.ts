@@ -1,18 +1,5 @@
 
-import type { EventItem, SubjectPageData } from "@/types";
-
-/** Placeholder past event. Replace with real events later. */
-const placeholderEvent = (n: number): EventItem => ({
-  id: `business-finance-past-${n}`,
-  title: "[PAST EVENT NAME]",
-  dateLabel: "[DATE]",
-  weekday: "[WEEKDAY]",
-  time: "[TIME]",
-  location: "[LOCATION]",
-  hostName: "[HOST NAME]",
-  tags: ["Business", "Finance"],
-  href: "#",
-});
+import type { SubjectPageData } from "@/types";
 
 export const businessFinance: SubjectPageData = {
   name: "Business & Finance",
@@ -31,6 +18,8 @@ export const businessFinance: SubjectPageData = {
       "CV and interview preparation",
     ],
   },
+
+  resources: [],
 
   nextEvent: {
     ...placeholderEvent(0),

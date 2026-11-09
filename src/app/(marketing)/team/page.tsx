@@ -6,6 +6,7 @@ import {
   Section,
   SectionHeader,
 } from "@/components/ui";
+import { connection } from "next/server";
 import { Suspense } from "react";
 
 import { TeamBrowser } from "@/components/team/TeamBrowser";
@@ -57,6 +58,8 @@ export default function TeamPage() {
 }
 
 async function TeamDirectors() {
+  await connection();
+
   const mediaSlots = await getMediaBySlots(["directors_image_1"]);
   const directorImage = mediaSlots.find(
     (slot) => slot.slot_key === "directors_image_1"

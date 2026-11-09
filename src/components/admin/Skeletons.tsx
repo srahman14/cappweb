@@ -72,3 +72,25 @@ export function MediaSkeleton() {
     </div>
   );
 }
+
+export function EventsAdminSkeleton() {
+  return (
+    <div>
+      <div aria-hidden="true" className="space-y-6">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className={`h-24 rounded-[20px] bg-indigo-soft ${pulse}`} />
+          ))}
+        </div>
+        <div className="space-y-4">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className={`h-16 rounded-[20px] bg-indigo-soft ${pulse}`} />
+          ))}
+        </div>
+      </div>
+      <span role="status" className="sr-only">
+        Loading…
+      </span>
+    </div>
+  );
+}

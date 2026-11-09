@@ -1,4 +1,5 @@
-import { EventList } from "@/components/events/EventList";
+import { SubjectEvents } from "@/components/events/SubjectEvents";
+import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
 import { PersonGrid } from "@/components/people/PersonGrid";
 import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
@@ -6,7 +7,6 @@ import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import {
   Button,
   HandDrawnUnderline,
-  PageHeader,
   Section,
   SectionHeader,
 } from "@/components/ui";
@@ -20,7 +20,8 @@ export const metadata: Metadata = pageMetadata("/tech", tech.name);
 export default function TechPage() {
   return (
     <>
-      <PageHeader
+      <SubjectPageHeader
+        subject="tech"
         breadcrumb={[{ label: "Subjects", href: "/" }, { label: tech.name }]}
         title={
           <>
@@ -39,7 +40,6 @@ export default function TechPage() {
             </Button>
           </>
         }
-        // aside={tech.nextEvent && <NextEventCard event={tech.nextEvent} label="Next Tech event" />}
       />
 
       <MediaFeatureSplit
@@ -58,15 +58,7 @@ export default function TechPage() {
         <ResourceGrid resources={tech.resources} />
       </Section>
 
-      <Section>
-        <SectionHeader
-          eyebrow="Events"
-          title="What we've done"
-          linkLabel="All events"
-          linkHref="/events"
-        />
-        <EventList events={tech.pastEvents} variant="past" />
-      </Section>
+      <SubjectEvents subject="tech" />
 
       <CTABand title="Join the Tech community" />
     </>
