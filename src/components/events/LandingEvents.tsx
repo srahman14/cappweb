@@ -6,7 +6,6 @@
  */
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { selectLandingEvents } from "@/lib/events/format";
 import { getPublicEvents } from "@/lib/services/event.service";
 import { EventList } from "./EventList";
 import { EventListSkeleton } from "./EventSkeletons";
@@ -23,8 +22,7 @@ export function LandingEvents() {
 async function LandingEventsContent() {
   await connection();
 
-  const { upcoming } = await getPublicEvents();
-  const events = selectLandingEvents(upcoming);
+  const { landing: events } = await getPublicEvents();
 
   if (events.length === 0) {
     return (

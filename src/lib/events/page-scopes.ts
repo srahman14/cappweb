@@ -30,12 +30,20 @@ export function parseEventPage(value: unknown): EventPageId {
  * soonest first, as getAllEvents() returns them, for the landing page to be right.
  */
 export function filterEventsForPage<
-  T extends { subjects: EventSubject[]; isPublished: boolean; isUpcoming: boolean },
+  T extends {
+    subjects: EventSubject[];
+    isPublished: boolean;
+    isUpcoming: boolean;
+    isLandingPinned: boolean;
+  },
 >(events: T[], page: EventPageId): T[] {
   if (page === "events") return events;
   if (page === "landing") {
     // The same selection the public landing page makes from its own published read.
-    return selectLandingEvents(events.filter((event) => event.isPublished && event.isUpcoming));
+    return selectLandingEvents(
+      events.filter((event) => event.isPublished && event.isUpcoming),
+      (event) => event.isLandingPinned,
+    );
   }
   return events.filter((event) => event.subjects.includes(page));
 }

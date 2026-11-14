@@ -19,8 +19,10 @@ import {
   formatWeekday,
   getLondonToday,
   isUpcomingEvent,
+  LANDING_EVENT_LIMIT,
   pickFeatured,
   sanitiseEventHref,
+  selectLandingEvents,
 } from "@/lib/events/format";
 import { createClient } from "@/lib/supabase/server";
 import type { EventItem } from "@/types";
@@ -33,7 +35,7 @@ const TABLE = "events";
 
 /** Listed explicitly so audit fields and blob pathnames never reach a page. */
 const PUBLIC_COLUMNS =
-  "id, title, description, starts_on, ends_on, start_time, end_time, date_label, location, host_name, tags, signup_url, recap_url, cover_url, cover_alt, is_featured";
+  "id, title, description, starts_on, ends_on, start_time, end_time, date_label, location, host_name, tags, signup_url, recap_url, cover_url, cover_alt, is_featured, is_landing_pinned";
 
 /** Still no cover_pathname or updated_by: these rows reach client components. */
 const ADMIN_COLUMNS = `${PUBLIC_COLUMNS}, subjects, is_published, updated_at`;
@@ -72,6 +74,7 @@ interface PublicEventRow {
   cover_url: string | null;
   cover_alt: string | null;
   is_featured: boolean;
+  is_landing_pinned: boolean;
 }
 
 /** Row shape for ADMIN_COLUMNS. */
@@ -89,6 +92,8 @@ export interface PublicEvents {
   past: EventItem[];
   /** The event /events leads with. Subject pages use upcoming[0] instead. */
   featured: EventItem | null;
+  /** What the landing page shows: pinned events first, then the soonest. */
+  landing: EventItem[];
 }
 
 /** What the admin dashboard works with: raw editable values plus display labels. */
@@ -111,6 +116,8 @@ export interface AdminEvent {
   coverUrl: string | null;
   coverAlt: string;
   isFeatured: boolean;
+  /** Pinned to the landing page (shows before the automatic picks). */
+  isLandingPinned: boolean;
   isPublished: boolean;
   isUpcoming: boolean;
   /** e.g. "22 Oct 2026 · 6pm", as shown in the admin list. */
@@ -231,6 +238,7 @@ function toAdminEvent(row: AdminEventRow, today: string): AdminEvent {
     coverUrl: row.cover_url,
     coverAlt: row.cover_alt ?? "",
     isFeatured: row.is_featured,
+    isLandingPinned: row.is_landing_pinned,
     isPublished: row.is_published,
     isUpcoming: isUpcomingEvent(row, today),
     whenLabel: time ? `${fullDateOf(row)} · ${time}` : fullDateOf(row),
@@ -423,7 +431,7 @@ async function requireEventAdmin() {
 /* Public reads                                                               */
 /* -------------------------------------------------------------------------- */
 
-const NO_EVENTS: PublicEvents = { upcoming: [], past: [], featured: null };
+const NO_EVENTS: PublicEvents = { upcoming: [], past: [], featured: null, landing: [] };
 
 /**
  * Published events for the public pages, optionally for one subject.
@@ -459,6 +467,9 @@ export const getPublicEvents = cache(async (subject?: EventSubject): Promise<Pub
     upcoming: upcoming.map((row) => toEventItem(row, today)),
     past: past.map((row) => toEventItem(row, today)),
     featured: featured && toEventItem(featured, today),
+    landing: selectLandingEvents(upcoming, (row) => row.is_landing_pinned).map((row) =>
+      toEventItem(row, today),
+    ),
   };
 });
 
@@ -491,11 +502,25 @@ export async function getEventOverview() {
   const published = all.filter((event) => event.isPublished);
   const drafts = all.filter((event) => !event.isPublished);
 
+  const upcoming = published.filter((event) => event.isUpcoming);
+  const landing = selectLandingEvents(upcoming, (event) => event.isLandingPinned);
+  const featured = upcoming.find((event) => event.isFeatured) ?? null;
+
   return {
     total: all.length,
-    upcoming: published.filter((event) => event.isUpcoming).length,
+    upcoming: upcoming.length,
     drafts: drafts.length,
     draftEvents: drafts.map(({ id, title, whenLabel }) => ({ id, title, whenLabel })),
+    /** What the landing page shows right now, and which of those are pinned. */
+    landing: landing.map(({ id, title, whenLabel, isLandingPinned }) => ({
+      id,
+      title,
+      whenLabel,
+      pinned: isLandingPinned,
+    })),
+    pinnedCount: landing.filter((event) => event.isLandingPinned).length,
+    featured: featured && { id: featured.id, title: featured.title, whenLabel: featured.whenLabel },
+    next: upcoming[0] ? { id: upcoming[0].id, title: upcoming[0].title, whenLabel: upcoming[0].whenLabel } : null,
   };
 }
 
@@ -552,13 +577,15 @@ export async function createEvent(input: EventInput): Promise<AdminEvent> {
   throw new EventServiceError("Couldn't generate a unique id. Try a different title.");
 }
 
-/** Save the form. Unpublishing also drops the featured flag, in the same write. */
+/** Save the form. Unpublishing also drops the featured and pinned flags, in the same write. */
 export async function updateEvent(id: string, input: EventInput): Promise<AdminEvent> {
   assertEventId(id);
   const supabase = await requireEventAdmin();
 
   const columns = toEventColumns(input);
-  const patch = columns.is_published ? columns : { ...columns, is_featured: false };
+  const patch = columns.is_published
+    ? columns
+    : { ...columns, is_featured: false, is_landing_pinned: false };
 
   const { data, error } = await supabase
     .from(TABLE)
@@ -577,14 +604,14 @@ export async function updateEvent(id: string, input: EventInput): Promise<AdminE
   return toAdminEvent(data, getLondonToday());
 }
 
-/** Publish or unpublish. Unpublishing also drops the featured flag, in the same write. */
+/** Publish or unpublish. Unpublishing also drops the featured and pinned flags, in the same write. */
 export async function setEventPublished(id: string, isPublished: boolean): Promise<void> {
   assertEventId(id);
   const supabase = await requireEventAdmin();
 
   const patch = isPublished
     ? { is_published: true }
-    : { is_published: false, is_featured: false };
+    : { is_published: false, is_featured: false, is_landing_pinned: false };
 
   const { data, error } = await supabase
     .from(TABLE)
@@ -699,6 +726,61 @@ export async function setEventFeatured(id: string, isFeatured: boolean): Promise
     }
     throw new EventServiceError("Publish this event before featuring it.");
   }
+
+  refreshEventPages();
+}
+
+/**
+ * Pin an event to the landing page, or unpin it. Pinned events show before the
+ * automatic picks. At most LANDING_EVENT_LIMIT upcoming events can be pinned.
+ */
+export async function setEventLandingPinned(id: string, isPinned: boolean): Promise<void> {
+  assertEventId(id);
+  const supabase = await requireEventAdmin();
+
+  if (isPinned) {
+    const { data: target, error: targetError } = await supabase
+      .from(TABLE)
+      .select("starts_on, ends_on, is_published")
+      .eq("id", id)
+      .maybeSingle<{ starts_on: string | null; ends_on: string | null; is_published: boolean }>();
+
+    if (targetError) throw new EventServiceError("Couldn't update the event.");
+    if (!target) throw new EventServiceError("Event not found.");
+    if (!target.is_published) throw new EventServiceError("Publish this event before pinning it.");
+    const today = getLondonToday();
+    if (!isUpcomingEvent(target, today)) {
+      throw new EventServiceError("This event has ended, so it can't be pinned.");
+    }
+
+    // Ended events keep their flag but no longer take a slot, so only upcoming ones count.
+    const { data: pinned, error: pinnedError } = await supabase
+      .from(TABLE)
+      .select("id, starts_on, ends_on")
+      .eq("is_landing_pinned", true)
+      .eq("is_published", true)
+      .neq("id", id)
+      .returns<{ id: string; starts_on: string | null; ends_on: string | null }[]>();
+
+    if (pinnedError) throw new EventServiceError("Couldn't update the event.");
+    if (pinned.filter((row) => isUpcomingEvent(row, today)).length >= LANDING_EVENT_LIMIT) {
+      throw new EventServiceError(
+        `The landing page has room for ${LANDING_EVENT_LIMIT} events. Unpin one first.`,
+      );
+    }
+  }
+
+  // The published check is part of the write, so it can't go stale after the read above.
+  let query = supabase.from(TABLE).update({ is_landing_pinned: isPinned }).eq("id", id);
+  if (isPinned) query = query.eq("is_published", true);
+
+  const { data, error } = await query.select("id").maybeSingle<{ id: string }>();
+
+  if (error) {
+    console.error("[event.service] setEventLandingPinned failed:", error.message);
+    throw new EventServiceError("Couldn't update the event.");
+  }
+  if (!data) throw new EventServiceError("Event not found, or not published.");
 
   refreshEventPages();
 }
