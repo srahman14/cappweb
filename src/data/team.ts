@@ -73,44 +73,6 @@ export const directorsMessage = {
   signOff: "Aiman & Khadeja",
 };
 
-export const teamMembers: TeamMember[] = [
-  {
-    id: "tech-1",
-    name: "[NAME]",
-    role: "Tech ambassador",
-    subject: "tech",
-    oneLiner: "[ONE LINER: why they joined CAPP or what they love about it.]",
-    linkedin: "https://www.linkedin.com/", // replace with the real profile URL
-  },
-  { id: "tech-2", name: "[NAME]", role: "Tech ambassador", subject: "tech" },
-  {
-    id: "bf-1",
-    name: "[NAME]",
-    role: "Business & Finance ambassador",
-    subject: "business-finance",
-  },
-  {
-    id: "bf-2",
-    name: "[NAME]",
-    role: "Business & Finance ambassador",
-    subject: "business-finance",
-  },
-  { id: "law-1", name: "[NAME]", role: "Law ambassador", subject: "law" },
-  { id: "law-2", name: "[NAME]", role: "Law ambassador", subject: "law" },
-  {
-    id: "eng-1",
-    name: "[NAME]",
-    role: "Engineering ambassador",
-    subject: "engineering",
-  },
-  {
-    id: "eng-2",
-    name: "[NAME]",
-    role: "Engineering ambassador",
-    subject: "engineering",
-  },
-];
-
 export const application: ApplicationInfo = {
   status: "open", // change to "closed" when applications shut
   openText:

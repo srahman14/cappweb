@@ -2,7 +2,7 @@
  * Admin navigation: the single source for the sidebar, the mobile tabs and
  * the Overview. To ship Resources/Events, add the route and flip `status`.
  */
-import { CalendarDays, FileText, Images, LayoutDashboard, Users, type LucideIcon } from "lucide-react";
+import { CalendarDays, FileText, Images, Contact, LayoutDashboard, Users, type LucideIcon } from "lucide-react";
 
 export type AdminNavItem = {
   label: string;
@@ -17,6 +17,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { label: "Media", href: "/admin/media", icon: Images, match: "prefix", status: "live" },
   { label: "Resources", href: "/admin/resources", icon: FileText, match: "prefix", status: "live" },
   { label: "Events", href: "/admin/events", icon: CalendarDays, match: "prefix", status: "live" },
+  { label: "Ambassadors", href: "/admin/ambassadors", icon: Contact, match: "prefix", status: "live" },
   { label: "Admins", href: "/admin/team", icon: Users, match: "prefix", status: "live" },
 ];
 
