@@ -60,3 +60,22 @@ export async function requireAdmin() {
 
   return user;
 }
+
+/**
+ * Like requireAdmin(), but only for super admins (capp_admins.is_super_admin).
+ * Returns null instead of redirecting so pages can show a notice.
+ */
+export async function getSuperAdminUser() {
+  const { user, isAdmin } = await getCappAdminStatus();
+  if (!user || !isAdmin) return null;
+
+  const { createServiceClient } = await import("@/lib/supabase/admin");
+  const { data, error } = await createServiceClient()
+    .from("capp_admins")
+    .select("is_super_admin")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (error) throw new Error("Unable to verify super admin permissions.");
+  return data?.is_super_admin === true ? user : null;
+}
