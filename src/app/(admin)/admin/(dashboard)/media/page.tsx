@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { ExternalLink, ImageOff } from "lucide-react";
-import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
+import { ExternalLink } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { MediaSlotGroup } from "@/components/admin/media/MediaSlotGroup";
+import { MediaBrowser } from "@/components/admin/media/MediaBrowser";
 import { ScrollToHash } from "@/components/admin/ScrollToHash";
 import { MediaSkeleton } from "@/components/admin/Skeletons";
 import { Button } from "@/components/ui/Button";
 import { requireAdmin } from "@/lib/auth/admin";
-import { SLOT_GROUPS, getSlotGroup } from "@/lib/media/slot-groups";
 import { getMediaSlots } from "@/lib/services/media.service";
 
 export const metadata: Metadata = {
@@ -21,7 +19,7 @@ export default function AdminMediaPage() {
     <>
       <AdminPageHeader
         title="Media"
-        description="Images used across the CAPP website. Uploads go live on the next page refresh."
+        description="Images used across the CAPP website. Pick a page or search to find the one you need. Uploads go live on the next page refresh."
         actions={
           <Button
             variant="secondary"
@@ -50,28 +48,10 @@ async function AdminMediaContent() {
 
   const mediaSlots = await getMediaSlots();
 
-  if (mediaSlots.length === 0) {
-    return (
-      <AdminEmptyState
-        icon={ImageOff}
-        title="No media slots yet"
-        description="Slots are created by a developer in Supabase."
-      />
-    );
-  }
-
-  // Slots arrive in sort_order; grouping keeps that order within each group.
-  const groups = SLOT_GROUPS.map((group) => ({
-    group,
-    slots: mediaSlots.filter((slot) => getSlotGroup(slot.slot_key) === group.id),
-  })).filter(({ slots }) => slots.length > 0);
-
   return (
-    <div>
-      {groups.map(({ group, slots }) => (
-        <MediaSlotGroup key={group.id} group={group} slots={slots} />
-      ))}
+    <>
+      <MediaBrowser slots={mediaSlots} />
       <ScrollToHash />
-    </div>
+    </>
   );
 }

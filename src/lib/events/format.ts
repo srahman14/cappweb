@@ -45,10 +45,21 @@ export const LANDING_EVENT_LIMIT = 3;
 
 /**
  * The one definition of what the landing page shows, used by the page itself and by
- * the admin Landing card. `upcoming` must be published only, and soonest first.
+ * the admin. `upcoming` must be published only, and soonest first.
+ *
+ * Pinned events come first (soonest first, up to the limit); any slots left over are
+ * filled with the soonest unpinned events. The result keeps the soonest-first order.
  */
-export function selectLandingEvents<T>(upcoming: T[]): T[] {
-  return upcoming.slice(0, LANDING_EVENT_LIMIT);
+export function selectLandingEvents<T>(
+  upcoming: T[],
+  isPinned: (event: T) => boolean = () => false,
+): T[] {
+  const chosen = new Set<T>([
+    ...upcoming.filter(isPinned),
+    ...upcoming.filter((event) => !isPinned(event)),
+  ].slice(0, LANDING_EVENT_LIMIT));
+
+  return upcoming.filter((event) => chosen.has(event));
 }
 
 function toUtcDate(value: string): Date {

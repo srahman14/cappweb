@@ -6,6 +6,7 @@ import {
   EventServiceError,
   removeEventCover,
   setEventFeatured,
+  setEventLandingPinned,
   setEventPublished,
   updateEvent,
   type EventInput,
@@ -116,6 +117,15 @@ export async function setFeaturedAction(id: string, isFeatured: boolean): Promis
   try {
     await setEventFeatured(id, isFeatured === true);
     return { ok: true, message: isFeatured ? "Featured." : "No longer featured." };
+  } catch (err) {
+    return fail(err);
+  }
+}
+
+export async function setLandingPinnedAction(id: string, isPinned: boolean): Promise<ActionState> {
+  try {
+    await setEventLandingPinned(id, isPinned === true);
+    return { ok: true, message: isPinned ? "Pinned to the landing page." : "Unpinned." };
   } catch (err) {
     return fail(err);
   }
