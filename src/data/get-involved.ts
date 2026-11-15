@@ -22,20 +22,20 @@ export const content = {
       tint: "from-indigo-soft to-white",
     },
     {
-      id: "partner",
-      title: "Partner with us",
+      id: "Ambassador Role",
+      title: "Become an Ambassador",
       description:
         "Work with CAPP on initiatives that open up opportunities for our community.",
-      href: SITE.whatsappUrl,
+      href: SITE.ambassadorRoleUrl,
       image: "/team/hover-2.png",
       tint: "from-gold-light/40 to-white",
     },
     {
-      id: "join-team",
-      title: "Join the team",
+      id: "Commitee Role",
+      title: "Commitee Roles",
       description:
         "Help us run CAPP day to day and shape what we do next. Meet the team and find out how to apply.",
-      href: "/team",
+      href: SITE.committeeRoleUrl,
       image: "/team/hover-3.png",
       tint: "from-indigo-soft via-white to-gold-light/30",
     },
