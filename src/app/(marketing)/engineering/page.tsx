@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { NextEventCard } from "@/components/events/NextEventCard";
+import { pageMetadata } from "@/lib/seo";
+import { SubjectEvents } from "@/components/events/SubjectEvents";
+import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import { ApplicationCalendar } from "@/components/subjects/ApplicationCalendar";
 import { SUBJECT_BENTO_ID, SubjectBento } from "@/components/subjects/SubjectBento";
 import { SubjectFAQ } from "@/components/subjects/SubjectFAQ";
-import { Button, HandDrawnUnderline, PageHeader } from "@/components/ui";
+import { Button, HandDrawnUnderline } from "@/components/ui";
 import { engineering } from "@/data/engineering";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = { title: engineering.name, description: engineering.description };
+export const metadata: Metadata = pageMetadata("/engineering", engineering.name);
 
 export default function EngineeringPage() {
   return (
     <>
-      <PageHeader
+      <SubjectPageHeader
+        subject="engineering"
         breadcrumb={[{ label: "Subjects", href: "/" }, { label: engineering.name }]}
         title={<><HandDrawnUnderline rotate={-1.5}>{engineering.name}</HandDrawnUnderline> at CAPP</>}
         description={engineering.description}
@@ -24,7 +27,6 @@ export default function EngineeringPage() {
             <Button href={`#${SUBJECT_BENTO_ID}`} variant="outlineOnDark">Explore the hub</Button>
           </>
         }
-        aside={engineering.nextEvent && <NextEventCard event={engineering.nextEvent} label="Next Engineering event" />}
       />
 
       <MediaFeatureSplit
@@ -35,6 +37,8 @@ export default function EngineeringPage() {
         />
 
       <SubjectBento data={engineering} />
+
+      <SubjectEvents subject="engineering" />
 
       <ApplicationCalendar subject={engineering.name} rows={engineering.calendar} />
 

@@ -18,7 +18,7 @@ export function TextField({ id, label, invalid, ...inputProps }: TextFieldProps)
         id={id}
         aria-invalid={invalid || undefined}
         className={cn(
-          "h-10 w-full rounded-lg border bg-white px-3 text-sm text-navy-ink placeholder:text-muted",
+          "h-11 w-full rounded-xl border bg-white px-3.5 text-base text-navy-ink placeholder:text-muted",
           "focus-ring focus-visible:border-indigo",
           // cn() only concatenates: pick exactly one border colour.
           invalid ? "border-danger" : "border-muted-soft",

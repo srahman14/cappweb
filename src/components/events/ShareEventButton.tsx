@@ -3,11 +3,15 @@
 
 import { ArrowUpRight } from "lucide-react";
 
-export default function ShareButton() {
+export interface ShareEventButtonProps {
+  title: string;
+}
+
+export function ShareEventButton({ title }: ShareEventButtonProps) {
   async function handleShare() {
     const shareData = {
-      title: "Upcoming CAPP Event",
-      text: "Check out this upcoming CAPP event!",
+      title,
+      text: `Check out ${title} from CAPP!`,
       url: `${window.location.origin}/events`,
     };
 

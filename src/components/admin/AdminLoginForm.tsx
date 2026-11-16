@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -92,6 +93,12 @@ export function AdminLoginForm({ next }: { next: string }) {
           {loading && <Loader2 aria-hidden="true" className="size-4 animate-spin motion-reduce:animate-none" />}
           {loading ? "Signing in…" : "Sign in"}
         </Button>
+
+        <p className="text-center text-sm">
+          <Link href="/admin/forgot-password" className="focus-ring rounded text-indigo hover:underline">
+            Forgot password?
+          </Link>
+        </p>
       </form>
     </>
   );

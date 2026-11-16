@@ -5,7 +5,12 @@
 export const SITE = {
   name: "CAPP",
   fullName: "Careers and People's Progression",
-  /** Contact address used in the Privacy policy and Terms. REPLACE before launch (brackets show highlighted on those pages until then). */
+  /** Canonical origin (Vercel 308-redirects the apex to www). Import this everywhere; no env var. */
+  url: "https://www.cappmain.com",
+  /** Default meta description, used by the root layout and the home page. */
+  description:
+    "CAPP is a careers community running events, industry panels and resources for Tech, Business & Finance, Engineering and Law.",
+  /** Contact address used in the Privacy policy and Terms. */
   contactEmail: "cappmain@outlook.com",
   /** The one WhatsApp join link used by every "Join" button (see WhatsAppButton). */
   whatsappUrl: "https://chat.whatsapp.com/GryLuh7Vk5CGaT5jE8FdCI",

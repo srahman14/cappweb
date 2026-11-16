@@ -1,17 +1,4 @@
-import type { EventItem, SubjectPageData } from "@/types";
-
-/** Placeholder past event. Replace these with real events (and delete this helper). */
-const placeholderEvent = (n: number): EventItem => ({
-  id: `law-past-${n}`,
-  title: "[PAST EVENT NAME]",
-  dateLabel: "[DATE]",
-  weekday: "[WEEKDAY]",
-  time: "[TIME]",
-  location: "[LOCATION]",
-  hostName: "[HOST NAME]",
-  tags: ["Panel", "Law"],
-  href: "#",
-});
+import type { SubjectPageData } from "@/types";
 
 export const law: SubjectPageData = {
   name: "Law",
@@ -28,8 +15,6 @@ export const law: SubjectPageData = {
       "Commercial awareness",
       "Vacation scheme and training contract applications",]
     },
-  // Placeholder for now, so the hub shows the plain "Events" card. Uncomment and fill in once a real event is booked.
-  // nextEvent: { ...placeholderEvent(0), id: "law-next", title: "[EVENT NAME]" },
   resources: [
     {
       id: "law-society",
@@ -60,7 +45,6 @@ export const law: SubjectPageData = {
       href: "#",
     },
   ],
-  pastEvents: [1, 2, 3].map(placeholderEvent),
   motif: "law",
   bentoCards: [
     { id: "law-routes", title: "Solicitor or barrister?", body: "Compare the two routes and what each day looks like, then decide which suits you." },

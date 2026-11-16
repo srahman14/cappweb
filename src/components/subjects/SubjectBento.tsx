@@ -4,7 +4,7 @@
  *
  * The layout is identical everywhere. What makes each page its own:
  *   - `motif` (pattern, glyph, focus-card illustrations; see ./motifs.tsx)
- *   - live data from src/data/<subject>.ts: nextEvent, resources, ambassadors, bentoCards, roles
+ *   - data from src/data/<subject>.ts: resources, ambassadors, bentoCards, roles
  *
  * Grid (desktop, 6 columns):
  *   [ next event (navy) ............ 4 ][ ambassadors .. 2 ]
@@ -74,7 +74,7 @@ function Go({ children, onDark }: { children: ReactNode; onDark?: boolean }) {
 }
 
 export function SubjectBento({ data }: { data: SubjectPageData }) {
-  const { name, motif, nextEvent, resources, ambassadors, bentoCards } = data;
+  const { name, motif, resources, ambassadors, bentoCards } = data;
   const glyph = MOTIF_GLYPH[motif];
   const faces = ambassadors.slice(0, 4);
   const extra = ambassadors.length - faces.length;
@@ -88,12 +88,8 @@ export function SubjectBento({ data }: { data: SubjectPageData }) {
         </h2>
 
         <div className="mt-10 grid gap-4 md:grid-cols-6 md:gap-5">
-          {/* Anchor: next event, or a nudge to join the channel when nothing is scheduled */}
-          <Tile
-            href={nextEvent?.href ?? "/events"}
-            dark
-            className="min-h-64 md:col-span-4 md:min-h-72"
-          >
+          {/* Anchor: links to /events. (The live next event shows in the page header and the events section.) */}
+          <Tile href="/events" dark className="min-h-64 md:col-span-4 md:min-h-72">
             <MotifPattern motif={motif} tone="dark" />
             <span
               aria-hidden="true"
@@ -104,24 +100,10 @@ export function SubjectBento({ data }: { data: SubjectPageData }) {
             >
               {glyph.char}
             </span>
-            <span className={cn(LABEL, "text-gold-light")}>{nextEvent ? `Next ${name} event` : `${name} events`}</span>
-            {nextEvent ? (
-              <>
-                <h3 className="max-w-[20ch] text-2xl font-extrabold tracking-[-0.02em] md:text-3xl">{nextEvent.title}</h3>
-                <ul className="flex flex-wrap gap-2">
-                  {[`${nextEvent.weekday} ${nextEvent.dateLabel}`, nextEvent.time, nextEvent.location].map((m) => (
-                    <li key={m} className="rounded-full bg-white/10 px-3 py-1.5 text-sm font-semibold">{m}</li>
-                  ))}
-                </ul>
-                <Go onDark>Book a place</Go>
-              </>
-            ) : (
-              <>
-                <h3 className="text-3xl font-extrabold tracking-[-0.02em] md:text-[40px]">Events</h3>
-                <p className="max-w-[46ch] text-on-dark">See what&apos;s coming up and book a place, or look back at what we&apos;ve run before.</p>
-                <Go onDark>See all events</Go>
-              </>
-            )}
+            <span className={cn(LABEL, "text-gold-light")}>{name} events</span>
+            <h3 className="text-3xl font-extrabold tracking-[-0.02em] md:text-[40px]">Events</h3>
+            <p className="max-w-[46ch] text-on-dark">See what&apos;s coming up and book a place, or look back at what we&apos;ve run before.</p>
+            <Go onDark>See all events</Go>
           </Tile>
 
           {/* Ambassadors */}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { connection } from "next/server";
 import { Suspense } from "react";
 import { /* StatStrip, */ TeamTeaser, ValuesGrid, WhereToFindUs } from "@/components/about/AboutSections";
@@ -16,11 +17,7 @@ import {
 import { whatCappIs, whatWeDo } from "@/data/about";
 import { getMediaBySlots } from "@/lib/services/media.service";
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    "CAPP is a careers community that runs events and panels with industry professionals across Tech, Business & Finance, Engineering and Law.",
-};
+export const metadata: Metadata = pageMetadata("/about", "About");
 
 const slotByItemId: Record<string, string> = {
   events: "about_image_1",

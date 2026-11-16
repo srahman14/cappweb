@@ -1,16 +1,4 @@
-import type { EventItem, SubjectPageData } from "@/types";
-
-const placeholderEvent = (n: number): EventItem => ({
-  id: `engineering-past-${n}`,
-  title: "[PAST EVENT NAME]",
-  dateLabel: "[DATE]",
-  weekday: "[WEEKDAY]",
-  time: "[TIME]",
-  location: "[LOCATION]",
-  hostName: "[HOST NAME]",
-  tags: ["Engineering"],
-  href: "#",
-});
+import type { SubjectPageData } from "@/types";
 
 export const engineering: SubjectPageData = {
   name: "Engineering",
@@ -29,13 +17,6 @@ export const engineering: SubjectPageData = {
     ],
   },
   resources: [],
-  // Placeholder for now, so the hub shows the plain "Events" card. Uncomment and fill in once a real event is booked.
-  // nextEvent: {
-  //   ...placeholderEvent(0),
-  //   id: "engineering-next",
-  //   title: "[EVENT NAME]",
-  // },
-  pastEvents: [1, 2, 3].map(placeholderEvent),
   motif: "engineering",
   bentoCards: [
     { id: "eng-disciplines", title: "Find your discipline", body: "Learn what each branch involves day to day, so you can choose with confidence." },

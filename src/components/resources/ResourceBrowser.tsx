@@ -72,6 +72,17 @@ export function ResourceBrowser({ resources, iconPosition = "left" }: ResourceBr
     setActiveKey("all");
   };
 
+  if (resources.length === 0) {
+  return (
+    <div id="library" className="scroll-mt-24 text-center">
+      <h2 className="text-3xl font-semibold tracking-tight text-navy sm:text-4xl">
+        Explore all our resources
+      </h2>
+      <p className="mt-4 text-muted">Resources are coming soon. Check back shortly.</p>
+    </div>
+  );
+}
+
   return (
     <div id="library" className="scroll-mt-24">
       <h2 className="text-center text-3xl font-semibold tracking-tight text-navy sm:text-4xl">

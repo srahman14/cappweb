@@ -1,22 +1,9 @@
 import { put, del } from "@vercel/blob";
 import { NextResponse } from "next/server";
-import { fileTypeFromBuffer } from "file-type";
-import sharp from "sharp";
 
 import { createClient } from "@/lib/supabase/server";
 import { getCappAdminStatus } from "@/lib/auth/admin";
-import { ACCEPTED_TYPES, MAX_UPLOAD_BYTES } from "@/lib/media/constants";
-
-const MAX_IMAGE_PIXELS = 40_000_000;
-
-const ALLOWED_TYPES = new Set<string>(ACCEPTED_TYPES);
-
-const EXTENSION_BY_TYPE: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-  "image/gif": "gif",
-};
+import { validateImageUpload } from "@/lib/media/validate-upload";
 
 export async function POST(request: Request) {
   // verify authentication and administrator permissions
@@ -65,73 +52,17 @@ export async function POST(request: Request) {
     );
   }
 
-  // validate file size.
-  if (file.size === 0 || file.size > MAX_UPLOAD_BYTES) {
+  // validate the file itself.
+  const validation = await validateImageUpload(file);
+
+  if (!validation.ok) {
     return NextResponse.json(
-      { error: "Images must be between 1 byte and 4 MB." },
+      { error: validation.error },
       { status: 400 }
     );
   }
 
-  // read the file and detect its actual format.
-  let buffer: Buffer;
-
-  try {
-    buffer = Buffer.from(await file.arrayBuffer());
-  } catch {
-    return NextResponse.json(
-      { error: "Unable to read the uploaded image." },
-      { status: 400 }
-    );
-  }
-
-  const detectedType = await fileTypeFromBuffer(buffer);
-
-  if (!detectedType || !ALLOWED_TYPES.has(detectedType.mime)) {
-    return NextResponse.json(
-      { error: "The file contents are not a supported image format." },
-      { status: 400 }
-    );
-  }
-
-  // the browser-provided MIME type must agree with the detected format.
-  if (file.type !== detectedType.mime) {
-    return NextResponse.json(
-      { error: "The declared file type does not match its contents." },
-      { status: 400 }
-    );
-  }
-
-  // attempt to decode the image and enforce a pixel limit.
-  try {
-    const image = sharp(buffer, {
-      limitInputPixels: MAX_IMAGE_PIXELS,
-    });
-
-    const metadata = await image.metadata();
-
-    if (!metadata.width || !metadata.height) {
-      return NextResponse.json(
-        { error: "The uploaded file has invalid image dimensions." },
-        { status: 400 }
-      );
-    }
-
-    if (metadata.width * metadata.height > MAX_IMAGE_PIXELS) {
-      return NextResponse.json(
-        { error: "The image dimensions are too large." },
-        { status: 400 }
-      );
-    }
-
-    // force Sharp to decode pixel data rather than relying only on headers
-    await image.stats();
-  } catch {
-    return NextResponse.json(
-      { error: "The image is corrupted or cannot be decoded." },
-      { status: 400 }
-    );
-  }
+  const { buffer, mime, extension } = validation.image;
 
   // look up the requested media slot
   const supabase = await createClient();
@@ -162,15 +93,13 @@ export async function POST(request: Request) {
   let uploadedBlob: { url: string; pathname: string };
 
   try {
-    const extension = EXTENSION_BY_TYPE[detectedType.mime];
-
     uploadedBlob = await put(
       `capp-media/${slot.slot_key}/${crypto.randomUUID()}.${extension}`,
       buffer,
       {
         access: "public",
         addRandomSuffix: false,
-        contentType: detectedType.mime,
+        contentType: mime,
       }
     );
   } catch (error) {

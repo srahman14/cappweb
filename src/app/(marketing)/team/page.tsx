@@ -6,6 +6,7 @@ import {
   Section,
   SectionHeader,
 } from "@/components/ui";
+import { connection } from "next/server";
 import { Suspense } from "react";
 
 import { TeamBrowser } from "@/components/team/TeamBrowser";
@@ -14,18 +15,15 @@ import {
   directors,
   directorsImage,
   directorsMessage,
-  teamMembers,
   teamSubjects,
 } from "@/data/team";
 import type { Metadata } from "next";
-import { connection } from "next/server";
+import { pageMetadata } from "@/lib/seo";
 
 import { getMediaBySlots } from "@/lib/services/media.service";
+import { getPublishedTeamMembers } from "@/lib/services/team.service";
 
-export const metadata: Metadata = {
-  title: "Meet the team",
-  description: "The directors, committee and ambassadors who run CAPP.",
-};
+export const metadata: Metadata = pageMetadata("/team", "Meet the team");
 
 export default function TeamPage() {
   return (
@@ -50,7 +48,9 @@ export default function TeamPage() {
           Our ambassadors share events, internships and resources in their
           subject. Pick a subject to see who to talk to.
         </p>
-        <TeamBrowser subjects={teamSubjects} members={teamMembers} />
+        <Suspense fallback={<TeamMembersSkeleton />}>
+          <TeamAmbassadors />
+        </Suspense>
       </Section>
 
       {/* Closing band for this page: replaces CTABand because it already links to WhatsApp when closed. */}
@@ -59,9 +59,34 @@ export default function TeamPage() {
   );
 }
 
-async function TeamDirectors() {
-  // Media slots are fetched per request (the Supabase client reads the clock), same as MediaFeatureSplit.
+async function TeamAmbassadors() {
   await connection();
+
+  const members = await getPublishedTeamMembers();
+  return <TeamBrowser subjects={teamSubjects} members={members} />;
+}
+
+function TeamMembersSkeleton() {
+  return (
+    <div>
+      <span role="status" className="sr-only">
+        Loading the team…
+      </span>
+      <div aria-hidden="true" className="space-y-8">
+        <div className="h-8 max-w-md animate-pulse rounded bg-indigo-soft motion-reduce:animate-none" />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="h-64 animate-pulse rounded bg-indigo-soft motion-reduce:animate-none" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+async function TeamDirectors() {
+  await connection();
+
   const mediaSlots = await getMediaBySlots(["directors_image_1"]);
   const directorImage = mediaSlots.find(
     (slot) => slot.slot_key === "directors_image_1"

@@ -5,6 +5,7 @@
  * Usage: <NextEventCard event={event} label="Next Tech event" />
  */
 import Link from "next/link";
+import { eventLinkProps } from "@/lib/events/format";
 import type { EventItem } from "@/types";
 
 export interface NextEventCardProps {
@@ -13,15 +14,18 @@ export interface NextEventCardProps {
 }
 
 export function NextEventCard({ event, label = "Next event" }: NextEventCardProps) {
+  const href = event.href ?? "/events";
+
   return (
     <Link
-      href={event.href}
+      href={href}
+      {...eventLinkProps(href)}
       className="block rounded-3xl border border-white/20 bg-white/10 p-7 transition hover:bg-white/15"
     >
       <p className="mb-2 text-[13px] font-bold uppercase tracking-[0.1em] text-gold">{label}</p>
       <h2 className="mb-1.5 text-2xl font-bold tracking-[-0.02em] md:text-[28px]">{event.title}</h2>
       <p className="text-on-dark">
-        {event.dateLabel} · {event.time} · {event.location}
+        {[event.dateLabel, event.time, event.location].filter(Boolean).join(" · ")}
       </p>
     </Link>
   );

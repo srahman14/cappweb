@@ -8,6 +8,7 @@ import { LoginCardSkeleton } from "@/components/admin/Skeletons";
 
 export const metadata: Metadata = {
   title: "Sign in",
+  robots: { index: false, follow: false },
 };
 
 export default function AdminLoginPage({ searchParams }: PageProps<"/admin/login">) {

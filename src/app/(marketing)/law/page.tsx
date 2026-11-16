@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+import { SubjectEvents } from "@/components/events/SubjectEvents";
+import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import { ApplicationCalendar } from "@/components/subjects/ApplicationCalendar";
@@ -7,20 +10,17 @@ import { SubjectFAQ } from "@/components/subjects/SubjectFAQ";
 import {
   Button,
   HandDrawnUnderline,
-  PageHeader,
 } from "@/components/ui";
 import { law } from "@/data/law";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: law.name,
-  description: law.description,
-};
+export const metadata: Metadata = pageMetadata("/law", law.name);
 
 export default function LawPage() {
   return (
     <>
-      <PageHeader
+      <SubjectPageHeader
+        subject="law"
         breadcrumb={[{ label: "Subjects", href: "/" }, { label: law.name }]}
         title={
           <>
@@ -39,7 +39,6 @@ export default function LawPage() {
             </Button>
           </>
         }
-        // aside={law.nextEvent && <NextEventCard event={law.nextEvent} label="Next Law event" />}
       />
 
       <MediaFeatureSplit
@@ -50,6 +49,8 @@ export default function LawPage() {
       />
 
       <SubjectBento data={law} />
+
+      <SubjectEvents subject="law" />
 
       <ApplicationCalendar subject={law.name} rows={law.calendar} />
 

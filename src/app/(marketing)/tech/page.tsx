@@ -1,3 +1,5 @@
+import { SubjectEvents } from "@/components/events/SubjectEvents";
+import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import { ApplicationCalendar } from "@/components/subjects/ApplicationCalendar";
@@ -6,21 +8,19 @@ import { SubjectFAQ } from "@/components/subjects/SubjectFAQ";
 import {
   Button,
   HandDrawnUnderline,
-  PageHeader,
 } from "@/components/ui";
 import { tech } from "@/data/tech";
 import { SITE } from "@/lib/site";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: tech.name,
-  description: tech.description,
-};
+export const metadata: Metadata = pageMetadata("/tech", tech.name);
 
 export default function TechPage() {
   return (
     <>
-      <PageHeader
+      <SubjectPageHeader
+        subject="tech"
         breadcrumb={[{ label: "Subjects", href: "/" }, { label: tech.name }]}
         title={
           <>
@@ -39,7 +39,6 @@ export default function TechPage() {
             </Button>
           </>
         }
-        // aside={tech.nextEvent && <NextEventCard event={tech.nextEvent} label="Next Tech event" />}
       />
 
       <MediaFeatureSplit
@@ -50,6 +49,8 @@ export default function TechPage() {
         />
 
       <SubjectBento data={tech} />
+
+      <SubjectEvents subject="tech" />
 
       <ApplicationCalendar subject={tech.name} rows={tech.calendar} />
 

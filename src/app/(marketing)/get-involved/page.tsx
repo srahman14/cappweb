@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { WayCard } from "@/components/get-involved/WayCard";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import { PageHeader, HandDrawnUnderline } from "@/components/ui";
 import { content } from "@/data/get-involved";
 
-export const metadata: Metadata = {
-  title: "Get involved",
-  description:
-    "Speak at an event, partner with CAPP or join the team. Find a way to help that suits you.",
-};
+export const metadata: Metadata = pageMetadata("/get-involved", "Get involved");
 
 export default function Page() {
   return (

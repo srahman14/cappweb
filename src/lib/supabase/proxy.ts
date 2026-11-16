@@ -4,7 +4,9 @@ import { NextResponse, type NextRequest } from 'next/server'
 function isProtectedAdminPath(pathname: string) {
   const isAdmin = pathname === '/admin' || pathname.startsWith('/admin/')
   const isLogin = pathname === '/admin/login' || pathname.startsWith('/admin/login/')
-  return isAdmin && !isLogin
+  const isForgot =
+    pathname === '/admin/forgot-password' || pathname === '/admin/set-password'
+  return isAdmin && !isLogin && !isForgot
 }
 
 export async function updateSession(request: NextRequest) {
