@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { SubjectEvents } from "@/components/events/SubjectEvents";
 import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
-import { pageMetadata } from "@/lib/seo";
-import { EventList } from "@/components/events/EventList";
-import { NextEventCard } from "@/components/events/NextEventCard";
-import { PersonGrid } from "@/components/people/PersonGrid";
-import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
-import { Button, HandDrawnUnderline, Section, SectionHeader } from "@/components/ui";
+import { ApplicationCalendar } from "@/components/subjects/ApplicationCalendar";
+import { SUBJECT_BENTO_ID, SubjectBento } from "@/components/subjects/SubjectBento";
+import { SubjectFAQ } from "@/components/subjects/SubjectFAQ";
+import { Button, HandDrawnUnderline } from "@/components/ui";
 import { engineering } from "@/data/engineering";
 import { SITE } from "@/lib/site";
 
@@ -25,28 +24,25 @@ export default function EngineeringPage() {
         actions={
           <>
             <Button href={engineering.channelUrl ?? SITE.whatsappUrl} variant="onDark">{engineering.channelLabel}</Button>
-            <Button href="#resources" variant="outlineOnDark">Jump to resources</Button>
+            <Button href={`#${SUBJECT_BENTO_ID}`} variant="outlineOnDark">Explore the hub</Button>
           </>
         }
       />
 
       <MediaFeatureSplit
           slotKey="subject_engineering_feature"
+          // caption={`From our ${engineering.name} panel`}
           alt="A speaker presenting at a CAPP career event"
           {...engineering.about}
         />
 
-      <Section id="resources" className="scroll-mt-8">
-        <SectionHeader eyebrow="Resources" title="Tools to level up" linkLabel="All resources" linkHref="/resources" />
-        <ResourceGrid resources={engineering.resources} />
-      </Section>
+      <SubjectBento data={engineering} />
 
       <SubjectEvents subject="engineering" />
 
-      <Section>
-        <SectionHeader eyebrow="Ambassadors" title="Meet the Engineering ambassadors" />
-        <PersonGrid people={engineering.ambassadors} />
-      </Section>
+      <ApplicationCalendar subject={engineering.name} rows={engineering.calendar} />
+
+      <SubjectFAQ subject={engineering.name} faqs={engineering.faqs} channelUrl={engineering.channelUrl ?? SITE.whatsappUrl} />
 
       <CTABand title="Join the Engineering community" />
     </>

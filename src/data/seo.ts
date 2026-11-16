@@ -62,7 +62,7 @@ export const PAGE_SEO = {
   },
   "/privacy": {
     description:
-      "How CAPP collects and uses the personal information of people who apply to be an ambassador or join the committee.",
+      "How CAPP uses the personal information of people who apply for a role, speak at an event or visit this website.",
     lastModified: "2026-11-09",
   },
   "/terms": {

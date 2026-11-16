@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
-import { CTABand } from "@/components/shared/CTABand";
-import { PageHeader, Section, SectionHeader, HandDrawnUnderline } from "@/components/ui";
+import { WayCard } from "@/components/get-involved/WayCard";
+import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
+import { PageHeader, HandDrawnUnderline } from "@/components/ui";
 import { content } from "@/data/get-involved";
 
 export const metadata: Metadata = pageMetadata("/get-involved", "Get involved");
@@ -22,38 +23,18 @@ export default function Page() {
         description="Support the CAPP community through volunteering, partnerships or contributions."
       />
 
-      <Section>
-        <SectionHeader
-          eyebrow="WAYS TO SUPPORT"
-          title="How you can get involved"
-        />
+      <MediaFeatureSplit
+        slotKey="about_image_1"
+        alt="A CAPP community event"
+        caption="From one of our events"
+        {...content.intro}
+      />
 
-        {/* Three cards */}
-        <div className="grid gap-6 md:grid-cols-3">
-          {content.items.map((item) => (
-            <div
-              key={item.id}
-              className="border border-line rounded-card bg-white p-6 shadow-card"
-            >
-              <h3 className="text-xl font-semibold tracking-[-0.03em] mb-3">
-                {item.title}
-              </h3>
-              <p className="text-muted mb-4">{item.description}</p>
-
-              
-              <item.action.component
-                href={item.action.href}
-                className={item.action.className}
-                size="md"
-              >
-                {item.action.label}
-              </item.action.component>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      <CTABand title="Ready to join the community?" />
+      <div className="grid gap-4 px-3 pb-16 md:grid-cols-3 md:gap-6 md:px-6 md:pb-24">
+        {content.items.map((item) => (
+          <WayCard key={item.id} {...item} />
+        ))}
+      </div>
     </>
   );
 }

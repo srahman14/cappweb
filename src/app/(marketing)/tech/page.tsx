@@ -1,14 +1,13 @@
 import { SubjectEvents } from "@/components/events/SubjectEvents";
 import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
-import { PersonGrid } from "@/components/people/PersonGrid";
-import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
+import { ApplicationCalendar } from "@/components/subjects/ApplicationCalendar";
+import { SUBJECT_BENTO_ID, SubjectBento } from "@/components/subjects/SubjectBento";
+import { SubjectFAQ } from "@/components/subjects/SubjectFAQ";
 import {
   Button,
   HandDrawnUnderline,
-  Section,
-  SectionHeader,
 } from "@/components/ui";
 import { tech } from "@/data/tech";
 import { SITE } from "@/lib/site";
@@ -35,8 +34,8 @@ export default function TechPage() {
             <Button href={tech.channelUrl ?? SITE.whatsappUrl} variant="onDark">
               {tech.channelLabel}
             </Button>
-            <Button href="#resources" variant="outlineOnDark">
-              Jump to resources
+            <Button href={`#${SUBJECT_BENTO_ID}`} variant="outlineOnDark">
+              Explore the hub
             </Button>
           </>
         }
@@ -44,21 +43,18 @@ export default function TechPage() {
 
       <MediaFeatureSplit
           slotKey="subject_tech_feature"
+          // caption={`From our ${tech.name} panel`}
           alt="A speaker presenting at a CAPP career event"
           {...tech.about}
         />
 
-      <Section id="resources" className="scroll-mt-8">
-        <SectionHeader
-          eyebrow="Resources"
-          title="Tools to level up"
-          linkLabel="All resources"
-          linkHref="/resources"
-        />
-        <ResourceGrid resources={tech.resources} />
-      </Section>
+      <SubjectBento data={tech} />
 
       <SubjectEvents subject="tech" />
+
+      <ApplicationCalendar subject={tech.name} rows={tech.calendar} />
+
+      <SubjectFAQ subject={tech.name} faqs={tech.faqs} channelUrl={tech.channelUrl ?? SITE.whatsappUrl} />
 
       <CTABand title="Join the Tech community" />
     </>

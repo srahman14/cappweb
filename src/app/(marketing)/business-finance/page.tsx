@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { SubjectEvents } from "@/components/events/SubjectEvents";
 import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
-import { pageMetadata } from "@/lib/seo";
-import { EventList } from "@/components/events/EventList";
-import { NextEventCard } from "@/components/events/NextEventCard";
-import { PersonGrid } from "@/components/people/PersonGrid";
-import { ResourceGrid } from "@/components/resources/ResourceGrid";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
-import { Button, HandDrawnUnderline, Section, SectionHeader } from "@/components/ui";
+import { ApplicationCalendar } from "@/components/subjects/ApplicationCalendar";
+import { SUBJECT_BENTO_ID, SubjectBento } from "@/components/subjects/SubjectBento";
+import { SubjectFAQ } from "@/components/subjects/SubjectFAQ";
+import { Button, HandDrawnUnderline } from "@/components/ui";
 import { businessFinance } from "@/data/business-finance";
 import { SITE } from "@/lib/site";
 
@@ -25,28 +24,25 @@ export default function BusinessFinancePage() {
         actions={
           <>
             <Button href={businessFinance.channelUrl ?? SITE.whatsappUrl} variant="onDark">{businessFinance.channelLabel}</Button>
-            <Button href="#resources" variant="outlineOnDark">Jump to resources</Button>
+            <Button href={`#${SUBJECT_BENTO_ID}`} variant="outlineOnDark">Explore the hub</Button>
           </>
         }
       />
 
       <MediaFeatureSplit
           slotKey="subject_business_finance_feature"
+          // caption={`From our ${businessFinance.name} panel`}
           alt="A speaker presenting at a CAPP career event"
           {...businessFinance.about}
         />
 
-      <Section id="resources" className="scroll-mt-8">
-        <SectionHeader eyebrow="Resources" title="Tools to level up" linkLabel="All resources" linkHref="/resources" />
-        <ResourceGrid resources={businessFinance.resources} />
-      </Section>
+      <SubjectBento data={businessFinance} />
 
       <SubjectEvents subject="business-finance" />
 
-      <Section>
-        <SectionHeader eyebrow="Ambassadors" title="Meet the Business & Finance ambassadors" />
-        <PersonGrid people={businessFinance.ambassadors} />
-      </Section>
+      <ApplicationCalendar subject={businessFinance.name} rows={businessFinance.calendar} />
+
+      <SubjectFAQ subject={businessFinance.name} faqs={businessFinance.faqs} channelUrl={businessFinance.channelUrl ?? SITE.whatsappUrl} />
 
       <CTABand title="Join the B&F community" />
     </>

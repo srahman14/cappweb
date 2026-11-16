@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { LegalLayout } from "@/components/legal/LegalLayout";
-import { CTABand } from "@/components/shared/CTABand";
 import { HandDrawnUnderline, PageHeader, Section } from "@/components/ui";
 import { terms } from "@/data/legal";
 
