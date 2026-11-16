@@ -134,17 +134,69 @@ export interface SubjectPageData {
   resources: Resource[];
   pastEvents: EventItem[];
   ambassadors: Person[];
-  /** Subject-specific cards for the page's bento grid (2-3 recommended). */
-  bentoCards?: SubjectBentoCard[];
+  /** Background pattern, glyph and card illustrations used by this subject's hub bento. */
+  motif: SubjectMotif;
+  /** The two "focus" cards in the hub bento. Only the first two are shown. */
+  bentoCards: [SubjectBentoCard, SubjectBentoCard];
+  /** "Roles you could do" cards under the hub bento (6 recommended). Empty = hidden. */
+  roles: SubjectRole[];
+  /** Rows of the "When to apply" calendar. Empty = section hidden. */
+  calendar: CalendarRow[];
+  /** FAQ entries. Empty = section hidden. */
+  faqs: SubjectFAQ[];
 }
 
-/** One subject-specific card in the bento grid. */
+/** Visual identity for a subject page. Each key has a pattern, glyph and two illustrations in components/subjects/motifs.tsx. */
+export type SubjectMotif = "tech" | "engineering" | "law" | "business";
+
+/** One subject-specific "focus" card in the hub bento. */
 export interface SubjectBentoCard {
   id: string;
   title: string;
   body: string;
-  /** Optional picture, a path in /public or a remote URL. Fades out towards the top of the card. */
-  image?: { src: string; alt: string };
+}
+
+/** Icon keys understood by <SubjectRoles />. Add the icon there before adding a key here. */
+export type SubjectRoleIcon =
+  | "code" | "chart" | "sparkles" | "shield" | "compass" | "pen"
+  | "construction" | "cog" | "zap" | "flask" | "plane" | "leaf"
+  | "briefcase" | "gavel" | "scale" | "file" | "building"
+  | "landmark" | "lightbulb" | "calculator" | "trending" | "pie";
+
+/** A job shown in the "Roles you could do" row. */
+export interface SubjectRole {
+  id: string;
+  title: string;
+  /** One or two sentences on what the job involves day to day. */
+  body: string;
+  icon: SubjectRoleIcon;
+  /** Short labels for the usual ways in, e.g. ["Degree", "Apprenticeship"]. */
+  routes: string[];
+}
+
+/** Calendar months, in academic-year order (the calendar runs September to August). */
+export type CalendarMonth = "Sep" | "Oct" | "Nov" | "Dec" | "Jan" | "Feb" | "Mar" | "Apr" | "May" | "Jun" | "Jul" | "Aug";
+
+/** One row of the "When to apply" calendar. Ranges are inclusive and must not wrap past August. */
+export interface CalendarRow {
+  id: string;
+  /** e.g. "Spring weeks" */
+  label: string;
+  /** Who it's for, e.g. "First years". */
+  who: string;
+  /** When applications are typically open. Omit with `allYear`. */
+  apply?: [CalendarMonth, CalendarMonth];
+  /** When the programme itself usually runs. */
+  runs?: [CalendarMonth, CalendarMonth];
+  /** Happens all year round (e.g. hackathons). */
+  allYear?: boolean;
+}
+
+/** One question in a subject page's FAQ. */
+export interface SubjectFAQ {
+  id: string;
+  question: string;
+  answer: string;
 }
 
 /** A quote shown in the testimonials marquee, attributed to its program. */

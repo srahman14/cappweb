@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { NextEventCard } from "@/components/events/NextEventCard";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
+import { ApplicationCalendar } from "@/components/subjects/ApplicationCalendar";
 import { SUBJECT_BENTO_ID, SubjectBento } from "@/components/subjects/SubjectBento";
+import { SubjectFAQ } from "@/components/subjects/SubjectFAQ";
 import { Button, HandDrawnUnderline, PageHeader } from "@/components/ui";
 import { engineering } from "@/data/engineering";
 import { SITE } from "@/lib/site";
@@ -27,12 +29,16 @@ export default function EngineeringPage() {
 
       <MediaFeatureSplit
           slotKey="subject_engineering_feature"
-          caption={`From our ${engineering.name} panel`}
+          // caption={`From our ${engineering.name} panel`}
           alt="A speaker presenting at a CAPP career event"
           {...engineering.about}
         />
 
-      <SubjectBento subject={engineering.name} cards={engineering.bentoCards} />
+      <SubjectBento data={engineering} />
+
+      <ApplicationCalendar subject={engineering.name} rows={engineering.calendar} />
+
+      <SubjectFAQ subject={engineering.name} faqs={engineering.faqs} channelUrl={engineering.channelUrl ?? SITE.whatsappUrl} />
 
       <CTABand title="Join the Engineering community" />
     </>

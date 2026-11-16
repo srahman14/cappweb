@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { NextEventCard } from "@/components/events/NextEventCard";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
+import { ApplicationCalendar } from "@/components/subjects/ApplicationCalendar";
 import { SUBJECT_BENTO_ID, SubjectBento } from "@/components/subjects/SubjectBento";
+import { SubjectFAQ } from "@/components/subjects/SubjectFAQ";
 import { Button, HandDrawnUnderline, PageHeader } from "@/components/ui";
 import { businessFinance } from "@/data/business-finance";
 import { SITE } from "@/lib/site";
@@ -27,12 +29,16 @@ export default function BusinessFinancePage() {
 
       <MediaFeatureSplit
           slotKey="subject_business_finance_feature"
-          caption={`From our ${businessFinance.name} panel`}
+          // caption={`From our ${businessFinance.name} panel`}
           alt="A speaker presenting at a CAPP career event"
           {...businessFinance.about}
         />
 
-      <SubjectBento subject={businessFinance.name} cards={businessFinance.bentoCards} />
+      <SubjectBento data={businessFinance} />
+
+      <ApplicationCalendar subject={businessFinance.name} rows={businessFinance.calendar} />
+
+      <SubjectFAQ subject={businessFinance.name} faqs={businessFinance.faqs} channelUrl={businessFinance.channelUrl ?? SITE.whatsappUrl} />
 
       <CTABand title="Join the B&F community" />
     </>

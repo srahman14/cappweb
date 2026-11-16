@@ -18,6 +18,7 @@ import {
   teamSubjects,
 } from "@/data/team";
 import type { Metadata } from "next";
+import { connection } from "next/server";
 
 import { getMediaBySlots } from "@/lib/services/media.service";
 
@@ -59,6 +60,8 @@ export default function TeamPage() {
 }
 
 async function TeamDirectors() {
+  // Media slots are fetched per request (the Supabase client reads the clock), same as MediaFeatureSplit.
+  await connection();
   const mediaSlots = await getMediaBySlots(["directors_image_1"]);
   const directorImage = mediaSlots.find(
     (slot) => slot.slot_key === "directors_image_1"

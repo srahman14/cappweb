@@ -113,3 +113,66 @@ export const whatWeDo = {
     },
   ],
 };
+
+/** "CAPP in numbers" strip under the intro. Only use figures we can stand behind. */
+export const stats = [
+  { id: "members", value: "~800", label: "members in the community" },
+  { id: "subjects", value: "4", label: "subjects, each with its own ambassadors" },
+  // Matches the company logos on the home page ("Our speakers have worked at"). Update together.
+  { id: "companies", value: "9+", label: "companies our speakers have worked at" },
+  // Draft: confirm CAPP is free for members before launch.
+  { id: "free", value: "£0", label: "to join, always" },
+];
+
+/** "What we believe" cards. Draft, based on the directors' note: confirm with the committee. */
+export const values = {
+  eyebrow: "WHAT WE BELIEVE",
+  title: "What CAPP stands for",
+  items: [
+    {
+      id: "everyone",
+      icon: "users",
+      title: "Open to everyone",
+      text: "Wherever you study and whatever your background, there is a place for you here.",
+    },
+    {
+      id: "honest",
+      icon: "message",
+      title: "Honest advice",
+      text: "Straight answers from people doing the job, not just what looks good on a brochure.",
+    },
+    {
+      id: "routes",
+      icon: "route",
+      title: "Every route counts",
+      text: "University, apprenticeships, career changes. We help you find the way in that suits you.",
+    },
+    {
+      id: "volunteers",
+      icon: "heart",
+      title: "Run by volunteers",
+      text: "Our directors, committee and ambassadors give their time to help the next person along.",
+    },
+  ],
+} as const;
+
+/** Teaser that sends people to /team. The note is taken from the directors' message in data/team.ts. */
+export const teamTeaser = {
+  eyebrow: "THE PEOPLE BEHIND CAPP",
+  title: "Run by volunteers, for the community",
+  body: "Directors, a committee and ambassadors for every subject run CAPP in their spare time. Find out who they are and who to talk to.",
+  note: "We want CAPP to be a place where everyone feels welcome.",
+};
+
+/** "Where to find us" cards. Links come from SITE.whatsappUrl and `socials` in data/footer.ts. */
+export const findUs = {
+  eyebrow: "WHERE TO FIND US",
+  title: "Come and say hello",
+  whatsapp: "Where the community lives. Events, opportunities and your subject chats, all in one place.",
+  // Draft one-liners: confirm what each account actually posts.
+  socials: {
+    instagram: "Event photos, recaps and what's coming up.",
+    tiktok: "Short tips and behind the scenes at our events.",
+    linkedin: "Opportunities, speakers and CAPP news.",
+  },
+};

@@ -18,7 +18,7 @@ export const SOCIAL_LABELS: Record<SocialLink["platform"], string> = {
   linkedin: "LinkedIn",
 };
 
-const ICONS: Record<SocialLink["platform"], { label: string; icon: ReactNode }> = {
+export const SOCIAL_ICONS: Record<SocialLink["platform"], { label: string; icon: ReactNode }> = {
   tiktok: {
     label: "TikTok",
     icon: (
@@ -59,14 +59,14 @@ export function SocialIcons({ links, variant = "outline" }: { links: SocialLink[
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={ICONS[platform].label}
+            aria-label={SOCIAL_ICONS[platform].label}
             className={
               variant === "plain"
                 ? "flex h-10 w-10 items-center justify-center text-navy-ink transition hover:opacity-70"
                 : "flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white text-muted transition hover:text-navy-ink"
             }
           >
-            {ICONS[platform].icon}
+            {SOCIAL_ICONS[platform].icon}
           </a>
         </li>
       ))}

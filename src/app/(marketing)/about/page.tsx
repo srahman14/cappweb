@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { Suspense } from "react";
-import { PullQuote } from "@/components/about/PullQuote";
+import { /* StatStrip, */ TeamTeaser, ValuesGrid, WhereToFindUs } from "@/components/about/AboutSections";
 import { CTABand } from "@/components/shared/CTABand";
-import { WhoItsForBento } from "@/components/about/WhoItsForBento";
+// import { WhoItsForBento } from "@/components/about/WhoItsForBento"; // removed for now, see below
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
 import { MediaImage } from "@/components/media/MediaImage";
 import {
@@ -12,7 +13,7 @@ import {
   Section,
   SectionHeader,
 } from "@/components/ui";
-import { motto, whatCappIs, whatWeDo } from "@/data/about";
+import { whatCappIs, whatWeDo } from "@/data/about";
 import { getMediaBySlots } from "@/lib/services/media.service";
 
 export const metadata: Metadata = {
@@ -52,12 +53,17 @@ export default function AboutPage() {
         body={whatCappIs.paragraphs.join(" ")}
       />
 
-      <WhoItsForBento />
+      {/* "Who it's for" bento removed for now. Restore by uncommenting this and the import above. */}
+      {/* <WhoItsForBento /> */}
 
-      {/* Motto */}
-      <Section>
-        <PullQuote quote={motto.quote} cite={motto.cite} />
-      </Section>
+      {/* "CAPP in numbers" hidden for now. Restore by uncommenting this and StatStrip in the import above. */}
+      {/* <StatStrip /> */}
+
+      <WhereToFindUs />
+
+      {/* Values and the team teaser sit together as one block (the teaser has no top padding). */}
+      <ValuesGrid />
+      <TeamTeaser />
 
       <Suspense fallback={<WhatWeDoSection slotImages={{}} />}>
         <AboutWhatWeDo />
@@ -69,6 +75,8 @@ export default function AboutPage() {
 }
 
 async function AboutWhatWeDo() {
+  // Media slots are fetched per request (the Supabase client reads the clock), same as MediaFeatureSplit.
+  await connection();
   const mediaSlots = await getMediaBySlots([
     "about_image_1",
     "about_image_2",

@@ -1,199 +1,195 @@
 /**
- * Bento grid shared by the four subject pages (Tech, Engineering, Law, Business & Finance).
- * Three fixed cards link to the hub pages; 2-3 subject-specific cards come from
- * `bentoCards` in the subject's data file (generic fallback if omitted).
+ * "The <Subject> hub": the bento grid plus the "Roles you could do" row, shared by the four
+ * subject pages (Tech, Engineering, Law, Business & Finance).
  *
- * Cards have gradient backdrops only. Each has an empty, aria-hidden "image slot"
- * (marked IMAGE SLOT below) so artwork can be dropped in later.
+ * The layout is identical everywhere. What makes each page its own:
+ *   - `motif` (pattern, glyph, focus-card illustrations; see ./motifs.tsx)
+ *   - live data from src/data/<subject>.ts: nextEvent, resources, ambassadors, bentoCards, roles
+ *
+ * Grid (desktop, 6 columns):
+ *   [ next event (navy) ............ 4 ][ ambassadors .. 2 ]
+ *   [ resources .. 2 ][ focus card 1 .. 2 ][ focus card 2 .. 2 ]
+ * On mobile every card stacks in one column.
  */
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { caveat } from "@/lib/fonts";
-import type { SubjectBentoCard } from "@/types";
+import type { SubjectPageData } from "@/types";
+import { FocusArt, MOTIF_GLYPH, MotifPattern } from "./motifs";
+import { SubjectRoles } from "./SubjectRoles";
 
 export const SUBJECT_BENTO_ID = "explore";
 
-const TINTS = [
-  "from-sky-100 to-indigo-soft",
-  "from-violet-100 to-fuchsia-50",
-  "from-orange-100 to-amber-50",
-  "from-emerald-100 to-lime-50",
-] as const;
-
-/**
- * PLACEHOLDER pictures (reusing the team hover images) so every card shows its image slot.
- * Replace per card with a real `image={{ src, alt }}`; once every card has one, delete this list.
- */
-const PLACEHOLDERS = [
-  { src: "/team/hover-1.png", alt: "" },
-  { src: "/team/hover-2.png", alt: "" },
-  { src: "/team/hover-3.png", alt: "" },
-] as const;
-
 const FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo";
+const LABEL = "text-xs font-bold uppercase tracking-[0.12em]";
 
-function Arrow({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 80 50"
-      className={cn("h-10 w-16 text-gold-deep", className)}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4 6 C30 -4 60 10 40 26 C28 36 24 18 42 20 C58 22 66 32 72 42" />
-      <path d="M71 31 L72 43 L61 40" />
-    </svg>
-  );
-}
-
-/**
- * IMAGE SLOT. Every card has one. Pass `image={{ src, alt }}` to a BentoCard (subject cards get it
- * from `bentoCards[].image` in src/data/<subject>.ts) and the picture sits behind the text, mostly
- * visible at the bottom and fading out towards the top. With no image it is just empty space.
- */
-function Slot({ image }: { image?: { src: string; alt: string } }) {
-  if (!image) return <div aria-hidden="true" data-slot="bento-image" className="mt-6 min-h-24 flex-1" />;
-  return (
-    <>
-      <div aria-hidden="true" className="mt-6 min-h-40 flex-1" />
-      <div
-        data-slot="bento-image"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 [mask-image:linear-gradient(to_bottom,transparent,black_75%)]"
-      >
-        <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover object-bottom" />
-      </div>
-    </>
-  );
-}
-
-interface CardProps {
-  title: string;
-  body: string;
-  tint: string;
-  className?: string;
+function Tile({
+  href,
+  dark,
+  className,
+  children,
+}: {
   href?: string;
-  cta?: string;
-  image?: { src: string; alt: string };
-}
-
-function BentoCard({ title, body, tint, className, href, cta, image }: CardProps) {
-  const inner = (
-    <>
-      <div className="relative z-10">
-        <h3 className="text-xl font-extrabold tracking-tight text-navy-ink md:text-2xl">{title}</h3>
-        <p className="mt-2 max-w-md text-sm leading-relaxed text-muted md:text-base">{body}</p>
-        {cta && (
-          <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-indigo group-hover:underline">
-            {cta} <ArrowUpRight aria-hidden="true" size={16} />
-          </span>
-        )}
-      </div>
-      <Slot image={image} />
-    </>
-  );
+  /** Navy anchor card instead of a white one. */
+  dark?: boolean;
+  className?: string;
+  children: ReactNode;
+}) {
   const base = cn(
-    "relative flex min-h-52 flex-col overflow-hidden rounded-3xl bg-gradient-to-br p-6 md:p-8",
-    tint,
+    "relative isolate flex min-w-0 flex-col gap-3 overflow-hidden rounded-card p-6 md:p-7",
+    dark ? "bg-panel-gradient text-white" : "border border-line bg-white",
     className,
   );
-  return href ? (
+  if (!href) return <div className={base}>{children}</div>;
+  const external = /^https?:\/\//.test(href);
+  return (
     <Link
       href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className={cn(
         base,
-        "group outline-none transition-transform motion-safe:hover:-translate-y-1 motion-reduce:transition-none",
+        "group outline-none",
+        !dark && "transition-colors hover:border-muted-soft motion-reduce:transition-none",
         FOCUS,
       )}
     >
-      {inner}
+      {children}
     </Link>
-  ) : (
-    <div className={base}>{inner}</div>
   );
 }
 
-export function SubjectBento({
-  subject,
-  cards,
-}: {
-  subject: string;
-  cards?: SubjectBentoCard[];
-}) {
-  const own: SubjectBentoCard[] =
-    cards && cards.length > 0
-      ? cards.slice(0, 3)
-      : [
-          {
-            id: "fallback",
-            title: `${subject} at CAPP`,
-            body: `Talks, workshops and advice from people working in ${subject}.`,
-          },
-        ];
+function Go({ children, onDark }: { children: ReactNode; onDark?: boolean }) {
+  return (
+    <span
+      className={cn(
+        "mt-auto inline-flex items-center gap-1 pt-2 text-sm font-bold group-hover:underline",
+        onDark ? "text-gold-light" : "text-indigo",
+      )}
+    >
+      {children} <ArrowUpRight aria-hidden="true" size={16} />
+    </span>
+  );
+}
+
+export function SubjectBento({ data }: { data: SubjectPageData }) {
+  const { name, motif, nextEvent, resources, ambassadors, bentoCards } = data;
+  const glyph = MOTIF_GLYPH[motif];
+  const faces = ambassadors.slice(0, 4);
+  const extra = ambassadors.length - faces.length;
 
   return (
-    <section id={SUBJECT_BENTO_ID} aria-labelledby="bento-title" className="scroll-mt-8 py-12 md:py-20">
-      <div className="px-3 md:px-6">
-        <p className="text-xs font-bold uppercase tracking-widest text-indigo">The {subject} hub</p>
-        <h2 id="bento-title" className="mt-2 text-3xl font-extrabold tracking-tight text-navy-ink md:text-4xl">
-          Everything {subject}, in one place
+    <section id={SUBJECT_BENTO_ID} aria-labelledby="hub-title" className="scroll-mt-8 py-12 md:py-20">
+      <div className="mx-auto w-full max-w-[1440px] px-5 md:px-10 lg:px-20">
+        <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-muted-soft">The {name} hub</p>
+        <h2 id="hub-title" className="mt-3 text-3xl font-extrabold leading-[1.1] tracking-[-0.03em] md:text-[40px]">
+          Everything {name}, in one place
         </h2>
 
-        <div className="relative mt-8 grid gap-4 md:grid-cols-6 md:gap-5">
-          {/* IMAGE: add a picture for this card with an `image={{ src, alt }}` prop. */}
-          <BentoCard
-            title="Resources"
-            body="Guides, templates and tools. Browse the full library and filter by subject to find what you need."
-            tint={TINTS[0]}
-            href="/resources"
-            cta="Find resources"
-            image={PLACEHOLDERS[1]}
-            className="md:col-span-4"
-          />
-          {/* IMAGE: add a picture for this card with an `image={{ src, alt }}` prop. */}
-          <BentoCard
-            title="Events"
-            body="See what's coming up and book a place, or look back at what we've already done."
-            tint={TINTS[1]}
-            href="/events"
-            cta="Find events"
-            image={PLACEHOLDERS[2]}
-            className="md:col-span-2"
-          />
+        <div className="mt-10 grid gap-4 md:grid-cols-6 md:gap-5">
+          {/* Anchor: next event, or a nudge to join the channel when nothing is scheduled */}
+          <Tile
+            href={nextEvent?.href ?? "/events"}
+            dark
+            className="min-h-64 md:col-span-4 md:min-h-72"
+          >
+            <MotifPattern motif={motif} tone="dark" />
+            <span
+              aria-hidden="true"
+              className={cn(
+                "pointer-events-none absolute -bottom-8 -right-2 -z-10 select-none text-[120px] leading-none text-on-dark/15 md:text-[180px]",
+                glyph.className,
+              )}
+            >
+              {glyph.char}
+            </span>
+            <span className={cn(LABEL, "text-gold-light")}>{nextEvent ? `Next ${name} event` : `${name} events`}</span>
+            {nextEvent ? (
+              <>
+                <h3 className="max-w-[20ch] text-2xl font-extrabold tracking-[-0.02em] md:text-3xl">{nextEvent.title}</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {[`${nextEvent.weekday} ${nextEvent.dateLabel}`, nextEvent.time, nextEvent.location].map((m) => (
+                    <li key={m} className="rounded-full bg-white/10 px-3 py-1.5 text-sm font-semibold">{m}</li>
+                  ))}
+                </ul>
+                <Go onDark>Book a place</Go>
+              </>
+            ) : (
+              <>
+                <h3 className="text-3xl font-extrabold tracking-[-0.02em] md:text-[40px]">Events</h3>
+                <p className="max-w-[46ch] text-on-dark">See what&apos;s coming up and book a place, or look back at what we&apos;ve run before.</p>
+                <Go onDark>See all events</Go>
+              </>
+            )}
+          </Tile>
 
-          <div className="hidden items-center gap-3 md:col-span-6 md:flex" aria-hidden="true">
-            <Arrow className="rotate-12" />
-            <span className={cn(caveat.className, "text-2xl text-gold-ink")}>Also done for you</span>
-          </div>
+          {/* Ambassadors */}
+          <Tile href="/team" className="md:col-span-2">
+            <MotifPattern motif={motif} />
+            <span className={cn(LABEL, "text-muted-soft")}>Ambassadors</span>
+            <h3 className="text-xl font-extrabold tracking-[-0.02em] md:text-[22px]">Ask someone who&apos;s done it</h3>
+            {faces.length > 0 && (
+              <div aria-hidden="true" className="flex">
+                {faces.map((p, i) => (
+                  <span
+                    key={p.id}
+                    className={cn(
+                      "relative size-12 overflow-hidden rounded-full border-[3px] border-white bg-gold-gradient",
+                      i > 0 && "-ml-2.5",
+                    )}
+                  >
+                    {p.photoSrc && <Image src={p.photoSrc} alt="" fill sizes="48px" className="object-cover" />}
+                  </span>
+                ))}
+                {extra > 0 && (
+                  <span className="-ml-2.5 grid size-12 place-items-center rounded-full border-[3px] border-white bg-navy text-sm font-bold text-white">
+                    +{extra}
+                  </span>
+                )}
+              </div>
+            )}
+            <p className="text-[15px] text-muted">
+              {ambassadors.length > 0
+                ? `${ambassadors.length} ${name} ambassadors run this hub. Message them in the channel.`
+                : `Meet the team behind ${name} at CAPP.`}
+            </p>
+            <Go>Meet the ambassadors</Go>
+          </Tile>
 
-          {/* IMAGE: subject cards take their picture from `bentoCards[].image` in src/data/<subject>.ts. */}
-          {own.map((c, i) => (
-            <BentoCard
-              key={c.id}
-              title={c.title}
-              body={c.body}
-              tint={TINTS[(i + 2) % 4]}
-              image={c.image ?? PLACEHOLDERS[i % 3]}
-              className={own.length === 1 ? "md:col-span-6" : own.length === 2 ? "md:col-span-3" : "md:col-span-2"}
-            />
+          {/* Resources */}
+          <Tile href="/resources" className="md:col-span-2">
+            <span className={cn(LABEL, "text-muted-soft")}>Resources</span>
+            <h3 className="text-xl font-extrabold tracking-[-0.02em] md:text-[22px]">Start here</h3>
+            {resources.length > 0 ? (
+              <ul className="flex flex-col">
+                {resources.slice(0, 3).map((r) => (
+                  <li key={r.id} className="flex items-center justify-between gap-3 border-t border-line py-3 font-bold last:border-b">
+                    <span className="min-w-0 truncate">{r.title}</span>
+                    <span className="shrink-0 rounded-full border border-line bg-surface px-2 py-0.5 text-xs font-semibold text-muted">
+                      {r.category}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-[15px] text-muted">Guides, templates and tools picked by our ambassadors.</p>
+            )}
+            <Go>{resources.length > 0 ? `See all ${name} resources` : "Browse the library"}</Go>
+          </Tile>
+
+          {/* Two subject-specific focus cards */}
+          {bentoCards.slice(0, 2).map((card, i) => (
+            <Tile key={card.id} className="md:col-span-2">
+              <span className={cn(LABEL, "text-muted-soft")}>Focus</span>
+              <h3 className="text-xl font-extrabold tracking-[-0.02em] md:text-[22px]">{card.title}</h3>
+              <p className="text-[15px] text-muted">{card.body}</p>
+              <FocusArt motif={motif} index={i as 0 | 1} />
+            </Tile>
           ))}
-
-          {/* IMAGE: add a picture for this card with an `image={{ src, alt }}` prop. */}
-          <BentoCard
-            title="Ambassadors"
-            body={`Meet the ambassadors who run ${subject} at CAPP, and find out who to ask.`}
-            tint={TINTS[0]}
-            href="/team"
-            cta="Meet the ambassadors"
-            image={PLACEHOLDERS[0]}
-            className="md:col-span-6"
-          />
         </div>
+
+        <SubjectRoles subject={name} motif={motif} roles={data.roles} />
       </div>
     </section>
   );

@@ -7,13 +7,7 @@
 import type { ReactNode } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
-import type { SocialLink } from "@/types";
-
-const socials: SocialLink[] = [
-  { platform: "tiktok", href: "#" },
-  { platform: "instagram", href: "#" },
-  { platform: "linkedin", href: "#" },
-];
+import { socials } from "@/data/footer";
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   return (

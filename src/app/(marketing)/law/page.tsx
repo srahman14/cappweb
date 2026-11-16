@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
+import { ApplicationCalendar } from "@/components/subjects/ApplicationCalendar";
 import { SUBJECT_BENTO_ID, SubjectBento } from "@/components/subjects/SubjectBento";
+import { SubjectFAQ } from "@/components/subjects/SubjectFAQ";
 import {
   Button,
   HandDrawnUnderline,
@@ -42,12 +44,16 @@ export default function LawPage() {
 
       <MediaFeatureSplit
         slotKey="subject_law_feature"
-        caption={`From our ${law.name} panel`}
+        // caption={`From our ${law.name} panel`}
         alt="A speaker presenting at a CAPP career event"
         {...law.about}
       />
 
-      <SubjectBento subject={law.name} cards={law.bentoCards} />
+      <SubjectBento data={law} />
+
+      <ApplicationCalendar subject={law.name} rows={law.calendar} />
+
+      <SubjectFAQ subject={law.name} faqs={law.faqs} channelUrl={law.channelUrl ?? SITE.whatsappUrl} />
 
       <CTABand title="Join the Law community" />
     </>

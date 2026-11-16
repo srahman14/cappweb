@@ -1,19 +1,20 @@
+import { SITE } from "@/lib/site";
 import type { LegalPageData } from "@/types";
 
 /**
  * Content for /privacy and /terms. Edit the words here, never in the page files.
  * Anything in [BRACKETS] is unconfirmed and shows highlighted on the page.
- * Resolve every bracket (and have the committee read it) before launch.
  *
- * Move CONTACT_EMAIL into lib/site.ts (SITE) once we have the real address.
+ * The contact address comes from SITE.contactEmail (lib/site.ts). Change it there.
+ * Update LAST_UPDATED whenever either page changes.
  */
-const CONTACT_EMAIL = "[CAPP CONTACT EMAIL]";
-const LAST_UPDATED = "[DD Month YYYY]";
+const CONTACT_EMAIL = SITE.contactEmail;
+const LAST_UPDATED = "16 November 2026";
 
 export const privacyPolicy: LegalPageData = {
   lastUpdated: LAST_UPDATED,
   intro:
-    "This policy is mainly for people who apply to be a CAPP ambassador or join the committee. It explains what we collect, why, who sees it and how long we keep it.",
+    "CAPP only collects personal information when you apply for a role with us or offer to speak at an event, and we only use it for that. This policy explains what we collect, why, who sees it and how long we keep it.",
   sections: [
     {
       id: "who-we-are",
@@ -21,7 +22,11 @@ export const privacyPolicy: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "CAPP (Careers and People’s Progression) is a careers community that runs events and panels with industry professionals. We are the controller of the personal information described here, which means we decide how and why it is used. [CONFIRM LEGAL NAME AND STATUS OF CAPP]",
+          text: `CAPP (${SITE.fullName}) is a volunteer-run careers community that runs events and panels with industry professionals. We decide how and why the information described here is used, which makes us its controller under UK data protection law.`,
+        },
+        {
+          type: "paragraph",
+          text: "CAPP has no employees. Ambassador and committee roles are voluntary, and we do not keep employment or HR records about anyone.",
         },
         {
           type: "paragraph",
@@ -33,42 +38,47 @@ export const privacyPolicy: LegalPageData = {
       id: "what-this-covers",
       title: "What this policy covers",
       blocks: [
+        { type: "paragraph", text: "This policy covers information about:" },
+        {
+          type: "list",
+          items: [
+            "People who apply to be an ambassador or join the committee.",
+            "People who offer to speak at one of our events.",
+            "Ambassadors, committee members and speakers who appear on this website.",
+            "People who visit this website.",
+          ],
+        },
         {
           type: "paragraph",
-          text: "It covers information you give us when you apply for an ambassador or committee role, and, in section 10, what happens when you simply visit this website. It does not cover WhatsApp, which has its own privacy policy.",
+          text: "Our community chats run on WhatsApp, and our application forms run on Google Forms. Those services have their own privacy policies, which also apply when you use them.",
         },
       ],
     },
     {
       id: "what-we-collect",
-      title: "What we collect from applicants",
+      title: "What we collect",
       blocks: [
-        { type: "paragraph", text: "Depending on the role, we may collect:" },
+        {
+          type: "paragraph",
+          text: "If you apply to be an ambassador or join the committee, the application form asks for:",
+        },
         {
           type: "list",
           items: [
-            "Contact details: your name, email address and [WHATSAPP / PHONE NUMBER].",
-            "Background: your university, course and year of study.",
-            "The role and subject you are applying for (Tech, Business & Finance, Engineering or Law, or a committee role).",
-            "Your answers: why you want the role, your experience and your availability.",
-            "Anything you choose to attach or link, such as [CV / LINKEDIN PROFILE].",
-            "If you are shortlisted: notes from your interview and how we scored it.",
-            "The outcome of your application and any feedback we give you.",
+            "Your name and contact details, such as your email address and phone number.",
+            "Where and what you study, and your year of study.",
+            "The role and subject you are applying for (Tech, Business & Finance, Engineering, Law or a committee role).",
+            "Your answers to the questions on the form, such as why you want the role, your experience and your availability.",
+            "Anything else you choose to share, such as a LinkedIn profile.",
           ],
         },
         {
           type: "paragraph",
-          text: "We only ask for what we need to choose people fairly. Please do not include sensitive details (such as health, religion or ethnicity) unless a question asks for them and explains why. [CHECK THIS LIST AGAINST THE REAL APPLICATION FORM BEFORE PUBLISHING]",
+          text: "If you offer to speak at an event, we keep your name, contact details, job title and organisation, and the messages we exchange to arrange the event.",
         },
-      ],
-    },
-    {
-      id: "how-we-collect",
-      title: "How we collect it",
-      blocks: [
         {
           type: "paragraph",
-          text: "Directly from you: through our application form ([GOOGLE FORM / OTHER]), by email or message if you get in touch, and during interviews. Interview notes are written by the committee members who speak to you.",
+          text: "We only ask for what we need. Please do not share sensitive details, such as information about your health, religion or ethnicity. We do not need them.",
         },
       ],
     },
@@ -76,20 +86,41 @@ export const privacyPolicy: LegalPageData = {
       id: "why-we-use-it",
       title: "Why we use it",
       blocks: [
-        { type: "paragraph", text: "We use applicant information to:" },
+        {
+          type: "paragraph",
+          text: "We use your information only for the application or event you contacted us about. That means we use it to:",
+        },
         {
           type: "list",
           items: [
             "Read and compare applications fairly.",
-            "Contact you and arrange interviews.",
-            "Keep a record of how decisions were made.",
-            "Set up the people we appoint, for example adding them to team chats and handover materials.",
-            "Answer your questions about your application.",
+            "Contact you about your application or event, and arrange a chat if needed.",
+            "Tell you the outcome.",
+            "Set up the people we appoint, for example by adding them to team chats.",
+            "Plan and promote events with speakers who have agreed to take part.",
           ],
         },
         {
           type: "paragraph",
-          text: "Our lawful basis is legitimate interests: we need this information to run volunteer roles fairly, and we have weighed this against your rights. Where we ask for something extra, such as showing your name, photo or bio on the Team or subject pages, we ask for your consent separately. You can withdraw it at any time.",
+          text: "We do not use it for marketing, we do not sell it, and we do not use it to make automated decisions about you.",
+        },
+        {
+          type: "paragraph",
+          text: "Our lawful basis is legitimate interests: we need this information to choose volunteers and run events, and we have weighed this against your rights. Showing your name, photo or profile on the website is optional, and we only do it with your consent, which you can withdraw at any time.",
+        },
+      ],
+    },
+    {
+      id: "on-the-website",
+      title: "People shown on the website",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "With their agreement, we show ambassadors and committee members on the Team and subject pages. This can include their name, role, photo and a link to their LinkedIn profile. We may also name speakers and their organisation on event pages.",
+        },
+        {
+          type: "paragraph",
+          text: "We sometimes take photos at events and use them on this website and our social media. If you would rather not appear, tell an organiser on the day, or email us and we will remove the photo.",
         },
       ],
     },
@@ -100,13 +131,13 @@ export const privacyPolicy: LegalPageData = {
         {
           type: "list",
           items: [
-            "Only the committee members involved in selection ([E.G. DIRECTORS AND THE RELEVANT SUBJECT LEAD]).",
-            "Our tools, such as [GOOGLE WORKSPACE] for forms and spreadsheets. These providers process information on our behalf.",
+            "Only the committee members involved in choosing people for a role, or in organising the event.",
+            "The services we use to run CAPP: Google (application forms and the spreadsheets that hold the answers), WhatsApp (messages), and Vercel and Supabase (hosting this website and storing what appears on it). They process information on our behalf.",
           ],
         },
         {
           type: "paragraph",
-          text: "We do not sell your information, and we do not share it with employers, universities, sponsors or speakers. We may disclose it if the law requires us to.",
+          text: "We do not share your information with employers, universities, sponsors or other speakers. We would only disclose it if the law required us to.",
         },
       ],
     },
@@ -117,15 +148,12 @@ export const privacyPolicy: LegalPageData = {
         {
           type: "list",
           items: [
-            "Unsuccessful applications: deleted within [X MONTHS] of the decision.",
-            "Successful applications: kept while you hold the role and for [X MONTHS] after you step down.",
-            "After that we may keep a minimal record (your name, role and dates) so future teams have a handover trail. [CONFIRM]",
-            "Withdrawn applications: deleted when you ask.",
+            "Unsuccessful applications: deleted within 6 months of the decision.",
+            "Successful applications: kept while you hold the role, and deleted within 12 months of you stepping down.",
+            "Withdrawn applications: deleted as soon as you ask.",
+            "Speaker details: kept while we are arranging the event, and for up to 12 months afterwards in case we invite you back.",
+            "Your name, photo or profile on the website: removed within 14 days of you leaving the role or asking us to.",
           ],
-        },
-        {
-          type: "paragraph",
-          text: "If your name, photo or bio appears on the website, we remove it within [X DAYS] of you leaving the role or asking us to.",
         },
       ],
     },
@@ -135,11 +163,11 @@ export const privacyPolicy: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "Application information is stored in [GOOGLE WORKSPACE — CONFIRM]. Access is limited to the named committee members who need it, and [WE REVIEW WHO HAS ACCESS AT THE START OF EACH TERM].",
+          text: "Application answers are stored in Google Forms and Google Sheets. Only the committee members who need them have access, and we remove access when someone leaves the committee.",
         },
         {
           type: "paragraph",
-          text: "Our providers may process data outside the UK. Where they do, the safeguards required by UK law apply. No system is completely secure. If a breach puts your rights at risk, we will tell you and the Information Commissioner’s Office (ICO) where the law requires it.",
+          text: "Our providers may process data outside the UK. Where they do, the safeguards required by UK law apply. No system is completely secure. If a breach puts your rights at risk, we will tell you, and the Information Commissioner’s Office (ICO) where the law requires it.",
         },
       ],
     },
@@ -147,10 +175,7 @@ export const privacyPolicy: LegalPageData = {
       id: "your-rights",
       title: "Your rights",
       blocks: [
-        {
-          type: "paragraph",
-          text: "Under UK data protection law you can ask us to:",
-        },
+        { type: "paragraph", text: "Under UK data protection law you can ask us to:" },
         {
           type: "list",
           items: [
@@ -164,21 +189,25 @@ export const privacyPolicy: LegalPageData = {
         },
         {
           type: "paragraph",
-          text: `Email ${CONTACT_EMAIL} and we will reply within one month. There is normally no charge. If you are unhappy with how we handle your information, you can complain to the ICO at ico.org.uk. We would appreciate the chance to put things right first.`,
+          text: `Email ${CONTACT_EMAIL} and we will reply within one month. There is no charge. If you are unhappy with how we handle your information, you can complain to the ICO at ico.org.uk, but we would appreciate the chance to put things right first.`,
         },
       ],
     },
     {
       id: "website-visitors",
-      title: "Website visitors",
+      title: "Website visitors and cookies",
       blocks: [
         {
           type: "paragraph",
-          text: "This website has no accounts or logins, and it does not ask visitors for personal information. [CONFIRM: WE DO NOT CURRENTLY USE ANALYTICS OR ADVERTISING COOKIES. IF THIS CHANGES, UPDATE THIS SECTION BEFORE SWITCHING THEM ON.]",
+          text: "You do not need an account to use this website, and it does not ask visitors for personal information. We do not use analytics, advertising or tracking cookies.",
         },
         {
           type: "paragraph",
-          text: "Our hosting provider may log technical details such as your IP address to keep the site running and secure. Links to WhatsApp, Google, social media and other sites take you to places with their own privacy policies.",
+          text: "The only cookies are strictly necessary ones that keep committee members signed in to the private area where they update the site. Our hosting provider may log technical details, such as your IP address, to keep the site running and secure.",
+        },
+        {
+          type: "paragraph",
+          text: "Links to WhatsApp, Google Forms, social media and other websites take you to services with their own privacy policies.",
         },
       ],
     },
@@ -188,7 +217,7 @@ export const privacyPolicy: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "We will update the date at the top when we change this policy. If a change affects people with a live application, we will tell them directly.",
+          text: "We will update the date at the top whenever we change this policy. If a change affects people with an open application, we will tell them directly.",
         },
       ],
     },
@@ -198,7 +227,7 @@ export const privacyPolicy: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: `Email ${CONTACT_EMAIL} for anything in this policy, including requests to see or delete your information.`,
+          text: `Email ${CONTACT_EMAIL} about anything in this policy, including requests to see or delete your information.`,
         },
       ],
     },
@@ -216,7 +245,7 @@ export const terms: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "By using this website you agree to these terms. If you do not agree, please do not use it. “We” and “CAPP” mean Careers and People’s Progression. [CONFIRM LEGAL NAME AND STATUS OF CAPP]",
+          text: `By using this website you agree to these terms. If you do not agree, please do not use it. “We”, “us” and “CAPP” mean ${SITE.fullName}, a volunteer-run careers community.`,
         },
       ],
     },
@@ -226,7 +255,7 @@ export const terms: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "CAPP is a careers community that runs events and panels with industry professionals. The community runs on WhatsApp. This website is the library and front door: it holds our events, resources, team and ways to get involved.",
+          text: "CAPP is a careers community that runs events and panels with industry professionals. The community itself runs on WhatsApp. This website is our front door: it holds our events, resources, team and ways to get involved.",
         },
         {
           type: "paragraph",
@@ -240,7 +269,7 @@ export const terms: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "Everything on the site is general information shared in good faith. It is not professional career, legal, financial or other advice, including on the Law and Business & Finance pages. Please check important details with the original source.",
+          text: "Everything on the site is general information shared in good faith. It is not professional careers, legal, financial or other advice, and that includes the Law and Business & Finance pages. Please check important details, such as application deadlines and entry requirements, with the original source.",
         },
         {
           type: "paragraph",
@@ -258,7 +287,7 @@ export const terms: LegalPageData = {
         },
         {
           type: "paragraph",
-          text: "Company names and logos show that someone from that organisation has spoken at a CAPP panel. They do not mean the company endorses CAPP or is partnered with us. [CONFIRM LOGO PERMISSIONS]",
+          text: "Company names and logos on the site show that someone from that organisation has spoken at a CAPP event. They do not mean the company endorses or partners with CAPP. If you represent a company and want its name or logo removed, contact us and we will take it down.",
         },
       ],
     },
@@ -266,17 +295,14 @@ export const terms: LegalPageData = {
       id: "acceptable-use",
       title: "Acceptable use",
       blocks: [
-        {
-          type: "paragraph",
-          text: "When you use the website or the community, you agree not to:",
-        },
+        { type: "paragraph", text: "When you use the website or the community, you agree not to:" },
         {
           type: "list",
           items: [
-            "Break the law or harass, discriminate against or abuse anyone.",
+            "Break the law, or harass, discriminate against or abuse anyone.",
             "Try to get into parts of the site or our systems you are not meant to access.",
             "Disrupt the site, for example with automated scraping that slows it down.",
-            "Pretend to be an ambassador, committee member or speaker, or otherwise claim a connection to CAPP you do not have.",
+            "Pretend to be an ambassador, committee member or speaker, or claim a connection to CAPP you do not have.",
             "Post spam or misleading opportunities.",
           ],
         },
@@ -292,11 +318,11 @@ export const terms: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "Ambassador and committee roles are voluntary. They are not employment, and they come with no pay or contract of employment. Applying does not guarantee you a role, and we decide who to appoint. Roles can end if someone steps down or no longer meets the expectations of the role.",
+          text: "Ambassador and committee roles are voluntary. They are not employment and come with no pay or employment contract. Applying does not guarantee a role, and we decide who to appoint. A role can end if someone steps down or no longer meets what the role expects.",
         },
         {
           type: "paragraph",
-          text: "How we handle your application information is explained in our Privacy policy.",
+          text: "How we handle the information in your application is explained in our Privacy policy.",
         },
       ],
     },
@@ -306,7 +332,7 @@ export const terms: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "Speakers share their own views, which are not CAPP’s. [IF WE PHOTOGRAPH OR RECORD EVENTS, SAY SO HERE AND HOW ATTENDEES CAN OPT OUT]",
+          text: "Speakers share their own views, which are not necessarily CAPP’s. We sometimes take photos at events and use them on this website and our social media. If you would rather not appear, tell an organiser on the day, or contact us and we will remove the photo.",
         },
       ],
     },
@@ -316,7 +342,7 @@ export const terms: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "The site’s design, text and the CAPP name and logo belong to CAPP [CONFIRM]. Company and speaker logos belong to their owners. You may link to our pages and share them, but please do not copy the site wholesale.",
+          text: "The site’s design and text, and the CAPP name and logo, belong to CAPP. Company and speaker logos belong to their owners. You are welcome to link to and share our pages, but please do not copy the site or its content wholesale.",
         },
         {
           type: "paragraph",
@@ -330,7 +356,7 @@ export const terms: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "We provide the website and community as they are, and we are not liable for losses from using the site, relying on its content or using linked sites, so far as the law allows. Nothing in these terms limits liability for death or personal injury caused by negligence, for fraud, or for anything else the law does not allow us to limit.",
+          text: "We provide the website and community as they are. So far as the law allows, we are not liable for losses from using the site, relying on its content or using linked sites. Nothing in these terms limits liability for death or personal injury caused by negligence, for fraud, or for anything else the law does not allow us to limit.",
         },
       ],
     },
@@ -340,7 +366,7 @@ export const terms: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "We may change or pause the website at any time. We may update these terms and will change the date at the top when we do. If you keep using the site after an update, you accept the new terms.",
+          text: "We may change or pause the website at any time. We may also update these terms, and will change the date at the top when we do. If you keep using the site after an update, you accept the new terms.",
         },
       ],
     },
@@ -350,19 +376,14 @@ export const terms: LegalPageData = {
       blocks: [
         {
           type: "paragraph",
-          text: "These terms are governed by the law of England and Wales, and the courts of England and Wales can hear any dispute. [CONFIRM]",
+          text: "These terms are governed by the law of England and Wales, and the courts of England and Wales can hear any dispute.",
         },
       ],
     },
     {
       id: "contact",
       title: "Contact us",
-      blocks: [
-        {
-          type: "paragraph",
-          text: `Questions about these terms: ${CONTACT_EMAIL}.`,
-        },
-      ],
+      blocks: [{ type: "paragraph", text: `Questions about these terms: ${CONTACT_EMAIL}.` }],
     },
   ],
 };
