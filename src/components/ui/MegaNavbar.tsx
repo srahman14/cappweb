@@ -34,6 +34,29 @@ export interface MegaNavbarItem {
   content?: React.ReactNode;
   /** Mobile only: the links shown (as big text) for an item that has `content`. */
   mobileLinks?: { label: string; href: string }[];
+  /**
+   * Mobile only, for plain links: neighbouring items with the same group are listed
+   * together under this heading (e.g. Events and Resources under "Explore").
+   */
+  mobileGroup?: string;
+}
+
+/** Mobile menu blocks: a heading with big links under it, or a lone link. */
+type MobileBlock = { heading?: string; links: { label: string; href: string }[] };
+
+function toMobileBlocks(items: MegaNavbarItem[]): MobileBlock[] {
+  const blocks: MobileBlock[] = [];
+  for (const item of items) {
+    if (item.content) {
+      blocks.push({ heading: item.label, links: item.mobileLinks ?? [] });
+      continue;
+    }
+    const link = { label: item.label, href: item.href ?? "#" };
+    const last = blocks.at(-1);
+    if (item.mobileGroup && last?.heading === item.mobileGroup) last.links.push(link);
+    else blocks.push({ heading: item.mobileGroup, links: [link] });
+  }
+  return blocks;
 }
 
 export interface MegaNavbarProps extends React.HTMLAttributes<HTMLElement> {
@@ -129,25 +152,19 @@ function MobileMenuContent({
 
           <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-6 pb-10 pt-4">
             <ul className="flex flex-col gap-8">
-              {items.map((item, i) =>
-                item.content ? (
-                  // dropdown item: small label, then its links as big text
-                  <li key={i} className="flex flex-col gap-0.5">
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-soft">{item.label}</p>
-                    {item.mobileLinks?.map((l) => (
-                      <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className={linkClass(l.href)}>
-                        {l.label}
-                      </Link>
-                    ))}
-                  </li>
-                ) : (
-                  <li key={i}>
-                    <Link href={item.href ?? "#"} onClick={() => setOpen(false)} className={linkClass(item.href ?? "")}>
-                      {item.label}
+              {toMobileBlocks(items).map((block, i) => (
+                // heading (small label) when the block has one, then its links as big text
+                <li key={i} className="flex flex-col gap-0.5">
+                  {block.heading && (
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-soft">{block.heading}</p>
+                  )}
+                  {block.links.map((l) => (
+                    <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className={linkClass(l.href)}>
+                      {l.label}
                     </Link>
-                  </li>
-                ),
-              )}
+                  ))}
+                </li>
+              ))}
             </ul>
           </nav>
 

@@ -124,37 +124,21 @@ export const stats = [
   { id: "free", value: "£0", label: "to join, always" },
 ];
 
-/** "What we believe" cards. Draft, based on the directors' note: confirm with the committee. */
+/**
+ * "What CAPP stands for" cards: one big statement each, on a soft brand tint.
+ * Draft, based on the directors' note: confirm with the committee.
+ * `tint` must be full Tailwind gradient classes so Tailwind sees them.
+ */
 export const values = {
   eyebrow: "WHAT WE BELIEVE",
   title: "What CAPP stands for",
   items: [
-    {
-      id: "everyone",
-      icon: "users",
-      title: "Open to everyone",
-      text: "Wherever you study and whatever your background, there is a place for you here.",
-    },
-    {
-      id: "honest",
-      icon: "message",
-      title: "Honest advice",
-      text: "Straight answers from people doing the job, not just what looks good on a brochure.",
-    },
-    {
-      id: "routes",
-      icon: "route",
-      title: "Every route counts",
-      text: "University, apprenticeships, career changes. We help you find the way in that suits you.",
-    },
-    {
-      id: "volunteers",
-      icon: "heart",
-      title: "Run by volunteers",
-      text: "Our directors, committee and ambassadors give their time to help the next person along.",
-    },
+    { id: "everyone", title: "Open to everyone", tint: "from-indigo-soft to-white" },
+    { id: "honest", title: "Honest advice", tint: "from-gold-light/40 to-white" },
+    { id: "routes", title: "Every route counts", tint: "from-indigo/15 to-white" },
+    { id: "volunteers", title: "Run by volunteers", tint: "from-gold-light/30 via-white to-indigo-soft" },
   ],
-} as const;
+};
 
 /** Teaser that sends people to /team. The note is taken from the directors' message in data/team.ts. */
 export const teamTeaser = {

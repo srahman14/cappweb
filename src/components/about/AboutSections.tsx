@@ -2,11 +2,11 @@
  * Sections for /about (content lives in src/data/about.ts):
  *
  *   <StatStrip />      "CAPP in numbers": 4 big figures in one hairline card (2x2 on mobile)
- *   <ValuesGrid />     "What we believe": 4 small cards
+ *   <ValuesGrid />     "What CAPP stands for": 4 big-statement cards on soft brand gradients
  *   <TeamTeaser />     short pitch for the volunteers, with a link to /team (sits directly under <ValuesGrid />)
  *   <WhereToFindUs />  WhatsApp (featured, navy) + one card per social account
  */
-import { ArrowUpRight, Heart, MessageCircle, MessagesSquare, Route, Users } from "lucide-react";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { Button, Container, Section, SectionHeader } from "@/components/ui";
 import { SOCIAL_ICONS } from "@/components/ui/SocialIcons";
 import { findUs, stats, teamTeaser, values } from "@/data/about";
@@ -43,26 +43,25 @@ export function StatStrip() {
   );
 }
 
-const VALUE_ICONS = { users: Users, message: MessagesSquare, route: Route, heart: Heart } as const;
-
 export function ValuesGrid() {
   return (
     // Not <Section>: no bottom padding, because <TeamTeaser /> follows straight on.
     <Container className="pt-12 md:pt-20">
       <SectionHeader eyebrow={values.eyebrow} title={values.title} />
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-        {values.items.map((v) => {
-          const Icon = VALUE_ICONS[v.icon];
-          return (
-            <li key={v.id} className="flex flex-col gap-3 rounded-card border border-line bg-white p-6">
-              <span aria-hidden="true" className="grid size-11 place-items-center rounded-xl bg-indigo-soft text-indigo">
-                <Icon size={22} />
-              </span>
-              <h3 className="text-xl font-extrabold tracking-[-0.02em]">{v.title}</h3>
-              <p className="text-[15px] leading-relaxed text-muted">{v.text}</p>
-            </li>
-          );
-        })}
+        {values.items.map((v) => (
+          <li
+            key={v.id}
+            className={cn(
+              "flex min-h-40 items-end rounded-card border border-line bg-gradient-to-br p-6 md:min-h-52 md:p-7",
+              v.tint,
+            )}
+          >
+            <h3 className="text-[32px] font-extrabold leading-[1.02] tracking-[-0.035em] text-navy-ink md:text-[40px]">
+              {v.title}
+            </h3>
+          </li>
+        ))}
       </ul>
     </Container>
   );

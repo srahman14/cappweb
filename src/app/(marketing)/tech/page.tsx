@@ -1,4 +1,3 @@
-import { SubjectEvents } from "@/components/events/SubjectEvents";
 import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
@@ -49,8 +48,6 @@ export default function TechPage() {
         />
 
       <SubjectBento data={tech} />
-
-      <SubjectEvents subject="tech" />
 
       <ApplicationCalendar subject={tech.name} rows={tech.calendar} />
 

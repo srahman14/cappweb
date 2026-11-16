@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
-import { SubjectEvents } from "@/components/events/SubjectEvents";
 import { SubjectPageHeader } from "@/components/events/SubjectPageHeader";
 import { CTABand } from "@/components/shared/CTABand";
 import { MediaFeatureSplit } from "@/components/shared/MediaFeatureSplit";
@@ -37,8 +36,6 @@ export default function BusinessFinancePage() {
         />
 
       <SubjectBento data={businessFinance} />
-
-      <SubjectEvents subject="business-finance" />
 
       <ApplicationCalendar subject={businessFinance.name} rows={businessFinance.calendar} />
 

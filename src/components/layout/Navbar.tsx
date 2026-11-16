@@ -47,8 +47,9 @@ const items: MegaNavbarItem[] = [
       </MegaNavbarSection>
     ),
   },
-  { label: "Events", href: "/events" },
-  { label: "Resources", href: "/resources" },
+  // Plain links on desktop; grouped under one "Explore" heading in the mobile menu.
+  { label: "Events", href: "/events", mobileGroup: "Explore" },
+  { label: "Resources", href: "/resources", mobileGroup: "Explore" },
   {
     label: "About",
     mobileLinks: toMobileLinks(ABOUT_LINKS),
