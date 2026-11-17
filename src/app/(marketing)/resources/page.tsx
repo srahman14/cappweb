@@ -1,5 +1,6 @@
 import { ResourceBrowser } from "@/components/resources/ResourceBrowser";
 import { SuggestResourceBand } from "@/components/shared/SuggestedResourceBand";
+import { HandDrawnUnderline } from "@/components/ui/HandDrawnUnderline";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
 import { getPublishedResources } from "@/lib/services/resource.service";
@@ -19,7 +20,11 @@ export default function ResourcesPage() {
   return (
     <>
       <PageHeader
-        title="Everything CAPP recommends, in one place"
+        title={
+          <>
+            Everything CAPP recommends, in <HandDrawnUnderline rotate={-1.5}>one place</HandDrawnUnderline>
+          </>
+        }
         description="Guides, practice material and curated links from our ambassadors, searchable and always here when you need them."
       />
 

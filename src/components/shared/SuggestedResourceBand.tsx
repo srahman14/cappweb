@@ -1,4 +1,6 @@
-import { Button } from "@/components/ui/Button";
+// import { Button } from "@/components/ui/Button"; // restore with the "Suggest a resource" button below
+import { Mail } from "lucide-react";
+import { SITE } from "@/lib/site";
 
 /**
  * "Got a resource to add?" band: says what we accept, what we don't, and that every
@@ -25,10 +27,11 @@ const declined = [
   "Misleading or inaccurate material",
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- `href` is for the commented-out button
 export function SuggestResourceBand({ href = "/get-involved" }: SuggestResourceBandProps) {
   return (
     <div className="rounded-[28px] border border-line bg-gradient-to-br from-gold/10 via-white to-indigo/10 p-8 md:p-12">
-      <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div className="grid gap-8">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight text-navy sm:text-3xl">
             Got a resource to add?
@@ -58,7 +61,24 @@ export function SuggestResourceBand({ href = "/get-involved" }: SuggestResourceB
           </div>
         </div>
 
-        <Button href={href}>Suggest a resource</Button>
+        {/* TEMPORARY: suggestions go by email until the suggestion route exists.
+            Restore this button (and the Button import above) when it does, and put back
+            lg:grid-cols-[1fr_auto] lg:items-end on the grid above so it sits on the right. */}
+        {/* <Button href={href}>Suggest a resource</Button> */}
+        <div className="flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:gap-4">
+          <span aria-hidden="true" className="grid size-11 shrink-0 place-items-center rounded-xl bg-indigo text-white">
+            <Mail size={20} />
+          </span>
+          <p className="min-w-0 text-lg font-bold text-navy-ink">
+            Email your suggestion to{" "}
+            <a
+              href={`mailto:${SITE.contactEmail}`}
+              className="break-words text-indigo underline underline-offset-4 hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo"
+            >
+              {SITE.contactEmail}
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
